@@ -11,6 +11,7 @@ import { LoginComponent } from './UserManagement/login';
 import { ProductTypeComponent } from './UserManagement/producttype';
 import { ProductsView } from './UserManagement/productsview';
 import { BrandComponent } from './UserManagement/brand';
+import { TaxComponent } from './UserManagement/taxcenter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsComponent } from './UserManagement/products';
@@ -22,7 +23,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule ,AppRoutingModule,MatTableModule,MatPaginatorModule,BrowserAnimationsModule ],
-  declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,ProductsView,BrandComponent],
+  declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,
+    ProductsView,BrandComponent,TaxComponent],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

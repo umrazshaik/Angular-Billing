@@ -8,12 +8,13 @@ import { MainPageComponent } from './UserManagement/mainpage.component';
 import { ProductTypeComponent } from './UserManagement/producttype';
 import { ProductsView } from './UserManagement/productsview';
 import { BrandComponent } from './UserManagement/brand';
+import { TaxComponent } from './UserManagement/taxcenter';
 
 
 const routes: Routes = [
   {path:'dashboard',component:DashBoardComponent},
   // {path:'products',component:ProductsComponent,outlet:'mainpage'},
-  {path:'mainpage',component:MainPageComponent,children:[{path:'',component:DashBoardComponent},
+  {path:'mainpage',component:MainPageComponent,children:[{path:'',component:DashBoardComponent},{path:'tax',component:TaxComponent},
   {path:'products',component:ProductsComponent,children:[{path:'',component:ProductTypeComponent},
   {path:'brand',component:BrandComponent},
     {path:'productview',component:ProductsView}]}
