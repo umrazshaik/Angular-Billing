@@ -7,6 +7,7 @@ import { ProductsComponent } from './UserManagement/products';
 import { MainPageComponent } from './UserManagement/mainpage.component';
 import { ProductTypeComponent } from './UserManagement/producttype';
 import { ProductsView } from './UserManagement/productsview';
+import { BrandComponent } from './UserManagement/brand';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   // {path:'products',component:ProductsComponent,outlet:'mainpage'},
   {path:'mainpage',component:MainPageComponent,children:[{path:'',component:DashBoardComponent},
   {path:'products',component:ProductsComponent,children:[{path:'',component:ProductTypeComponent},
+  {path:'brand',component:BrandComponent},
     {path:'productview',component:ProductsView}]}
 ]},
   {path:'',component:LoginComponent}

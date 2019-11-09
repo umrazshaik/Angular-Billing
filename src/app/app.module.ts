@@ -10,6 +10,7 @@ import { HelloComponent } from './hello.component';
 import { LoginComponent } from './UserManagement/login';
 import { ProductTypeComponent } from './UserManagement/producttype';
 import { ProductsView } from './UserManagement/productsview';
+import { BrandComponent } from './UserManagement/brand';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsComponent } from './UserManagement/products';
@@ -21,7 +22,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule ,AppRoutingModule,MatTableModule,MatPaginatorModule,BrowserAnimationsModule ],
-  declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,ProductsView],
+  declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,ProductsView,BrandComponent],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
