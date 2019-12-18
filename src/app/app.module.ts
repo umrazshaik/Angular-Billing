@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { MainPageComponent } from './UserManagement/mainpage.component';
@@ -22,7 +23,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule ,AppRoutingModule,MatTableModule,MatPaginatorModule,BrowserAnimationsModule ],
+    imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule],
   declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,
     ProductsView,BrandComponent,TaxComponent],
   bootstrap:    [ AppComponent ]

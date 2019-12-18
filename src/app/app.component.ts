@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { RetailerService } from './Services/retailer.service'
+import { CommonService } from './shared/common.service'
+import { AppintializorService } from './shared/appintializor.service'
+import { Retailer } from './model/Retailer'
+import { HttpbaseService } from './shared/httpbase.service'
 
 @Component({
   selector: 'my-app',
@@ -6,5 +11,31 @@ import { Component } from '@angular/core';
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  name = 'Angular';
+    name = 'Angular';
+    objretailer: Retailer 
+
+    constructor(private retailerservice: RetailerService, private commonservice: CommonService, private appini: AppintializorService, private httpsvc: HttpbaseService)
+    {
+        debugger
+    }
+
+    ngOnInit()
+    {
+        debugger
+        this.appini.loadServerConfig().then((data: any) => {
+            this.appini.baseUrl = data.BaseUrl;
+            this.httpsvc.baseUrl = data.BaseUrl;
+            this.getretailer();
+        });
+    }
+
+    getretailer()
+    {
+        this.retailerservice.getretailer().subscribe((data: any) => {
+            this.objretailer = data;
+            if (this.objretailer != null)
+                this.commonservice.setRetailer(this.objretailer);
+        });
+    }
+
 }

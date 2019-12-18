@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-
+import { Component } from '@angular/core';
+import { CommonService } from '../shared/common.service';
 
 declare var $: any;
 
@@ -12,8 +12,11 @@ declare var $: any;
 })
 export class ProductTypeComponent  {
     name:string = 'Product Type'; 
-    
-   
+
+    constructor(private commonsvc: CommonService)
+    {
+        
+    }
   
     ngOnInit() {
      
