@@ -19,6 +19,7 @@ export class ProductTypeComponent {
     newtype: ProductType
     retailId: number;
 
+
     constructor(private commonsvc: CommonService, private prodtypesvc: ProdtypeService, private toastr: ToastrService) {
         this.newtype = new ProductType;
     }
@@ -36,6 +37,7 @@ export class ProductTypeComponent {
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this)
             debugger
+          
             this.name = 'Add ProductType';
             modal.find('.modal-title').text(this.name)
             // modal.find('.modal-body input').val(recipient)
