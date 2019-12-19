@@ -14,7 +14,7 @@ export class RetailerService {
 
     getretailer()
     {
-        debugger
+        
         return this.http.getJson("api/retailer/getr");
     }
     

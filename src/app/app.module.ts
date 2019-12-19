@@ -17,15 +17,17 @@ import { TaxComponent } from './UserManagement/taxcenter';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsComponent } from './UserManagement/products';
 import {MatTableModule} from "@angular/material";
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+//import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule],
+    imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,
-    ProductsView,BrandComponent,TaxComponent],
+      ProductsView, BrandComponent, TaxComponent],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

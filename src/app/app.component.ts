@@ -21,7 +21,7 @@ export class AppComponent  {
 
     ngOnInit()
     {
-        debugger
+        
         this.appini.loadServerConfig().then((data: any) => {
             this.appini.baseUrl = data.BaseUrl;
             this.httpsvc.baseUrl = data.BaseUrl;

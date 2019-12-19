@@ -14,7 +14,7 @@ export class AppintializorService {
     }
 
     loadServerConfig() {
-        debugger
+        
         return this.http.get(this.configUrl)
             .toPromise();
     }
