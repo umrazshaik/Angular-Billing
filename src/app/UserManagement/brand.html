@@ -2,7 +2,7 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-center">List of Brands</h6>
-      <button  type="button" class="btn btn-primary btn-sm" style="float: right;" (click)="openpopup()">Add Brand</button>
+      <button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" (click)="createBrand()" data-keyboard="false">Add Brand</button>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -21,8 +21,8 @@
                     <td>{{brand.BrandName}}</td>
                     <td>{{brand.Status}}</td>
                     <td>
-                      <a (click)="editBrand(brand)" href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal" data-whatever="Edit Brand" data-backdrop="static" data-keyboard="false" >Edit</a>|
-                      <a (click)="deleteBrand(brand)" href="javascript:void(0)">Delte</a>
+                      <button class="btn" data-toggle="modal"  data-target="#exampleModal" [id]="brand.BrandId" data-backdrop="static" data-keyboard="false"(click)="editBrand(brand);"> <span class="fa fa-flag fa-wrench"></span> </button>
+                      <button class="btn"> <span class="fa fa-flag fa-trash" (click)="deleteBrand(i,brand);"></span></button>
                     </td>
                   </tr>                  
                 </tbody>
@@ -34,25 +34,25 @@
   </div>
 
 <!-- /.container-fluid -->
-<div class="modal fade" id="exampleModal" [popupshow]="popupshowFlag" tabindex="-1">
+<div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <div class="modal-header ">
-      <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">New message</h5>
-      <button type="button" class="close" (click)="popupshowFlag='false'" aria-label="Close">
+      <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #someForm="ngForm" (keydown.enter)="submit(actiontype,newBrand)" id="fid">
     <div class="modal-body">     
           <div class="form-group">
               <label for="exampleInputEmail1">Product Brand</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newBrand.BrandName" name="BrandName" aria-describedby="productname" placeholder="Enter Product Brand">
+              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newBrand.BrandName" name="BrandName" aria-describedby="productname" placeholder="Enter Brand Name">
             </div>      
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="popupshowFlag='false'" >Close</button>
-      <button type="button" (click)="addBrand()" class="btn btn-primary" data-dismiss="modal" >Add</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closepopup();">Close</button>
+      <button type="button" class="btn btn-primary" (click)="submit(actiontype,newBrand)" data-dismiss="modal">Submit</button>
     </div>
   </form>
   </div>

@@ -9,6 +9,7 @@ import { ProductTypeComponent } from './UserManagement/producttype';
 import { ProductsView } from './UserManagement/productsview';
 import { BrandComponent } from './UserManagement/brand';
 import { TaxComponent } from './UserManagement/taxcenter';
+import { CartsComponent } from './UserManagement/carts';
 
 
 const routes: Routes = [
@@ -41,7 +42,12 @@ const routes: Routes = [
           {
             path: 'productview',
             component: ProductsView
-          }]
+          },
+          {
+            path: 'carts',
+            component: CartsComponent
+          }
+        ]
       }
     ]
   },

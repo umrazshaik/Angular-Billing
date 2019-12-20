@@ -1,0 +1,47 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-center">List of Carts</h6>
+    <!-- <button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal"
+      data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" (click)="createCart()"
+      data-keyboard="false">Add Brand</button> -->
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="escalation">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>            
+            <th scope="col">CGST</th>
+            <th scope="col">SGST</th> 
+            <th scope="col">TaxAmount</th>           
+            <th scope="col">TotalPrice</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cart of carts; let i=index" [attr.data-index]="i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{cart.ProductName}}</td>
+            <td>{{cart.Quantity}}</td>
+            <td>{{cart.TaxAmount}}</td>
+            <td>{{cart.CGST}}</td>
+            <td>{{cart.SGST}}</td>
+            <td>{{cart.Price}}</td>
+            <td>{{cart.TotalPrice}}</td>
+            <td>
+              <!-- <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="cart.CartId"
+                data-backdrop="static" data-keyboard="false" (click)="editCart(cart);"> <span
+                  class="fa fa-flag fa-wrench"></span> </button> -->
+              <button class="btn"> <span class="fa fa-flag fa-trash" (click)="deleteCart(i,cart);"></span></button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+</div>
