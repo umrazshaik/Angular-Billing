@@ -3,9 +3,11 @@ import { CommonService } from '../shared/common.service';
 import { ProductsService } from '../Services/products.service';
 import { ProdtypeService } from '../Services/prodtype.service';
 import { BrandsService } from '../Services/brands.service';
+import { CartsService } from '../Services/carts.service';
 import { Products } from '../model/products';
 import { ProductType } from '../model/productType';
 import { Brands } from '../model/brands';
+import { Carts } from '../model/carts';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -29,7 +31,7 @@ export class ProductsView {
   selectedbrand: Brands;
   selectedtype: ProductType;
 
-  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private toastr: ToastrService) {
+  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService,private csvc:CartsService , private toastr: ToastrService) {
     this.newobj = new Products;
     this.selectedbrand = new Brands;
     this.selectedtype = new ProductType;
@@ -149,5 +151,25 @@ export class ProductsView {
         {
             this.updateType(prod);
         }
+    }
+
+    addtocart(prod:Products)
+    {
+      debugger
+      let cart=new Carts();
+      cart.ProductId=prod.Id;
+      cart.Quantity=1;
+      cart.RetailerId=this.retailId;
+      this.csvc.addCart(cart).subscribe((data:any)=>{
+        if(data>0)
+        {
+          this.toastr.success('added to cart');
+        }
+        else
+        {
+          this.toastr.error('not added');
+        }
+      });
+      
     }
 }
