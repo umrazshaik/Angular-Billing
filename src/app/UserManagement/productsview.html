@@ -7,75 +7,98 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="escalation">
                 <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Display Name</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Actual Price</th>
+                        <th scope="col">Selling Price</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Edit/Delete</th>
+                        <!--<th scope="col">Delete</th>-->
+
+                    </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                    <tr *ngFor="let prod of prods; let i=index" [attr.data-index]="i">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{prod.Name}}</td>
+                        <td>{{prod.DisplayName}}</td>
+                        <td>{{prod.Code}}</td>
+                        <td>{{prod.TypeName}}</td>
+                        <td>{{prod.BrandName}}</td>
+                        <td>{{prod.ActualCost}}</td>
+                        <td>{{prod.SellingCost}}</td>
+                        <td>{{prod.Status}}</td>
+                        <td>
+                            <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id" data-backdrop="static" data-keyboard="false" (click)="edit(prod);"> <span class="fa fa-flag fa-wrench"></span> </button>
+                            <button class="btn"> <span class="fa fa-flag fa-trash" (click)="delete((i),prod);"></span></button>
+                        </td>
+                    </tr>
                 </tbody>
-              </table>
+            </table>
           </div>
     </div>
   </div>
 
 <!-- /.container-fluid -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
+<div class="modal-dialog modal-xl" role="document">
   <div class="modal-content">
     <div class="modal-header ">
-      <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">New message</h5>
+      <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form>
-          <div class="form-group">
-              <label for="exampleInputEmail1">Product Name</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="productname" placeholder="Enter Product Name">
-              <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+        <div class="container-fluid">
+      <form id="fid">
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.Name" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Name">
             </div>
-            <div class="form-group">
-            <select class="form-control">
-                <option>Select</option>
-                <option>Mobile</option>
-                <option>Charger</option>
-                <option>Cable</option>
-                <option>Headphones</option>
-                <option>EarPhones</option>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">Display Name</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.DisplayName" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Display Name">
+          </div>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Code</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.Code" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Code">
+          </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+                <label for="exampleInputEmail1">Select Type</label>
+            <select class="form-control" (change)="selecttype($event.target.value)">
+                <option value="0">Select</option>
+                <option *ngFor="let type of ptypes"  value={{type.TypeId}}>{{type.Name}}</option>
               </select>
             </div>
-             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Product description</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-              </div>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Select Brand</label>
+              <select class="form-control" (change)="selectbrand($event.target.value)">
+                  <option value="0">Select</option>
+                  <option *ngFor="let brand of brands"  value={{brand.BrandId}}>{{brand.BrandName}}</option>
+              </select>
+          </div>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">Selling Price</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.SellingCost" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Selling price">
+          </div>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Actual Price</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.ActualCost" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Actual price">
+          </div>
       </form>
+      </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closepopup();">Close</button>
+        <button type="button" class="btn btn-primary" (click)="submit(actiontype,newobj)" data-dismiss="modal">Submit</button>
     </div>
   </div>
 </div>

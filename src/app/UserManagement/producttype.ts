@@ -27,38 +27,7 @@ export class ProductTypeComponent {
     }
 
     ngOnInit() {
-
-        var self=this;
-
         this.getTypes();
-
-        // $('#exampleModal').on('show.bs.modal', function (event) {
-        //     var button = $(event.relatedTarget) // Button that triggered the modal
-        //     var recipient = button.data('whatever') // Extract info from data-* attributes
-        //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        //     var modal = $(this)
-        //     debugger
-        //   if(button[0].className=="btn")
-        //   {
-        //     this.name = 'Update ProductType';
-        //   }
-        //   else
-        //   {
-        //     this.name = 'Add ProductType';
-        //   }
-        //   if(button[0].id!=undefined || null)
-        //   {
-        //       let id=button[0].id;
-        //   self.bindpopupdata(id);
-
-          
-        //   }
-
-        //     modal.find('.modal-title').text(this.name)
-        //     // modal.find('.modal-body input').val(recipient)
-        // })
-
     }
 
     bindpopupdata(id: any)
@@ -129,14 +98,6 @@ export class ProductTypeComponent {
         this.prodtypesvc.deleteProductType(pt.TypeId).subscribe((data: any) => {
             if (data > 0)
             {
-                // if(index==1)
-                // {
-                //     this.types.splice(index,1);
-                // }
-                // else
-                // {
-                //     this.types.splice(index-1,1);
-                // }
                 this.types.splice(index,1);
                 this.toastr.success('deleted');
                 this.getTypes();
