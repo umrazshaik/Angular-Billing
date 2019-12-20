@@ -1,4 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonService } from '../shared/common.service';
+import { ProductsService } from '../Services/products.service';
+import { ProdtypeService } from '../Services/prodtype.service';
+import { BrandsService } from '../Services/brands.service';
+import { Products } from '../model/products';
+import { ProductType } from '../model/productType';
+import { Brands } from '../model/brands';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -10,22 +18,136 @@ declare var $: any;
 @Component({
   templateUrl: './productsview.html',
 })
-export class ProductsView  {
-  name:string = 'Add Product'; 
-  
-  ngOnInit() {
-    
+export class ProductsView {
+  prods: Array<Products>;
+  ptypes: Array<ProductType>;
+  brands: Array<Brands>;
+  newobj: Products;
+  retailId: number;
+  header: string;
+  actiontype: number;
+  selectedbrand: Brands;
+  selectedtype: ProductType;
 
-    $('#exampleModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
-      var recipient = button.data('whatever') // Extract info from data-* attributes
-      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-      var modal = $(this)
-       
-      this.name='Add Product';
-      modal.find('.modal-title').text(this.name)
-      // modal.find('.modal-body input').val(recipient)
-    })
+  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private toastr: ToastrService) {
+    this.newobj = new Products;
+    this.selectedbrand = new Brands;
+    this.selectedtype = new ProductType;
+    this.header = "Add"; this.actiontype = 1;
   }
+
+  ngOnInit() {
+    this.loaddependencies();
+  }
+  getProducts() {
+    this.retailId = this.commonsvc.retaileR.RetailId;
+    return this.prodsvc.getProducts(this.retailId).subscribe((data: any) => {
+      this.prods = data;
+      console.log(this.prods);
+    });
+  }
+  loaddependencies() {
+    this.getProducts();
+    this.getptypes();
+    this.getbrands();
+
+  }
+  getptypes() {
+    this.retailId = this.commonsvc.retaileR.RetailId;
+    return this.ptypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
+      this.ptypes = data;
+    });
+  }
+  getbrands() {
+    this.retailId = this.commonsvc.retaileR.RetailId;
+    this.bsvc.getBrands(this.retailId).subscribe((data: any) => {
+      this.brands = data;
+    });
+  }
+  edit(objnew: Products) {
+    debugger
+    this.header = "Update";
+    this.newobj = objnew;
+    this.actiontype = 2;
+    console.log(this.newobj);
+  }
+  closepopup() {
+    debugger
+    $("#fid").trigger("reset");
+    this.header = "Add";
+    this.actiontype = 1;
+  }
+  addp(newp: Products) {
+
+    newp.RetailId = this.retailId;
+    newp.Status = true;
+    newp.CreatedBy = "admin";
+    newp.BrandId=this.selectedbrand.BrandId;
+    newp.TypeId=this.selectedtype.TypeId;
+    this.prodsvc.addProduct(newp).subscribe((data: any) => {
+      if (data > 0) {
+        //this.types.push(newtype);
+        this.newobj = new Products();
+        this.toastr.success('Added');
+        this.selectedbrand=new Brands;
+        this.selectedtype=new ProductType
+        this.getProducts();
+      }
+      else {
+        this.toastr.error('failed');
+      }
+    });
+  }
+  updateType(prod: Products) {
+    prod.RetailId = this.retailId;
+    this.prodsvc.updateProduct(prod).subscribe((data: any) => {
+        if (data > 0)
+        {
+            this.actiontype=1;
+            this.toastr.success('Updated');
+            this.header="Add";
+            this.getProducts();
+        }
+        else
+        {
+            this.toastr.success('not Updated');
+        }
+    });
+}
+  selecttype(filterVal: any) {
+    debugger
+    if (filterVal == "0") {
+
+    }
+    else {
+      let stype = this.ptypes.filter((item) => item.TypeId == filterVal);
+      if (stype != null || undefined) {
+        this.selectedtype = stype[0];
+      }
+    }
+  }
+  selectbrand(filterVal: any) {
+    debugger
+    if (filterVal == "0") {
+
+    }
+    else {
+      let sbrand = this.brands.filter((item) => item.BrandId == filterVal);
+      if (sbrand != null || undefined) {
+        this.selectedbrand = sbrand[0];
+      }
+    }
+  }
+  submit(type:number,prod:Products)
+    {
+        debugger
+        if(type==1)
+        {
+            this.addp(prod);
+        }
+        else
+        {
+            this.updateType(prod);
+        }
+    }
 }
