@@ -18,9 +18,9 @@
                         <th scope="col">Brand</th>
                         <th scope="col">Actual Price</th>
                         <th scope="col">Selling Price</th>
-                        <th scope="col">Status</th>
+                        <!-- <th scope="col">Status</th> -->
                         <th scope="col">Edit/Delete</th>
-                        <!--<th scope="col">Delete</th>-->
+                        <th scope="col">Add 2 Cart</th>
 
                     </tr>
                 </thead>
@@ -34,10 +34,14 @@
                         <td>{{prod.BrandName}}</td>
                         <td>{{prod.ActualCost}}</td>
                         <td>{{prod.SellingCost}}</td>
-                        <td>{{prod.Status}}</td>
+                        <!-- <td>{{prod.Status}}</td> -->
                         <td>
                             <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id" data-backdrop="static" data-keyboard="false" (click)="edit(prod);"> <span class="fa fa-flag fa-wrench"></span> </button>
                             <button class="btn"> <span class="fa fa-flag fa-trash" (click)="delete((i),prod);"></span></button>
+                        </td>
+                        <td>
+                            <button class="btn"> <span class="fa fa-shopping-cart" (click)="addtocart(prod);"></span> </button>
+                           
                         </td>
                     </tr>
                 </tbody>
