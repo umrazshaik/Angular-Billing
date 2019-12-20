@@ -28,10 +28,11 @@
               "src/app/css/sb-admin-2.min.css",
               "src/app/vendor/datatables/dataTables.bootstrap4.min.css",
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              //"node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+              
               "node_modules/ngx-toastr/toastr.css",
-              "src/app/vendor/bootstrap/scss/bootstrap.scss"
-              //"node_modules/bootstrap/bootstrap.scss"
+              "src/app/vendor/bootstrap/scss/bootstrap.scss",
+            
+                "node_modules/font-awesome/css/font-awesome.min.css"  
             ],
             "scripts": [
               
@@ -44,7 +45,7 @@
               "src/app/js/demo/chart-pie-demo.js",
               "src/app/vendor/datatables/jquery.dataTables.min.js",
               "src/app/vendor/datatables/dataTables.bootstrap4.min.js",
-              "src/app/js/demo/datatables-demo.js",
+              "src/app/js/demo/datatables-demo.js"
               //"node_modules/ng2-toastr/bundles/ng2-toastr.min.js"
             ]
           },

@@ -20,7 +20,7 @@ export class ProdtypeService {
     }
 
     updateProductType(prodtype: ProductType) {
-        return this.http.postJson(prodtype, "api/productType/updatett");
+        return this.http.postJson(prodtype, "api/productType/updatet");
     }
 
     deleteProductType(typeId: number) {
