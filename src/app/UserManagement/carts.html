@@ -1,9 +1,11 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-center">List of Carts</h6>
-    <!-- <button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal"
-      data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" (click)="createCart()"
-      data-keyboard="false">Add Brand</button> -->
+    <!-- <button type="button" class="btn btn-info btn-sm btn-space" style="float: right;">Cash</button> -->
+    
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;">Online</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;">Card</button>    
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;">Cash</button>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -26,10 +28,10 @@
             <th scope="row">{{i+1}}</th>
             <td>{{cart.ProductName}}</td>
             <td>{{cart.Quantity}}</td>
-            <td>{{cart.TaxAmount}}</td>
+            <td>{{cart.Price}}</td>            
             <td>{{cart.CGST}}</td>
             <td>{{cart.SGST}}</td>
-            <td>{{cart.Price}}</td>
+            <td>{{cart.TaxAmount}}</td>            
             <td>{{cart.TotalPrice}}</td>
             <td>
               <!-- <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="cart.CartId"

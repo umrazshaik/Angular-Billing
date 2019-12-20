@@ -8,18 +8,23 @@ declare var $: any;
 
 @Component({
   templateUrl: './carts.html',
+  styles: [`
+  .btn-space {
+    margin-right: 5px;
+  }
+`]
 })
 export class CartsComponent {
   name: string = 'Carts';
   retailId = 0;
   carts: Array<Carts>;
-  newCart: Carts;  
+  newCart: Carts;
   actiontype = 0;
 
 
   constructor(private commonsvc: CommonService, private castssvc: CartsService, private toastr: ToastrService) {
     this.newCart = new Carts();
-    this.carts = [];    
+    this.carts = [];
     this.actiontype = 1;
     this.retailId = this.commonsvc.retaileR.RetailId;
   }
@@ -38,15 +43,13 @@ export class CartsComponent {
   deleteCart(index: number, cart: Carts) {
     debugger
     this.castssvc.deleteCart(cart.CartId).subscribe((data: any) => {
-      if (data > 0)
-      {                
-          this.carts.splice(index,1);
-          this.toastr.success('deleted');
-          //this.getCarts();
+      if (data > 0) {
+        this.carts.splice(index, 1);
+        this.toastr.success('deleted');
+        //this.getCarts();
       }
-      else
-      {
-      this.toastr.error('failed');
+      else {
+        this.toastr.error('failed');
       }
     });
   }
