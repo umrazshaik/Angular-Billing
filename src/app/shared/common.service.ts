@@ -13,6 +13,9 @@ export class CommonService {
     retaileR: Retailer
 
     constructor() {
+
+      this.retaileR=new Retailer();
+      this.retaileR.RetailId=1;
        
     }
 

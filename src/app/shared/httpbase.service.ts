@@ -29,6 +29,7 @@ export class HttpbaseService {
     };
 
     postJson(postObject: any, url: string) {
+        debugger
         return this.httpClient.post(this.baseUrl + url, postObject, this.requestOptionsForUpload);
     }
 
