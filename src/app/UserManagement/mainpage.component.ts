@@ -12,7 +12,7 @@ export class MainPageComponent  {
 
   redirect()
   {
-    debugger;
+     ;
     this.router.navigate(['mainpage/products']);
   }
 }

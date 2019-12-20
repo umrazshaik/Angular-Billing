@@ -20,6 +20,7 @@ import {MatTableModule} from "@angular/material";
 import { MatPaginatorModule } from '@angular/material/paginator';
 //import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { ToastrModule } from 'ngx-toastr';
+import { PopupshowDirective } from './shared/popupshow.directive';
 
 
 
@@ -27,7 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 @NgModule({
     imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [ AppComponent, HelloComponent,DashBoardComponent,LoginComponent,ProductsComponent ,MainPageComponent,ProductTypeComponent,
-      ProductsView, BrandComponent, TaxComponent],
+      ProductsView, BrandComponent, TaxComponent, PopupshowDirective],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

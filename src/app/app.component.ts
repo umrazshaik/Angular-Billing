@@ -15,8 +15,7 @@ export class AppComponent  {
     objretailer: Retailer 
 
     constructor(private retailerservice: RetailerService, private commonservice: CommonService, private appini: AppintializorService, private httpsvc: HttpbaseService)
-    {
-        debugger
+    {        
     }
 
     ngOnInit()

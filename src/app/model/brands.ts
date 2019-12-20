@@ -2,17 +2,17 @@
 {
     public BrandId: number
 
-    public BrandName: string
+    public BrandName: string//
 
-    public RetailId: number
+    public RetailId: number//
 
     public RetailName: string
 
-    public Status: boolean
+    public Status: boolean//
 
-    public CreatedBy: string
+    public CreatedBy: string//
 
-    public UpdatedBy: string
+    public UpdatedBy: string//
 
     public CreatedDate: Date
 

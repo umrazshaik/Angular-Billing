@@ -9,15 +9,16 @@ import { Retailer } from '../model/Retailer'
 export class CommonService {
     //private retailer = new BehaviorSubject<Retailer>(null);
     //retaileR = this.retailer.asObservable();
-
-    retaileR: Retailer
+    createdBy = 'admin';
+    retaileR: Retailer;
 
     constructor() {
-       
+      this.retaileR = new Retailer();
+      this.retaileR.RetailId=1;
     }
 
     setRetailer(objretailer: Retailer) {
-        debugger
+         
         this.retaileR = objretailer;
     }
 }

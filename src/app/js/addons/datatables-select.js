@@ -56,7 +56,7 @@
 var DataTable = $.fn.dataTable;
 
 
-// Version information for debugger
+// Version information for  
 DataTable.select = {};
 
 DataTable.select.version = '1.2.7';

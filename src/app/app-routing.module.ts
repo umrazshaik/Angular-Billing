@@ -12,18 +12,44 @@ import { TaxComponent } from './UserManagement/taxcenter';
 
 
 const routes: Routes = [
-  {path:'dashboard',component:DashBoardComponent},
+  // { path: 'dashboard', component: DashBoardComponent },
   // {path:'products',component:ProductsComponent,outlet:'mainpage'},
-  {path:'mainpage',component:MainPageComponent,children:[{path:'',component:DashBoardComponent},{path:'tax',component:TaxComponent},
-  {path:'products',component:ProductsComponent,children:[{path:'',component:ProductTypeComponent},
-  {path:'brand',component:BrandComponent},
-    {path:'productview',component:ProductsView}]}
-]},
-  {path:'',component:LoginComponent}
+  {
+    path: 'mainpage',
+    component: MainPageComponent,
+    children: [
+      {
+        path: '',
+        component: DashBoardComponent,
+      },
+      {
+        path: 'tax',
+        component: TaxComponent
+      },
+      {
+        path: 'products',
+        component: ProductsComponent,
+        children: [
+          {
+            path: '',
+            component: ProductTypeComponent
+          },
+          {
+            path: 'brand',
+            component: BrandComponent
+          },
+          {
+            path: 'productview',
+            component: ProductsView
+          }]
+      }
+    ]
+  },
+  { path: '', component: LoginComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false})],
-  exports: [RouterModule]   
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

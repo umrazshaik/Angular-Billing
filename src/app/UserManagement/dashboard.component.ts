@@ -14,7 +14,7 @@ export class DashBoardComponent {
 
   redirect()
   {
-    debugger;
+     ;
     this.router.navigate(['/products']);
   }
 

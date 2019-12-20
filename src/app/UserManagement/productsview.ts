@@ -22,7 +22,7 @@ export class ProductsView  {
       // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
       // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       var modal = $(this)
-      debugger
+       
       this.name='Add Product';
       modal.find('.modal-title').text(this.name)
       // modal.find('.modal-body input').val(recipient)

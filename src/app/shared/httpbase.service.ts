@@ -45,7 +45,7 @@ export class HttpbaseService {
     }
 
     getJson(url) {
-        debugger
+         
         return this.httpClient.get(this.baseUrl + url, this.requestOptions);
     }
 
