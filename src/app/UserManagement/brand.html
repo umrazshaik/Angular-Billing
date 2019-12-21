@@ -43,16 +43,16 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <form (ngSubmit)="onSubmit()" #someForm="ngForm" (keydown.enter)="submit(actiontype,newBrand)" id="fid">
+    <form (ngSubmit)="fm.form.valid && submit(actiontype,newBrand)" #fm="ngForm" (keydown.enter)="submit(actiontype,newBrand)">
     <div class="modal-body">     
           <div class="form-group">
-              <label for="exampleInputEmail1">Product Brand</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newBrand.BrandName" name="BrandName" aria-describedby="productname" placeholder="Enter Brand Name">
+              <label for="BrandName">Product Brand</label>
+              <input type="text" class="form-control" id="BrandName" [(ngModel)]="newBrand.BrandName" pattern='[A-Za-z\\s]*' name="BrandName" aria-describedby="productname" placeholder="Enter Brand Name"  #BrandName="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && BrandName.invalid }" required />              
             </div>      
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closepopup();">Close</button>
-      <button type="button" class="btn btn-primary" (click)="submit(actiontype,newBrand)" data-dismiss="modal">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="closepopup();">Close</button>
+      <button type="submit" class="btn btn-primary" >Submit</button>
     </div>
   </form>
   </div>

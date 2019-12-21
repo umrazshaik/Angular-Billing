@@ -36,16 +36,7 @@ export class BrandComponent {
     });
   }
 
-  closepopup() {
-    debugger    
-    this.header = "Add";
-    this.actiontype = 1;
-  }
-  enterKeyEvent(event: any){
-    console.log(event);
-
-  }
-  createBrand(){
+  createBrand(){    
     this.newBrand=new Brands();
     this.newBrand.BrandName='';
     this.header = "Add Brand";
@@ -105,11 +96,10 @@ export class BrandComponent {
     });
   }
 
-  onSubmit() {
-
-  }
+  //pop up controlling code here
   submit(type: number, brand: Brands) {
-    debugger
+    $('#exampleModal').modal('hide')
+    console.log('submit', brand);
     if (type == 1) {
       this.addBrand();
     }
@@ -117,5 +107,12 @@ export class BrandComponent {
       this.updateBrand(brand);
     }
   }
+
+  closepopup() {
+    $('#exampleModal').modal('hide')
+    this.header = "Add";
+    this.actiontype = 1;
+  }
+  
 
 }
