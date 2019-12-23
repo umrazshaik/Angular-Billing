@@ -10,6 +10,7 @@ import { ProductsView } from './UserManagement/productsview';
 import { BrandComponent } from './UserManagement/brand';
 import { TaxComponent } from './UserManagement/taxcenter';
 import { CartsComponent } from './UserManagement/carts';
+import { BillingsComponent } from './views/billings.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'tax',
         component: TaxComponent
+      },
+      {
+        path:'billing',
+        component:BillingsComponent
       },
       {
         path: 'products',

@@ -11,9 +11,9 @@
 
     public UserName: string
 
-    public CustomerId: number
-
     public CustomerName: string
+
+    public CustMobile:number;
 
     public BilledAmount: number
 

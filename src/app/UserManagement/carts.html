@@ -1,11 +1,23 @@
+<style>
+ .form-group > [class*='.form-group .col-md-']{
+   padding-top: 10px;
+ }
+</style>
+
+
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-center">List of Carts</h6>
-    <!-- <button type="button" class="btn btn-info btn-sm btn-space" style="float: right;">Cash</button> -->
-    
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;">Online</button>
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;">Card</button>    
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;">Cash</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="makepayment(3,newobj)">Online</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="makepayment(2,newobj)">Card</button>    
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="makepayment(1,newobj)">Cash</button>
+    <form id="fid">
+      <div class="form-group col-xs-12 col-xl-4 col-md-12  pull-right">
+        <input type="number" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.BillInfo.CustMobile" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Mobile">
+    </div>
+     <div class="form-group col-xs-12 col-xl-4 col-md-12  pull-right">
+          <input type="text" class="form-control" id="exampleInputEmail1" [(ngModel)]="newobj.BillInfo.CustomerName" [ngModelOptions]="{standalone:true}" aria-describedby="productname" placeholder="Customer Name">
+      </div>
+  </form>
   </div>
   <div class="card-body">
     <div class="table-responsive">

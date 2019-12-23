@@ -22,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ToastrModule } from 'ngx-toastr';
 import { PopupshowDirective } from './shared/popupshow.directive';
 import { CartsComponent } from './UserManagement/carts';
+import { BillingsComponent } from './views/billings.component';
 
 
 
@@ -29,7 +30,7 @@ import { CartsComponent } from './UserManagement/carts';
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [AppComponent, HelloComponent, DashBoardComponent, LoginComponent, ProductsComponent, MainPageComponent, ProductTypeComponent,
-    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent],
+    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,7 +5,7 @@ import { BillingTaxInfo } from './billingTaxInfo'
 export class Bill {
     public BillInfo: BillingInfo
 
-    public BillProducts: BillingProducts
+    public BillProducts: BillingProducts[]
 
     public BillTaxInfo: BillingTaxInfo
 }

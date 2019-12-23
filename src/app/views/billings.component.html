@@ -1,0 +1,41 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-center">Billings</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="escalation">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Bill#</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Billed Amt.</th>
+                        <th scope="col">Paid Amt.</th>
+                        <th scope="col">Tax Amt.</th>
+                        <th scope="col">Pay. Mode </th>
+                        <th scope="col">View</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let bill of billings; let i=index" [attr.data-index]="i">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{bill.BillNo}}</td>
+                        <td>{{bill.CustomerName}}</td>
+                        <td>{{bill.BilledAmount}}</td>
+                        <td>{{bill.PaidAmount}}</td>
+                        <td>{{bill.TaxAmount}}</td>
+                        <td>{{bill.PaymentType}}</td>
+                        <td>
+                            <button class="btn"> <span class="fa fa-shopping-cart" (click)="viewbll(bill);"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- /.container-fluid -->

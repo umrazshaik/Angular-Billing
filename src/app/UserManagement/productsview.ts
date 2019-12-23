@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
 import { CommonService } from '../shared/common.service';
 import { ProductsService } from '../Services/products.service';
 import { ProdtypeService } from '../Services/prodtype.service';
@@ -19,6 +19,7 @@ declare var $: any;
 
 @Component({
   templateUrl: './productsview.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsView {
   prods: Array<Products>;
@@ -31,8 +32,8 @@ export class ProductsView {
   selectedbrand: Brands;
   selectedtype: ProductType;
 
-  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService,private csvc:CartsService , private toastr: ToastrService) {
-    this.newobj = new Products;
+  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService,private csvc:CartsService , private toastr: ToastrService,private cd: ChangeDetectorRef) {
+    this.newobj = new Products; this.newobj.Id=0;
     this.selectedbrand = new Brands;
     this.selectedtype = new ProductType;
     this.header = "Add"; this.actiontype = 1;
@@ -69,7 +70,10 @@ export class ProductsView {
   edit(objnew: Products) {
     debugger
     this.header = "Update";
+    this.newobj=new Products();
+
     this.newobj = objnew;
+    this.cd.detectChanges();
     this.actiontype = 2;
     console.log(this.newobj);
   }
