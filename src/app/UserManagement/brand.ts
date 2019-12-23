@@ -23,13 +23,14 @@ export class BrandComponent {
     this.brands = [];
     this.header = "Add";
     this.actiontype = 1;
-    this.retailId = this.commonsvc.retaileR.RetailId;
+    //this.retailId = this.commonsvc.retaileR.RetailId;
   }
   ngOnInit() {
     this.getBrands();
   }
 
   getBrands() {
+    this.retailId = this.commonsvc.getretailId();
     this.brandsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
       console.log('brandsvc', data);

@@ -8,6 +8,9 @@
     public AlternateMob: number;
     public PinCode: number;
     public City: string;
+    public ShopNo : string;
+    public Building:string;
+    public Area : string;
     public District: string;
     public State: string;
     public Status: boolean;

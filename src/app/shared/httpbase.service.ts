@@ -15,8 +15,8 @@ export class HttpbaseService {
         'Access-Control-Allow-Headers': 'Content-Type',
     }
     constructor(private httpClient: HttpClient, private appInitializerService: AppintializorService) {
-        //this.baseUrl = appInitializerService.baseUrl;
-        //console.log(this.baseUrl);
+        this.baseUrl = appInitializerService.baseUrl;
+        console.log(this.baseUrl);
     }
 
     requestOptions: any = {

@@ -2,7 +2,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-center">List of Products</h6>
+      <h6 class="m-0 font-weight-bold text-center">List of Products {{prods.length}}</h6>
       <button  type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">Add Product</button>
     </div>
     <div class="card-body">
@@ -18,7 +18,6 @@
                         <th scope="col">Brand</th>
                         <th scope="col">Actual Price</th>
                         <th scope="col">Selling Price</th>
-                        <!-- <th scope="col">Status</th> -->
                         <th scope="col">Edit/Delete</th>
                         <th scope="col">Add 2 Cart</th>
 
@@ -65,15 +64,15 @@
       <form id="fid">
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Name</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.Name"  aria-describedby="name" placeholder="Name">
+              <input type="text" class="form-control"  [(ngModel)]="newobj.Name" name="name" placeholder="Name">
             </div>
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
               <label for="exampleInputEmail1">Display Name</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.DisplayName" [ngModelOptions]="{standalone:true}" aria-describedby="dn" placeholder="Display Name">
+              <input type="text" class="form-control"  [(ngModel)]="newobj.DisplayName" name="display name" placeholder="Display Name">
           </div>
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Code</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.Code" [ngModelOptions]="{standalone:true}" aria-describedby="code" placeholder="Code">
+              <input type="text" class="form-control"  [(ngModel)]="newobj.Code" name="code" placeholder="Code">
           </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right" *ngIf="newobj.Id==0">
                 <label for="exampleInputEmail1">Select Type</label>
@@ -91,25 +90,33 @@
           </div>
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left" *ngIf="newobj.Id==0">
               <label for="exampleInputEmail1">Select Brand</label>
-              <select class="form-control" (change)="selectbrand($event.target.value)">
+              <select class="form-control" (change)="selectbrand($event.target.value)" name="type">
                   <option value="0">Select</option>
                   <option *ngFor="let brand of brands"  value={{brand.BrandId}}>{{brand.BrandName}}</option>
               </select>
           </div>
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left" *ngIf="newobj.Id>0">
             <label for="exampleInputEmail1">Select Brand</label>
-            <select class="form-control" [(ngModel)]="newobj.BrandId" [ngModelOptions]="{standalone:true}">
+            <select class="form-control" [(ngModel)]="newobj.BrandId" name="brand" [ngModelOptions]="{standalone:true}">
                 <option value="0">Select</option>
                 <option *ngFor="let brand of brands"   value={{brand.BrandId}}  >{{brand.BrandName}}</option>
             </select>
         </div>
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
               <label for="exampleInputEmail1">Selling Price</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.SellingCost" [ngModelOptions]="{standalone:true}" aria-describedby="sp" placeholder="Selling price">
+              <input type="text" class="form-control"  [(ngModel)]="newobj.SellingCost" name="sellingprice" placeholder="Selling price">
           </div>
           <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Actual Price</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.ActualCost" [ngModelOptions]="{standalone:true}" aria-describedby="ap" placeholder="Actual price">
+              <input type="text" class="form-control"  [(ngModel)]="newobj.ActualCost" name="actualprice" placeholder="Actual price">
+          </div>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">CGST%</label>
+              <input type="text" class="form-control"  [(ngModel)]="newobj.CGST" name="cgst" placeholder="Actual price">
+          </div>
+          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">SGST%</label>
+              <input type="text" class="form-control"  [(ngModel)]="newobj.SGST" name="sgst" placeholder="Actual price">
           </div>
       </form>
       </div>

@@ -17,11 +17,11 @@ export class CartsService {
         return this.http.postJson(cart, "api/cart/addc");
     }
 
-    updateCart(cart: Carts) {
+    updateCart(cart: Carts[]) {
         return this.http.postJson(cart, "api/cart/updatec");
     }
 
     deleteCart(cartId: number) {
-        return this.http.delete("api/cart/product?cartId=" + cartId);
+        return this.http.delete("api/cart/deletec?cartId=" + cartId);
     }
 }

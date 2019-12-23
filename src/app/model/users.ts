@@ -7,7 +7,11 @@
 
     public RetailId: number
 
+    public Password:string
+
     public RetailName: string
+
+    public UserType :string
 
     public Status: boolean
 

@@ -32,8 +32,8 @@ export class CartsComponent {
     this.newCart = new Carts();
     this.carts = [];
     this.actiontype = 1;
-    this.retailId = this.commonsvc.retaileR.RetailId;
-    this.newobj = new Bill(); this.newobj.BillInfo=new BillingInfo();
+    //this.retailId = this.commonsvc.retaileR.RetailId;
+    this.newobj = new Bill(); this.newobj.BillInfo = new BillingInfo();
     this.cash = 'Cash'; this.card = 'Card'; this.online = 'Online';
   }
   ngOnInit() {
@@ -41,6 +41,7 @@ export class CartsComponent {
   }
 
   getCarts() {
+    this.retailId = this.commonsvc.getretailId();
     this.castssvc.getCarts(this.retailId).subscribe((data: any) => {
       this.carts = data;
       console.log('castssvc', data);
@@ -88,6 +89,23 @@ export class CartsComponent {
     }
   }
 
+  addplus(objcart: Carts) {
+    objcart.Quantity = objcart.Quantity + 1;
+  }
+
+  updatecarts(){
+    if(this.carts!=null || undefined)
+    {
+      this.castssvc.updateCart(this.carts).subscribe((data:any)=>{
+        if(data>0)
+        {
+          this.toastr.success('updated');
+          this.getCarts();
+        }
+      });
+    }
+  }
+
   cardpayment(bill: Bill) {
     let objbill = this.billinglogic(bill);
 
@@ -110,6 +128,7 @@ export class CartsComponent {
     this.billsvc.addBilling(objbill).subscribe((data: any) => {
       if (data > 0) {
         this.toastr.success('billing success');
+        this.getCarts();
         $("#fid").trigger("reset");
       }
       else {

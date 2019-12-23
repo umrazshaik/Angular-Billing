@@ -11,6 +11,7 @@ import { BrandComponent } from './UserManagement/brand';
 import { TaxComponent } from './UserManagement/taxcenter';
 import { CartsComponent } from './UserManagement/carts';
 import { BillingsComponent } from './views/billings.component';
+import { InvoiceComponent } from './views/invoice.component';
 
 
 const routes: Routes = [
@@ -30,7 +31,13 @@ const routes: Routes = [
       },
       {
         path:'billing',
-        component:BillingsComponent
+        component:BillingsComponent,
+        // children:[
+        //   {
+        //     path:'invoice',
+        //     component:InvoiceComponent
+        //   }
+        // ]
       },
       {
         path: 'products',
@@ -56,7 +63,8 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', component: LoginComponent }
+  { path: '', component: LoginComponent },
+  {path:'invoice',component:InvoiceComponent}
 ];
 
 @NgModule({

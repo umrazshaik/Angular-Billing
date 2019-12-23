@@ -23,6 +23,10 @@
 
     public SellingCost: number
 
+    public  SGST :number
+
+    public  CGST :number
+
     public Status: boolean
 
     public CreatedBy: string

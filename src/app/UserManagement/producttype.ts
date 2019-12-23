@@ -18,13 +18,13 @@ export class ProductTypeComponent {
     types: Array<ProductType>
     newtype: ProductType
     retailId: number;
-    header:string;
-    actiontype:number;
+    header: string;
+    actiontype: number;
 
     constructor(private commonsvc: CommonService, private prodtypesvc: ProdtypeService, private toastr: ToastrService) {
         this.newtype = new ProductType;
-        this.header="Add"; 
-        this.actiontype=1;
+        this.header = "Add";
+        this.actiontype = 1;
     }
 
     ngOnInit() {
@@ -32,26 +32,26 @@ export class ProductTypeComponent {
 
     }
 
-    
+
     getTypes() {
-        this.retailId = this.commonsvc.retaileR.RetailId;
+
+        this.retailId = this.commonsvc.getretailId();
         return this.prodtypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
             this.types = data;
         });
     }
 
-    edittype(newobject:ProductType)
-    {
+    edittype(newobject: ProductType) {
         debugger
-        this.header="Update";
-        this.newtype=newobject;
-        this.actiontype=2;
+        this.header = "Update";
+        this.newtype = newobject;
+        this.actiontype = 2;
         console.log(this.newtype);
     }
 
 
     addType(newtype: ProductType) {
-         
+
         newtype.RetailId = this.retailId;
         newtype.Status = true;
         newtype.CreatedBy = "admin";
@@ -70,55 +70,47 @@ export class ProductTypeComponent {
     updateType(prodtype: ProductType) {
         prodtype.RetailId = this.retailId;
         this.prodtypesvc.updateProductType(prodtype).subscribe((data: any) => {
-            if (data > 0)
-            {
-                this.actiontype=1;
+            if (data > 0) {
+                this.actiontype = 1;
                 this.toastr.success('Updated');
-                this.header="Add";
+                this.header = "Add";
                 this.getTypes();
             }
-            else
-            {
+            else {
                 this.toastr.success('not Updated');
             }
         });
     }
-    deleteType(index: number,pt:ProductType) {
+    deleteType(index: number, pt: ProductType) {
         debugger
         this.prodtypesvc.deleteProductType(pt.TypeId).subscribe((data: any) => {
-            if (data > 0)
-            {                
-                this.types.splice(index,1);
+            if (data > 0) {
+                this.types.splice(index, 1);
                 this.toastr.success('deleted');
                 this.getTypes();
             }
-            else
-            {
-            this.toastr.success('not deleted');
+            else {
+                this.toastr.success('not deleted');
             }
         });
     }
 
     //popup controling code here
-    submit(type:number,prodtype:ProductType)
-    {
+    submit(type: number, prodtype: ProductType) {
         debugger
         $('#exampleModal').modal('hide');
-        if(type==1)
-        {
+        if (type == 1) {
             this.addType(prodtype);
         }
-        else
-        {
+        else {
             this.updateType(prodtype);
         }
     }
 
-    closepopup()
-    {        
+    closepopup() {
         $('#exampleModal').modal('hide');
         $("#fm").trigger("reset");
-        this.header="Add";
-        this.actiontype=1;
+        this.header = "Add";
+        this.actiontype = 1;
     }
 }

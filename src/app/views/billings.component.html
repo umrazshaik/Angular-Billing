@@ -28,7 +28,7 @@
                         <td>{{bill.TaxAmount}}</td>
                         <td>{{bill.PaymentType}}</td>
                         <td>
-                            <button class="btn"> <span class="fa fa-shopping-cart" (click)="viewbll(bill);"></span>
+                            <button class="btn"> <span class="fa fa-shopping-cart" (click)="viewbll(bill);" [routerLink]="['/billing/invoice']"></span>
                             </button>
                         </td>
                     </tr>

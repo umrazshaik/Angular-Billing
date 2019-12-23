@@ -1,4 +1,4 @@
-import { Component,ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonService } from '../shared/common.service';
 import { ProductsService } from '../Services/products.service';
 import { ProdtypeService } from '../Services/prodtype.service';
@@ -32,8 +32,8 @@ export class ProductsView {
   selectedbrand: Brands;
   selectedtype: ProductType;
 
-  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService,private csvc:CartsService , private toastr: ToastrService,private cd: ChangeDetectorRef) {
-    this.newobj = new Products; this.newobj.Id=0;
+  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private csvc: CartsService, private toastr: ToastrService, private cd: ChangeDetectorRef) {
+    this.newobj = new Products; this.newobj.Id = 0;
     this.selectedbrand = new Brands;
     this.selectedtype = new ProductType;
     this.header = "Add"; this.actiontype = 1;
@@ -43,7 +43,7 @@ export class ProductsView {
     this.loaddependencies();
   }
   getProducts() {
-    this.retailId = this.commonsvc.retaileR.RetailId;
+    this.retailId = this.commonsvc.getretailId();
     return this.prodsvc.getProducts(this.retailId).subscribe((data: any) => {
       this.prods = data;
       console.log(this.prods);
@@ -56,13 +56,13 @@ export class ProductsView {
 
   }
   getptypes() {
-    this.retailId = this.commonsvc.retaileR.RetailId;
+    this.retailId = this.commonsvc.getretailId();
     return this.ptypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
       this.ptypes = data;
     });
   }
   getbrands() {
-    this.retailId = this.commonsvc.retaileR.RetailId;
+    this.retailId = this.commonsvc.getretailId();
     this.bsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
     });
@@ -70,7 +70,7 @@ export class ProductsView {
   edit(objnew: Products) {
     debugger
     this.header = "Update";
-    this.newobj=new Products();
+    this.newobj = new Products();
 
     this.newobj = objnew;
     this.cd.detectChanges();
@@ -88,15 +88,15 @@ export class ProductsView {
     newp.RetailId = this.retailId;
     newp.Status = true;
     newp.CreatedBy = "admin";
-    newp.BrandId=this.selectedbrand.BrandId;
-    newp.TypeId=this.selectedtype.TypeId;
+    newp.BrandId = this.selectedbrand.BrandId;
+    newp.TypeId = this.selectedtype.TypeId;
     this.prodsvc.addProduct(newp).subscribe((data: any) => {
       if (data > 0) {
         //this.types.push(newtype);
         this.newobj = new Products();
         this.toastr.success('Added');
-        this.selectedbrand=new Brands;
-        this.selectedtype=new ProductType
+        this.selectedbrand = new Brands;
+        this.selectedtype = new ProductType
         this.getProducts();
       }
       else {
@@ -107,19 +107,17 @@ export class ProductsView {
   updateType(prod: Products) {
     prod.RetailId = this.retailId;
     this.prodsvc.updateProduct(prod).subscribe((data: any) => {
-        if (data > 0)
-        {
-            this.actiontype=1;
-            this.toastr.success('Updated');
-            this.header="Add";
-            this.getProducts();
-        }
-        else
-        {
-            this.toastr.success('not Updated');
-        }
+      if (data > 0) {
+        this.actiontype = 1;
+        this.toastr.success('Updated');
+        this.header = "Add";
+        this.getProducts();
+      }
+      else {
+        this.toastr.success('not Updated');
+      }
     });
-}
+  }
   selecttype(filterVal: any) {
     debugger
     if (filterVal == "0") {
@@ -144,36 +142,30 @@ export class ProductsView {
       }
     }
   }
-  submit(type:number,prod:Products)
-    {
-        debugger
-        if(type==1)
-        {
-            this.addp(prod);
-        }
-        else
-        {
-            this.updateType(prod);
-        }
+  submit(type: number, prod: Products) {
+    debugger
+    if (type == 1) {
+      this.addp(prod);
     }
+    else {
+      this.updateType(prod);
+    }
+  }
 
-    addtocart(prod:Products)
-    {
-      debugger
-      let cart=new Carts();
-      cart.ProductId=prod.Id;
-      cart.Quantity=1;
-      cart.RetailerId=this.retailId;
-      this.csvc.addCart(cart).subscribe((data:any)=>{
-        if(data>0)
-        {
-          this.toastr.success('added to cart');
-        }
-        else
-        {
-          this.toastr.error('not added');
-        }
-      });
-      
-    }
+  addtocart(prod: Products) {
+    debugger
+    let cart = new Carts();
+    cart.ProductId = prod.Id;
+    cart.Quantity = 1;
+    cart.RetailerId = this.retailId;
+    this.csvc.addCart(cart).subscribe((data: any) => {
+      if (data > 0) {
+        this.toastr.success('added to cart');
+      }
+      else {
+        this.toastr.error('not added');
+      }
+    });
+
+  }
 }

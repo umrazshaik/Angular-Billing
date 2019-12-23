@@ -17,6 +17,10 @@
 
     public SGST: number
 
+    public CGSTPercentage: number
+
+    public SGSTPercentage : number
+
     public Price: number
 
     public TotalPrice: number

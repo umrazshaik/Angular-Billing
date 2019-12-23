@@ -11,6 +11,10 @@
 
     public Price: number
 
+    public CGSTPercentage: number
+
+    public SGSTPercentage : number
+
     public Tax: number
 
     public Status: boolean
