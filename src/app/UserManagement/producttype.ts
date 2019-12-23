@@ -49,13 +49,6 @@ export class ProductTypeComponent {
         console.log(this.newtype);
     }
 
-    closepopup()
-    {
-        debugger
-        $("#fid").trigger("reset");
-        this.header="Add";
-        this.actiontype=1;
-    }
 
     addType(newtype: ProductType) {
          
@@ -106,9 +99,11 @@ export class ProductTypeComponent {
         });
     }
 
+    //popup controling code here
     submit(type:number,prodtype:ProductType)
     {
         debugger
+        $('#exampleModal').modal('hide');
         if(type==1)
         {
             this.addType(prodtype);
@@ -117,5 +112,13 @@ export class ProductTypeComponent {
         {
             this.updateType(prodtype);
         }
+    }
+
+    closepopup()
+    {        
+        $('#exampleModal').modal('hide');
+        $("#fm").trigger("reset");
+        this.header="Add";
+        this.actiontype=1;
     }
 }
