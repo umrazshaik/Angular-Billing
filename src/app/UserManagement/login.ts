@@ -21,7 +21,9 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-
+    if (this.cmsvc.getretailId() != 0) {
+      this.router.navigateByUrl("/mainpage");
+    }
   }
 
   validate(user: Users) {
@@ -41,7 +43,7 @@ export class LoginComponent {
   getretailer() {
     this.retailer.getretailer().subscribe((data: any) => {
       if (data != null || undefined) {
-        this.cmsvc.retaileR=data;
+        this.cmsvc.retaileR = data;
         localStorage.setItem('retail', JSON.stringify(data));
         this.router.navigateByUrl("/mainpage");
       }

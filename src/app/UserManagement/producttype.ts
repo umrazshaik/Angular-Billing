@@ -3,6 +3,7 @@ import { CommonService } from '../shared/common.service';
 import { ProdtypeService } from '../Services/prodtype.service';
 import { ProductType } from '../model/productType';
 import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
 declare var $: any;
 
@@ -55,7 +56,7 @@ export class ProductTypeComponent {
         this.newtype = new ProductType();
     }
 
-    addType(newtype: ProductType) {
+    addType(newtype: ProductType,form: NgForm) {
         newtype.RetailId = this.retailId;
         newtype.Status = true;
         newtype.CreatedBy = newtype.UpdatedBy = this.commonsvc.createdBy;
@@ -65,14 +66,15 @@ export class ProductTypeComponent {
                 this.types.push(newtype);
                 this.newtype = new ProductType();
                 this.toastr.success('Added');
-                //this.getTypes();
+                form.reset();
             }
             else {
                 this.toastr.error('failed');
+                form.reset();
             }
         });
     }
-    updateType(prodtype: ProductType) {
+    updateType(prodtype: ProductType,form: NgForm) {
         this.objProductType.Name=prodtype.Name;
         this.prodtypesvc.updateProductType(this.objProductType).subscribe((data: any) => {
             if (data > 0) {
@@ -80,9 +82,11 @@ export class ProductTypeComponent {
                 this.toastr.success('Updated');
                 this.header = "Add Product Type";
                 this.getTypes();
+                form.reset();
             }
             else {
                 this.toastr.success('not Updated');
+                form.reset();
             }
         });
     }
@@ -101,19 +105,22 @@ export class ProductTypeComponent {
     }
 
     //popup controling code here
-    submit(type: number, prodtype: ProductType) {
+    submit(type: number, prodtype: ProductType,form: NgForm) {
         $('#exampleModal').modal('hide');
         if (type == 1) {
-            this.addType(prodtype);
+            this.addType(prodtype,form);
         }
         else {
-            this.updateType(prodtype);
+            this.updateType(prodtype,form);
         }
+        
     }
 
-    closepopup() {
+    closepopup(form: NgForm =null) {
+       
         $('#exampleModal').modal('hide');
         this.header = "Add Product Type";
         this.actiontype = 1;
+        form.reset();
     }
 }

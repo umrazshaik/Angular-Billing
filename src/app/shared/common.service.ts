@@ -32,22 +32,21 @@ export class CommonService {
   getretailId() {
     if (this.retailerId == 0 || undefined || null) {
       var user = JSON.parse(localStorage.getItem('user'));
-      this.retailerId = user.RetailId;
+      if (user != null)
+        this.retailerId = user.RetailId;
     }
-    else
-      this.retailerId = this.retailerId;
-
-    // if (this.baseurl == '' || undefined || null) {
-    //   var base = JSON.stringify(localStorage.getItem('baseurl'));
-    //   this.baseurl = base;
-    // }
 
     if (this.retaileR == null || undefined) {
       var retailer = JSON.parse(localStorage.getItem('retail'));
-      this.retaileR=new Retailer();
-      this.retaileR=retailer;
+      this.retaileR = new Retailer();
+      this.retaileR = retailer;
     }
 
     return this.retailerId;
   }
+
+  clearlocalStorage() {
+    localStorage.clear();
+  }
+
 }

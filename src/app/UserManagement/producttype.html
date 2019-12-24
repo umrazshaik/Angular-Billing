@@ -53,21 +53,21 @@
         <div class="modal-content">
             <div class="modal-header ">
                 <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup(fm);">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form (ngSubmit)="fm.form.valid && submit(actiontype,newtype)" #fm="ngForm">
+            <form (ngSubmit)="fm.form.valid && submit(actiontype,newtype,fm);" #fm="ngForm">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="Name">Product Type</label>
                         <input type="text" class="form-control" id="productType" name="Name" [(ngModel)]="newtype.Name"
-                            pattern='[A-Za-z\\s]*' placeholder="Enter Product type" #Name="ngModel"
-                            [ngClass]="{ 'is-invalid': fm.submitted && Name.invalid }" required />
+                            placeholder="Enter Product type" #Name="ngModel"
+                            [ngClass]="{ 'is-invalid': fm.touched && fm.submitted && Name.invalid }" required />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="closepopup();">Close</button>
+                    <button type="button" class="btn btn-secondary" (click)="closepopup(fm);">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
