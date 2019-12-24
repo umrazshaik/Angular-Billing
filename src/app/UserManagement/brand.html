@@ -1,60 +1,66 @@
-
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-center">List of Brands</h6>
-      <button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" (click)="createBrand()" data-keyboard="false">Add Brand</button>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="escalation">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 <tr *ngFor="let brand of brands; let i=index" [attr.data-index]="i">
-                    <th scope="row">{{i+1}}</th>
-                    <td>{{brand.BrandName}}</td>
-                    <td>{{brand.Status}}</td>
-                    <td>
-                      <button class="btn" data-toggle="modal"  data-target="#exampleModal" [id]="brand.BrandId" data-backdrop="static" data-keyboard="false"(click)="editBrand(brand);"> <span class="fa fa-flag fa-wrench"></span> </button>
-                      <button class="btn"> <span class="fa fa-flag fa-trash" (click)="deleteBrand(i,brand);"></span></button>
-                    </td>
-                  </tr>                  
-                </tbody>
-                
-              </table>
-              
-          </div>
-    </div>
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-center">List of Brands<button type="button" class="btn btn-primary btn-sm"
+        style="float: right;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"
+        data-backdrop="static" (click)="createBrand()" data-keyboard="false">Add Brand</button></h6>
   </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="escalation">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let brand of brands| paginate: pageConfig ; let i=index">
+            <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
+            <td>{{brand.BrandName}}</td>
+            <td>{{brand.Status}}</td>
+            <td>
+              <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="brand.BrandId"
+                data-backdrop="static" data-keyboard="false" (click)="editBrand(brand);"> <span
+                  class="fa fa-flag fa-wrench"></span> </button>
+              <button class="btn"> <span class="fa fa-flag fa-trash" (click)="deleteBrand(i,brand);"></span></button>
+            </td>
+          </tr>
+        </tbody>
 
-<!-- /.container-fluid -->
-<div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header ">
-      <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      </table>
+      <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
+        (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
     </div>
-    <form (ngSubmit)="fm.form.valid && submit(actiontype,newBrand)" #fm="ngForm" (keydown.enter)="submit(actiontype,newBrand)">
-    <div class="modal-body">     
-          <div class="form-group">
-              <label for="BrandName">Product Brand</label>
-              <input type="text" class="form-control" id="BrandName" [(ngModel)]="newBrand.BrandName" pattern='[A-Za-z\\s]*' name="BrandName" aria-describedby="productname" placeholder="Enter Brand Name"  #BrandName="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && BrandName.invalid }" required />              
-            </div>      
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="closepopup();">Close</button>
-      <button type="submit" class="btn btn-primary" >Submit</button>
-    </div>
-  </form>
   </div>
 </div>
+
+<!-- /.container-fluid -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (ngSubmit)="fm.form.valid && submit(actiontype,newBrand)" #fm="ngForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="BrandName">Product Brand</label>
+            <input type="text" class="form-control" id="BrandName" [(ngModel)]="newBrand.BrandName"
+              pattern='[A-Za-z\\s]*' name="BrandName" aria-describedby="productname" placeholder="Enter Brand Name"
+              #BrandName="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && BrandName.invalid }" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closepopup();">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

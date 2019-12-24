@@ -15,6 +15,7 @@ export class CommonService {
   billId: number;
   retailerId: number = 0;
   baseurl: string;
+  pageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
 
   constructor() {
 

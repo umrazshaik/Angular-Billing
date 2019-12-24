@@ -1,9 +1,11 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-center">List of Product Types</h6>
-        <button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal"
-            data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">Add Product
-            Type</button>
+        <h6 class="m-0 font-weight-bold text-center">List of Product Types
+            <button type="button" (click)="createProductType()" class="btn btn-primary btn-sm" style="float: right;"
+                data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static"
+                data-keyboard="false">Add Product
+                Type</button>
+        </h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -19,8 +21,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let type of types; let i=index" [attr.data-index]="i">
-                        <th scope="row">{{i+1}}</th>
+                    <tr *ngFor="let type of types| paginate: pageConfig ; let i=index">
+                        <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
                         <td>{{type.Name}}</td>
                         <td>{{type.Status}}</td>
                         <td>
@@ -38,6 +40,8 @@
                     </tr>
                 </tbody>
             </table>
+            <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
+                (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
         </div>
     </div>
 </div>
@@ -52,12 +56,14 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>            
-                <form (ngSubmit)="fm.form.valid && submit(actiontype,newtype)" #fm="ngForm" (keydown.enter)="submit(actiontype,newtype)">
+            </div>
+            <form (ngSubmit)="fm.form.valid && submit(actiontype,newtype)" #fm="ngForm">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="Name">Product Type</label>
-                        <input type="text" class="form-control" id="productType" name="Name" [(ngModel)]="newtype.Name" pattern='[A-Za-z\\s]*' placeholder="Enter Product type"  #Name="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && Name.invalid }" required />
+                        <input type="text" class="form-control" id="productType" name="Name" [(ngModel)]="newtype.Name"
+                            pattern='[A-Za-z\\s]*' placeholder="Enter Product type" #Name="ngModel"
+                            [ngClass]="{ 'is-invalid': fm.submitted && Name.invalid }" required />
                     </div>
                 </div>
                 <div class="modal-footer">
