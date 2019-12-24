@@ -8,16 +8,21 @@ import { Retailer } from '../model/Retailer'
 })
 export class RetailerService {
     retailer: Retailer;
-    
+
     constructor(private http: HttpbaseService) {
     }
 
-    getretailer()
-    {
-        
+    getretailer() {
         return this.http.getJson("api/retailer/getr");
     }
-    
+
+    addretailer(objretailer: Retailer) {
+        return this.http.postJson(objretailer, "api/retailer/addr");
+    }
+
+    updateRetailer(objretailer: Retailer) {
+        return this.http.postJson(objretailer, "api/retailer/updater");
+    }
 
 
 }
