@@ -5,6 +5,7 @@ import { CommonService } from '../shared/common.service';
 import { Routes, RouterModule, Router } from '@angular/router';
 import { RetailerService } from '../Services/retailer.service';
 import { Retailer } from '../model/Retailer';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class LoginComponent {
   userState: any;
   loginuser: Users;
   
-  constructor(private loginsvc: LoginService, private cmsvc: CommonService, private router: Router, private retailer: RetailerService) {
+  constructor(private loginsvc: LoginService, private cmsvc: CommonService, private router: Router, private retailer: RetailerService,private toastr: ToastrService) {
     this.loginuser = new Users();
   }
 
@@ -30,6 +31,9 @@ export class LoginComponent {
         this.userState = data;
         localStorage.setItem('user', JSON.stringify(this.userState));
         this.getretailer();
+      }
+      else{
+        this.toastr.error('login failed');
       }
     });
   }

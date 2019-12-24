@@ -7,6 +7,8 @@
 
     public ProductName: string
 
+    public Code :string
+
     public Quantity: number
 
     public Price: number

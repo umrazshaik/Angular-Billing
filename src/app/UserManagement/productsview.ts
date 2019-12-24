@@ -109,8 +109,6 @@ export class ProductsView {
     newp.RetailId = this.retailId;
     newp.Status = true;
     newp.CreatedBy = "admin";
-    newp.BrandId = this.selectedbrand.BrandId;
-    newp.TypeId = this.selectedtype.TypeId;
     this.prodsvc.addProduct(newp).subscribe((data: any) => {
       if (data > 0) {
         //this.types.push(newtype);
