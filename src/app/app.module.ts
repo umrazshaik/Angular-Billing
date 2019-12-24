@@ -25,6 +25,7 @@ import { CartsComponent } from './UserManagement/carts';
 import { BillingsComponent } from './views/billings.component';
 import { InvoiceComponent } from './views/invoice.component';
 import { AppintializorService, serverConfigInitializerFactory } from './shared/appintializor.service';
+import { RegisterComponent } from './views/register.component';
 
 
 
@@ -32,7 +33,7 @@ import { AppintializorService, serverConfigInitializerFactory } from './shared/a
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [AppComponent, HelloComponent, DashBoardComponent, LoginComponent, ProductsComponent, MainPageComponent, ProductTypeComponent,
-    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent],
+    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent],
     providers :[AppintializorService,{ provide: APP_INITIALIZER, useFactory: serverConfigInitializerFactory, deps: [AppintializorService], multi: true }],
   bootstrap: [AppComponent]
 })

@@ -12,6 +12,7 @@ import { TaxComponent } from './UserManagement/taxcenter';
 import { CartsComponent } from './UserManagement/carts';
 import { BillingsComponent } from './views/billings.component';
 import { InvoiceComponent } from './views/invoice.component';
+import { RegisterComponent } from './views/register.component';
 
 
 const routes: Routes = [
@@ -64,6 +65,7 @@ const routes: Routes = [
     ]
   },
   { path: '', component: LoginComponent },
+  {path:'register',component:RegisterComponent},
   {path:'invoice',component:InvoiceComponent}
 ];
 

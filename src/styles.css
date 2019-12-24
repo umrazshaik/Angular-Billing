@@ -1,3 +1,15 @@
     .fa-flag:hover {
     color: red;
 }/* Add application styles & imports to this file! */
+
+.bg-register-user {
+    background: url("./assets/img/reg.jpg");
+    background-position: center;
+    background-size: cover;
+  }
+
+  .bg-login-user {
+    background: url("assets/img/92166049.jpg");
+    background-position: center;
+    background-size: cover;
+  }
