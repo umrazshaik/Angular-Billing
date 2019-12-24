@@ -1,130 +1,134 @@
-
-
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-center">List of Products {{prods.length}}</h6>
-      <button  type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static" data-keyboard="false">Add Product</button>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="escalation">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Display Name</th>
-                        <th scope="col">Code</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Brand</th>
-                        <th scope="col">Actual Price</th>
-                        <th scope="col">Selling Price</th>
-                        <th scope="col">Edit/Delete</th>
-                        <th scope="col">Add 2 Cart</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let prod of prods; let i=index" [attr.data-index]="i">
-                        <th scope="row">{{i+1}}</th>
-                        <td>{{prod.Name}}</td>
-                        <td>{{prod.DisplayName}}</td>
-                        <td>{{prod.Code}}</td>
-                        <td>{{prod.TypeName}}</td>
-                        <td>{{prod.BrandName}}</td>
-                        <td>{{prod.ActualCost}}</td>
-                        <td>{{prod.SellingCost}}</td>
-                        <!-- <td>{{prod.Status}}</td> -->
-                        <td>
-                            <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id" data-backdrop="static" data-keyboard="false" (click)="edit(prod);"> <span class="fa fa-flag fa-wrench"></span> </button>
-                            <button class="btn"> <span class="fa fa-flag fa-trash" (click)="delete((i),prod);"></span></button>
-                        </td>
-                        <td>
-                            <button class="btn"> <span class="fa fa-shopping-cart" (click)="addtocart(prod);"></span> </button>
-                           
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-          </div>
-    </div>
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-center">List of Products
+      <button type="button" (click)="createProduct()" class="btn btn-primary btn-sm" style="float: right;"
+        data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static"
+        data-keyboard="false">Add
+        Product</button>
+    </h6>
   </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="escalation">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Display Name</th>
+            <th scope="col">Code</th>
+            <th scope="col">Type</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Actual Price</th>
+            <th scope="col">Selling Price</th>
+            <th scope="col">Edit/Delete</th>
+            <th scope="col">Add 2 Cart</th>
 
-<!-- /.container-fluid -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-xl" role="document">
-  <div class="modal-content">
-    <div class="modal-header ">
-      <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();"> 
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <div class="container-fluid">
-      <form id="fid">
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
-              <label for="exampleInputEmail1">Name</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.Name" name="name" placeholder="Name">
-            </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
-              <label for="exampleInputEmail1">Display Name</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.DisplayName" name="display name" placeholder="Display Name">
-          </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
-              <label for="exampleInputEmail1">Code</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.Code" name="code" placeholder="Code">
-          </div>
-            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right" *ngIf="newobj.Id==0">
-                <label for="exampleInputEmail1">Select Type</label>
-            <select class="form-control" (change)="selecttype($event.target.value)">
-                <option value="0">Select</option>
-                <option *ngFor="let type of ptypes"  value={{type.TypeId}}>{{type.Name}}</option>
-              </select>
-            </div>
-            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right" *ngIf="newobj.Id>0">
-              <label for="exampleInputEmail1">Select Type</label>
-          <select class="form-control" [(ngModel)]="newobj.TypeId" [ngModelOptions]="{standalone:true}">
-              <option value="0">Select</option>
-              <option *ngFor="let type of ptypes"   value={{type.TypeId}}  >{{type.Name}}</option>
-            </select>
-          </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left" *ngIf="newobj.Id==0">
-              <label for="exampleInputEmail1">Select Brand</label>
-              <select class="form-control" (change)="selectbrand($event.target.value)" name="type">
-                  <option value="0">Select</option>
-                  <option *ngFor="let brand of brands"  value={{brand.BrandId}}>{{brand.BrandName}}</option>
-              </select>
-          </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left" *ngIf="newobj.Id>0">
-            <label for="exampleInputEmail1">Select Brand</label>
-            <select class="form-control" [(ngModel)]="newobj.BrandId" name="brand" [ngModelOptions]="{standalone:true}">
-                <option value="0">Select</option>
-                <option *ngFor="let brand of brands"   value={{brand.BrandId}}  >{{brand.BrandName}}</option>
-            </select>
-        </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
-              <label for="exampleInputEmail1">Selling Price</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.SellingCost" name="sellingprice" placeholder="Selling price">
-          </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
-              <label for="exampleInputEmail1">Actual Price</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.ActualCost" name="actualprice" placeholder="Actual price">
-          </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
-              <label for="exampleInputEmail1">CGST%</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.CGST" name="cgst" placeholder="Actual price">
-          </div>
-          <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
-              <label for="exampleInputEmail1">SGST%</label>
-              <input type="text" class="form-control"  [(ngModel)]="newobj.SGST" name="sgst" placeholder="Actual price">
-          </div>
-      </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closepopup();">Close</button>
-        <button type="button" class="btn btn-primary" (click)="submit(actiontype,newobj)" data-dismiss="modal">Submit</button>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of prods | paginate: pageConfig ; let i=index">
+            <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
+            <td>{{prod.Name}}</td>
+            <td>{{prod.DisplayName}}</td>
+            <td>{{prod.Code}}</td>
+            <td>{{prod.TypeName}}</td>
+            <td>{{prod.BrandName}}</td>
+            <td>{{prod.ActualCost}}</td>
+            <td>{{prod.SellingCost}}</td>
+            <!-- <td>{{prod.Status}}</td> -->
+            <td>
+              <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id" data-backdrop="static"
+                data-keyboard="false" (click)="edit(prod);"> <span class="fa fa-flag fa-wrench"></span> </button>
+              <button class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></button>
+            </td>
+            <td>
+              <button class="btn"> <span class="fa fa-shopping-cart" (click)="addtocart(prod);"></span> </button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
+        (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
     </div>
   </div>
 </div>
+
+<!-- /.container-fluid -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h5 class="modal-title card text-white bg-primary" id="exampleModalLabel">{{header}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closepopup();">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (ngSubmit)="fm.form.valid && submit(actiontype,newobj)" #fm="ngForm">      
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Name</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.Name" name="name" placeholder="Name" #name="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && name.invalid }" required>
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">Display Name</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.DisplayName" name="displayname" placeholder="Display Name" #displayname="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && displayname.invalid }" required>
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Code</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.Code" name="code" placeholder="Code" #code="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && code.invalid }" required>
+            </div>           
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">Select Type</label>
+              <select class="form-control" [(ngModel)]="newobj.TypeId" name="typeId" #typeId="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && typeId.invalid }" required>
+                <option [ngValue]=null>Select</option>
+                <option *ngFor="let type of ptypes" value={{type.TypeId}}>{{type.Name}}</option>
+              </select>
+            </div>            
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Select Brand</label>
+              <select class="form-control" [(ngModel)]="newobj.BrandId" name="brand" #brand="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && brand.invalid }" required>
+                <option [ngValue]=null>Select</option>
+                <option *ngFor="let brand of brands" value={{brand.BrandId}}>{{brand.BrandName}}</option>
+              </select>
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">Selling Price</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.SellingCost" name="sellingprice" placeholder="Selling price" #sellingprice="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && sellingprice.invalid }" required />
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">Actual Price</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.ActualCost" name="actualprice" placeholder="Actual price" #actualprice="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && actualprice.invalid }" required />
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <label for="exampleInputEmail1">CGST%</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.CGST" name="cgst" placeholder="Actual price" #cgst="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && cgst.invalid }" required />
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <label for="exampleInputEmail1">SGST%</label>
+              <input type="text" class="form-control" [(ngModel)]="newobj.SGST" name="sgst" placeholder="Actual price" #sgst="ngModel"
+              [ngClass]="{ 'is-invalid': fm.submitted && sgst.invalid }" required />
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
+              <button type="button" class="btn btn-secondary" (click)="closepopup();">Close</button>
+            </div>
+            <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </div>       
+       
+      </form>
+    </div>
+  </div>
 </div>

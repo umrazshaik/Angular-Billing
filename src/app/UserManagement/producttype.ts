@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonService } from '../shared/common.service';
 import { ProdtypeService } from '../Services/prodtype.service';
 import { ProductType } from '../model/productType';
@@ -6,35 +6,36 @@ import { ToastrService } from 'ngx-toastr';
 
 declare var $: any;
 
-
-
-
-
 @Component({
     templateUrl: './producttype.html',
 })
 export class ProductTypeComponent {
     name: string = 'Product Type';
     types: Array<ProductType>
-    newtype: ProductType
+    newtype: ProductType;
+    objProductType: ProductType;
     retailId: number;
     header: string;
     actiontype: number;
+    pageConfig: any;
+    @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+        this.closepopup();
+    }
 
     constructor(private commonsvc: CommonService, private prodtypesvc: ProdtypeService, private toastr: ToastrService) {
         this.newtype = new ProductType;
-        this.header = "Add";
+        this.header = "Add Product Type";
         this.actiontype = 1;
+        this.pageConfig = commonsvc.pageConfig;
+        this.pageConfig.currentPage = 1;
     }
 
     ngOnInit() {
         this.getTypes();
-
     }
 
 
     getTypes() {
-
         this.retailId = this.commonsvc.getretailId();
         return this.prodtypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
             this.types = data;
@@ -43,24 +44,28 @@ export class ProductTypeComponent {
 
     edittype(newobject: ProductType) {
         debugger
-        this.header = "Update";
-        this.newtype = newobject;
-        this.actiontype = 2;
-        console.log(this.newtype);
+        this.header = "Update Product Type";
+        this.newtype = new ProductType();
+        this.newtype.Name=newobject.Name;
+        this.objProductType=newobject;
+        this.actiontype = 2;        
     }
 
+    createProductType() {
+        this.newtype = new ProductType();
+    }
 
     addType(newtype: ProductType) {
-
         newtype.RetailId = this.retailId;
         newtype.Status = true;
-        newtype.CreatedBy = "admin";
+        newtype.CreatedBy = newtype.UpdatedBy = this.commonsvc.createdBy;
         this.prodtypesvc.addProductType(newtype).subscribe((data: any) => {
             if (data > 0) {
-                //this.types.push(newtype);
+                newtype.TypeId=data;
+                this.types.push(newtype);
                 this.newtype = new ProductType();
                 this.toastr.success('Added');
-                this.getTypes();
+                //this.getTypes();
             }
             else {
                 this.toastr.error('failed');
@@ -68,12 +73,12 @@ export class ProductTypeComponent {
         });
     }
     updateType(prodtype: ProductType) {
-        prodtype.RetailId = this.retailId;
-        this.prodtypesvc.updateProductType(prodtype).subscribe((data: any) => {
+        this.objProductType.Name=prodtype.Name;
+        this.prodtypesvc.updateProductType(this.objProductType).subscribe((data: any) => {
             if (data > 0) {
                 this.actiontype = 1;
                 this.toastr.success('Updated');
-                this.header = "Add";
+                this.header = "Add Product Type";
                 this.getTypes();
             }
             else {
@@ -81,13 +86,13 @@ export class ProductTypeComponent {
             }
         });
     }
+
     deleteType(index: number, pt: ProductType) {
-        debugger
         this.prodtypesvc.deleteProductType(pt.TypeId).subscribe((data: any) => {
             if (data > 0) {
                 this.types.splice(index, 1);
                 this.toastr.success('deleted');
-                this.getTypes();
+                //this.getTypes();
             }
             else {
                 this.toastr.success('not deleted');
@@ -97,7 +102,6 @@ export class ProductTypeComponent {
 
     //popup controling code here
     submit(type: number, prodtype: ProductType) {
-        debugger
         $('#exampleModal').modal('hide');
         if (type == 1) {
             this.addType(prodtype);
@@ -109,8 +113,7 @@ export class ProductTypeComponent {
 
     closepopup() {
         $('#exampleModal').modal('hide');
-        $("#fm").trigger("reset");
-        this.header = "Add";
+        this.header = "Add Product Type";
         this.actiontype = 1;
     }
 }

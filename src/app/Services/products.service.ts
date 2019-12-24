@@ -22,6 +22,6 @@ export class ProductsService {
     }
 
     deleteProduct(prodId: number) {
-        return this.http.delete("api/brands/product?productId=" + prodId);
+        return this.http.delete("api/product/deletep?productId=" + prodId);
     }
 }

@@ -37,8 +37,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cart of carts; let i=index" [attr.data-index]="i">
-            <th scope="row">{{i+1}}</th>
+          <tr *ngFor="let cart of carts| paginate: pageConfig ; let i=index">
+            <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
             <td>{{cart.ProductName}}</td>
             <td>{{cart.Quantity | number : '1.2-2'}}</td>
             <td>{{cart.Price | currency:'INR'}}</td>            
@@ -55,9 +55,8 @@
             </td>
           </tr>
         </tbody>
-
       </table>
-
+      <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide" (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
     </div>
   </div>
 </div>

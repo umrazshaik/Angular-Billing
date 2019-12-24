@@ -26,6 +26,7 @@ export class CartsComponent {
   actiontype = 0;
   newobj: Bill;
   cash: string; card: string; online: string;
+  pageConfig : any;
 
 
   constructor(private commonsvc: CommonService, private castssvc: CartsService, private billsvc: BillingService, private toastr: ToastrService) {
@@ -35,6 +36,8 @@ export class CartsComponent {
     //this.retailId = this.commonsvc.retaileR.RetailId;
     this.newobj = new Bill(); this.newobj.BillInfo = new BillingInfo();
     this.cash = 'Cash'; this.card = 'Card'; this.online = 'Online';
+    this.pageConfig=commonsvc.pageConfig;
+    this.pageConfig.currentPage = 1;
   }
   ngOnInit() {
     this.getCarts();

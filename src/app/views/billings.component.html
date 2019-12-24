@@ -19,8 +19,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let bill of billings; let i=index" [attr.data-index]="i">
-                        <th scope="row">{{i+1}}</th>
+                    <tr *ngFor="let bill of billings| paginate: pageConfig ; let i=index">
+                        <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
                         <td>{{bill.BillNo}}</td>
                         <td>{{bill.CustomerName}}</td>
                         <td>{{bill.BilledAmount}}</td>
@@ -34,6 +34,7 @@
                     </tr>
                 </tbody>
             </table>
+            <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide" (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
         </div>
     </div>
 </div>

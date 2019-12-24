@@ -26,12 +26,13 @@ import { BillingsComponent } from './views/billings.component';
 import { InvoiceComponent } from './views/invoice.component';
 import { AppintializorService, serverConfigInitializerFactory } from './shared/appintializor.service';
 import { RegisterComponent } from './views/register.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule, HttpClientModule, ToastrModule.forRoot()],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule,NgxPaginationModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [AppComponent, HelloComponent, DashBoardComponent, LoginComponent, ProductsComponent, MainPageComponent, ProductTypeComponent,
     ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent],
     providers :[AppintializorService,{ provide: APP_INITIALIZER, useFactory: serverConfigInitializerFactory, deps: [AppintializorService], multi: true }],

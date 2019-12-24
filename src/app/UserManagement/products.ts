@@ -4,7 +4,6 @@ import {MatPaginator} from '@angular/material/paginator';
 import 'hammerjs';
 
 
-
 declare var $: any;
 
 export interface PeriodicElement {

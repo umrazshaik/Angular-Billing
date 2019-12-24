@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonService } from '../shared/common.service';
 import { ProductsService } from '../Services/products.service';
 import { ProdtypeService } from '../Services/prodtype.service';
@@ -10,16 +10,10 @@ import { Brands } from '../model/brands';
 import { Carts } from '../model/carts';
 import { ToastrService } from 'ngx-toastr';
 
-
-
-
 declare var $: any;
-
-
 
 @Component({
   templateUrl: './productsview.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsView {
   prods: Array<Products>;
@@ -31,12 +25,20 @@ export class ProductsView {
   actiontype: number;
   selectedbrand: Brands;
   selectedtype: ProductType;
+  pageConfig: any;
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    this.closepopup();
+  }
 
   constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private csvc: CartsService, private toastr: ToastrService, private cd: ChangeDetectorRef) {
-    this.newobj = new Products; this.newobj.Id = 0;
+    this.newobj = new Products;     
+    this.newobj.Id = 0;
     this.selectedbrand = new Brands;
     this.selectedtype = new ProductType;
-    this.header = "Add"; this.actiontype = 1;
+    this.header = "Add Product";
+    this.actiontype = 1;
+    this.pageConfig = commonsvc.pageConfig;
+    this.pageConfig.currentPage = 1;
   }
 
   ngOnInit() {
@@ -45,8 +47,7 @@ export class ProductsView {
   getProducts() {
     this.retailId = this.commonsvc.getretailId();
     return this.prodsvc.getProducts(this.retailId).subscribe((data: any) => {
-      this.prods = data;
-      console.log(this.prods);
+      this.prods = data;      
     });
   }
   loaddependencies() {
@@ -67,9 +68,30 @@ export class ProductsView {
       this.brands = data;
     });
   }
+
+  createProduct() {
+    this.newobj = new Products();
+    this.newobj.BrandId=null;
+    this.newobj.TypeId=null;
+  }
+
+  delete(index: number, objproduct: Products) {
+    this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
+      if (data > 0) {
+        this.prods.splice(index, 1);
+        this.toastr.success('deleted');
+        //this.getProducts();
+      }
+      else {
+        this.toastr.success('failed');
+      }
+    });
+
+  }
+
   edit(objnew: Products) {
     debugger
-    this.header = "Update";
+    this.header = "Update Product";
     this.newobj = new Products();
 
     this.newobj = objnew;
@@ -78,9 +100,8 @@ export class ProductsView {
     console.log(this.newobj);
   }
   closepopup() {
-    debugger
-    $("#fid").trigger("reset");
-    this.header = "Add";
+    $('#exampleModal').modal('hide');
+    this.header = "Add Product";
     this.actiontype = 1;
   }
   addp(newp: Products) {
@@ -110,11 +131,11 @@ export class ProductsView {
       if (data > 0) {
         this.actiontype = 1;
         this.toastr.success('Updated');
-        this.header = "Add";
+        this.header = "Add Product";
         this.getProducts();
       }
       else {
-        this.toastr.success('not Updated');
+        this.toastr.error('failed');
       }
     });
   }
@@ -143,7 +164,7 @@ export class ProductsView {
     }
   }
   submit(type: number, prod: Products) {
-    debugger
+    $('#exampleModal').modal('hide');
     if (type == 1) {
       this.addp(prod);
     }
@@ -163,7 +184,7 @@ export class ProductsView {
         this.toastr.success('added to cart');
       }
       else {
-        this.toastr.error('not added');
+        this.toastr.error('failed');
       }
     });
 
