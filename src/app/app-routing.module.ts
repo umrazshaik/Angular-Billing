@@ -14,6 +14,7 @@ import { BillingsComponent } from './views/billings.component';
 import { InvoiceComponent } from './views/invoice.component';
 import { RegisterComponent } from './views/register.component';
 import { ProfileComponent } from './views/profile.component';
+import { AuthGuardService } from './routeGuards/auth.guard.service';
 
 
 const routes: Routes = [
@@ -22,28 +23,23 @@ const routes: Routes = [
   {
     path: 'mainpage',
     component: MainPageComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',
         component: DashBoardComponent,
       },
       {
-        path:'profile',
-        component:ProfileComponent
+        path: 'profile',
+        component: ProfileComponent
       },
       {
         path: 'tax',
         component: TaxComponent
       },
       {
-        path:'billing',
-        component:BillingsComponent,
-        // children:[
-        //   {
-        //     path:'invoice',
-        //     component:InvoiceComponent
-        //   }
-        // ]
+        path: 'billing',
+        component: BillingsComponent,
       },
       {
         path: 'products',
@@ -70,8 +66,12 @@ const routes: Routes = [
     ]
   },
   { path: '', component: LoginComponent },
-  {path:'register',component:RegisterComponent},
-  {path:'invoice',component:InvoiceComponent}
+  { path: 'register', component: RegisterComponent },
+  {
+    path: 'invoice',
+    component: InvoiceComponent,
+    canActivate: [AuthGuardService]
+  }
 ];
 
 @NgModule({
