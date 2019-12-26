@@ -16,6 +16,7 @@ export class CommonService {
   retailerId: number = 0;
   userId:number=0;
   baseurl: string;
+  private _searchBS = new BehaviorSubject<string>('');
   pageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
 
   constructor() {
@@ -23,6 +24,14 @@ export class CommonService {
     //this.retaileR = new Retailer();
     //this.retaileR.RetailId = 1;
 
+  }
+
+  pushSearchStr(val: string) {
+    this._searchBS.next(val);
+  }
+
+  pullSearchStr(){
+    return this._searchBS.asObservable();
   }
 
   setRetailer(objretailer: Retailer) {

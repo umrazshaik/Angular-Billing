@@ -22,6 +22,7 @@ export class BrandComponent {
   header = '';
   actiontype = 0;
   pageConfig: any;
+  filterStr: string;
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.closepopup();
@@ -38,10 +39,11 @@ export class BrandComponent {
   }
   ngOnInit() {
     this.getBrands();
+    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr=p});
   }
 
   getBrands() {
-    this.retailId = this.commonsvc.getretailId();
+    this.retailId = this.commonsvc.getretailId();    
     this.brandsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
       console.log(data);
