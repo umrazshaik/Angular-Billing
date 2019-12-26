@@ -6,8 +6,12 @@ import { CommonService } from '../shared/common.service';
   templateUrl: './mainpage.html',
 })
 export class MainPageComponent {
-  constructor(private router: Router, private commonsvc: CommonService) {
 
+  public serachStr:string = '';
+  constructor(private router: Router, private commonsvc: CommonService) {
+    router.events.subscribe(val => {
+      this.serachStr = '';
+    });
   }
   name = 'Angular';
 
@@ -15,9 +19,14 @@ export class MainPageComponent {
     this.router.navigate(['mainpage/products']);
   }
 
-  logOut() {    
-    this.commonsvc.retailerId=0;
+  onChange(event: string) {    
+    this.commonsvc.pushSearchStr(event);
+  }
+
+  logOut() {
+    this.commonsvc.retailerId = 0;
     this.commonsvc.clearlocalStorage();
     this.router.navigateByUrl('');
   }
+
 }
