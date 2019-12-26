@@ -3,7 +3,7 @@
           <div class="text-center">
             <h1 class="h4 text-gray-900 mb-4">Update an Account!</h1>
           </div>
-          <form class="user" (ngSubmit)="fm.form.valid && update(objnew)" #fm="ngForm" (keydown.enter)="submit(objnew)">
+          <form class="user" (ngSubmit)="fm.form.valid && update(objnew)" #fm="ngForm" (keydown.enter)="update(objnew)">
               <div class="form-group row">
               <div class="col-sm-6 mb-3 mb-sm-0">
                   <input type="email" class="form-control form-control-user" name="name"

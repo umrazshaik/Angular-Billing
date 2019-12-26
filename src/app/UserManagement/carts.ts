@@ -143,7 +143,7 @@ export class CartsComponent {
   billinglogic(objbill: Bill) {
 
     objbill.BillProducts = new Array<BillingProducts>();
-
+    
     if (this.carts != null || undefined) {
       let totaltaxamount: number = 0;
       let totalbilledamount: number = 0;
@@ -151,6 +151,7 @@ export class CartsComponent {
       let totalactualamount: number = 0;
 
       objbill.BillInfo.RetailId = this.retailId;
+      objbill.BillInfo.UserId=this.commonsvc.userId;
       this.carts.forEach(element => {
         let objprod = new BillingProducts();
         objprod.ProductId = element.ProductId;

@@ -14,6 +14,7 @@ export class CommonService {
   retaileR: Retailer;
   billId: number;
   retailerId: number = 0;
+  userId:number=0;
   baseurl: string;
   pageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
 
@@ -33,7 +34,10 @@ export class CommonService {
     if (this.retailerId == 0 || undefined || null) {
       var user = JSON.parse(localStorage.getItem('user'));
       if (user != null)
+      {
         this.retailerId = user.RetailId;
+        this.userId=user.UserId;
+      }
     }
 
     if (this.retaileR == null || undefined) {

@@ -14,6 +14,15 @@ declare var $: any;
 
 @Component({
   templateUrl: './productsview.html',
+  styles: [`
+  .btn-space {
+    margin-right: 5px;
+    margin-top:20px;
+  },
+  .paddingbutton{
+    padding-left: 0;
+  }
+`]
 })
 export class ProductsView {
   prods: Array<Products>;
@@ -175,6 +184,9 @@ export class ProductsView {
     debugger
     let cart = new Carts();
     cart.ProductId = prod.Id;
+    this.commonsvc.retailerId=0;
+    this.commonsvc.getretailId();
+    cart.UserId=this.commonsvc.userId;
     cart.Quantity = 1;
     cart.RetailerId = this.retailId;
     this.csvc.addCart(cart).subscribe((data: any) => {
