@@ -9,6 +9,7 @@ import { ProductType } from '../model/productType';
 import { Brands } from '../model/brands';
 import { Carts } from '../model/carts';
 import { ToastrService } from 'ngx-toastr';
+import { SpinnerService } from '../spinner/spinner.service';
 
 declare var $: any;
 
@@ -35,11 +36,12 @@ export class ProductsView {
   selectedbrand: Brands;
   selectedtype: ProductType;
   pageConfig: any;
+  filterStr: string;
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.closepopup();
   }
 
-  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private csvc: CartsService, private toastr: ToastrService, private cd: ChangeDetectorRef) {
+  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private csvc: CartsService, private toastr: ToastrService, private cd: ChangeDetectorRef,private loader:SpinnerService) {
     this.newobj = new Products;     
     this.newobj.Id = 0;
     this.selectedbrand = new Brands;
@@ -51,12 +53,15 @@ export class ProductsView {
   }
 
   ngOnInit() {
+    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr=p});
     this.loaddependencies();
   }
   getProducts() {
+    this.loader.show();
     this.retailId = this.commonsvc.getretailId();
     return this.prodsvc.getProducts(this.retailId).subscribe((data: any) => {
-      this.prods = data;      
+      this.prods = data; 
+      this.loader.hide();     
     });
   }
   loaddependencies() {
@@ -66,6 +71,7 @@ export class ProductsView {
 
   }
   getptypes() {
+
     this.retailId = this.commonsvc.getretailId();
     return this.ptypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
       this.ptypes = data;
@@ -75,7 +81,9 @@ export class ProductsView {
     this.retailId = this.commonsvc.getretailId();
     this.bsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
-    });
+    },er=>{
+      this.toastr.error('loading failed');
+      this.loader.hide();});
   }
 
   createProduct() {

@@ -14,7 +14,7 @@ export class FilterPipe implements PipeTransform {
         if (Array.isArray(filterKeys)) {            
             return items.filter(item => {
                 return filterKeys.some(x => {
-                    return item[x].includes(searchText);
+                    return (item[x]!=null) && (item[x].toLowerCase().includes(searchText));
                 });
             });
         }

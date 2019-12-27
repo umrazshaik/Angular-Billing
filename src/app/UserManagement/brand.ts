@@ -3,6 +3,7 @@ import { CommonService } from '../shared/common.service';
 import { Brands } from '../model/brands';
 import { BrandsService } from '../Services/brands.service';
 import { ToastrService } from 'ngx-toastr';
+import { SpinnerService } from '../spinner/spinner.service';
 
 declare var $: any;
 
@@ -28,7 +29,7 @@ export class BrandComponent {
     this.closepopup();
   }
 
-  constructor(private commonsvc: CommonService, private brandsvc: BrandsService, private toastr: ToastrService) {
+  constructor(private commonsvc: CommonService, private brandsvc: BrandsService, private toastr: ToastrService,private loader:SpinnerService) {
     this.newBrand = new Brands();
     this.brands = [];
     this.header = "Add";
@@ -43,11 +44,15 @@ export class BrandComponent {
   }
 
   getBrands() {
+    this.loader.show();
     this.retailId = this.commonsvc.getretailId();    
     this.brandsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
+      this.loader.hide();
       console.log(data);
-    });
+    },er=>{
+      this.toastr.error('loading failed');
+      this.loader.hide();});
   }
 
   createBrand() {

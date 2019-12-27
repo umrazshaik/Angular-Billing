@@ -4,6 +4,7 @@ import { ProdtypeService } from '../Services/prodtype.service';
 import { ProductType } from '../model/productType';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
+import { SpinnerService } from '../spinner/spinner.service';
 
 declare var $: any;
 
@@ -19,16 +20,20 @@ export class ProductTypeComponent {
     header: string;
     actiontype: number;
     pageConfig: any;
+    searchstr:string;
     @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         this.closepopup();
     }
 
-    constructor(private commonsvc: CommonService, private prodtypesvc: ProdtypeService, private toastr: ToastrService) {
+    constructor(private commonsvc: CommonService, private prodtypesvc: ProdtypeService, private toastr: ToastrService, private loader: SpinnerService) {
         this.newtype = new ProductType;
         this.header = "Add Product Type";
         this.actiontype = 1;
         this.pageConfig = commonsvc.pageConfig;
         this.pageConfig.currentPage = 1;
+        this.commonsvc.pullSearchStr().subscribe((p:any)=>{
+            this.searchstr=p;
+        })
     }
 
     ngOnInit() {
@@ -37,9 +42,14 @@ export class ProductTypeComponent {
 
 
     getTypes() {
+        this.loader.show();
         this.retailId = this.commonsvc.getretailId();
         return this.prodtypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
             this.types = data;
+            this.loader.hide();
+        },er=>{
+            this.toastr.error('loading failed');
+            this.loader.hide();
         });
     }
 
@@ -47,22 +57,22 @@ export class ProductTypeComponent {
         debugger
         this.header = "Update Product Type";
         this.newtype = new ProductType();
-        this.newtype.Name=newobject.Name;
-        this.objProductType=newobject;
-        this.actiontype = 2;        
+        this.newtype.Name = newobject.Name;
+        this.objProductType = newobject;
+        this.actiontype = 2;
     }
 
     createProductType() {
         this.newtype = new ProductType();
     }
 
-    addType(newtype: ProductType,form: NgForm) {
+    addType(newtype: ProductType, form: NgForm) {
         newtype.RetailId = this.retailId;
         newtype.Status = true;
         newtype.CreatedBy = newtype.UpdatedBy = this.commonsvc.createdBy;
         this.prodtypesvc.addProductType(newtype).subscribe((data: any) => {
             if (data > 0) {
-                newtype.TypeId=data;
+                newtype.TypeId = data;
                 this.types.push(newtype);
                 this.newtype = new ProductType();
                 this.toastr.success('Added');
@@ -74,8 +84,8 @@ export class ProductTypeComponent {
             }
         });
     }
-    updateType(prodtype: ProductType,form: NgForm) {
-        this.objProductType.Name=prodtype.Name;
+    updateType(prodtype: ProductType, form: NgForm) {
+        this.objProductType.Name = prodtype.Name;
         this.prodtypesvc.updateProductType(this.objProductType).subscribe((data: any) => {
             if (data > 0) {
                 this.actiontype = 1;
@@ -105,19 +115,19 @@ export class ProductTypeComponent {
     }
 
     //popup controling code here
-    submit(type: number, prodtype: ProductType,form: NgForm) {
+    submit(type: number, prodtype: ProductType, form: NgForm) {
         $('#exampleModal').modal('hide');
         if (type == 1) {
-            this.addType(prodtype,form);
+            this.addType(prodtype, form);
         }
         else {
-            this.updateType(prodtype,form);
+            this.updateType(prodtype, form);
         }
-        
+
     }
 
-    closepopup(form: NgForm =null) {
-       
+    closepopup(form: NgForm = null) {
+
         $('#exampleModal').modal('hide');
         this.header = "Add Product Type";
         this.actiontype = 1;

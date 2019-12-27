@@ -37,7 +37,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cart of carts| paginate: pageConfig ; let i=index">
+          <tr *ngFor="let cart of carts |filter: filterStr : 'ProductName'| paginate: pageConfig ; let i=index">
             <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
             <td>{{cart.ProductName}}</td>
             <td>{{cart.Quantity | number : '1.2-2'}}</td>

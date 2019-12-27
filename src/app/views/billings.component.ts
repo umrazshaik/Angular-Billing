@@ -4,6 +4,7 @@ import { BillingService } from '../Services/billing.service';
 import { BillingInfo } from '../model/billingInfo';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { SpinnerService } from '../spinner/spinner.service';
 
 
 @Component({
@@ -14,8 +15,8 @@ export class BillingsComponent implements OnInit {
   billings: Array<BillingInfo>;
   retailId: number;
   pageConfig : any;
-
-  constructor(private commonsvc: CommonService, private toastr: ToastrService, private billsvc: BillingService, private router: Router) {
+  filterStr: string;
+  constructor(private commonsvc: CommonService, private toastr: ToastrService, private billsvc: BillingService, private router: Router,private loader:SpinnerService) {
     this.billings = new Array<BillingInfo>();
     this.pageConfig = commonsvc.pageConfig;
     //this.retailId = this.commonsvc.retaileR.RetailId;
@@ -23,14 +24,19 @@ export class BillingsComponent implements OnInit {
 
   ngOnInit() {
     this.getBillings();
+    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr=p});
   }
 
 
   getBillings() {
+    this.loader.show();
     this.retailId = this.commonsvc.getretailId();
     return this.billsvc.getBillings(this.retailId).subscribe((data: any) => {
       this.billings = data;
-    });
+      this.loader.hide();
+    },er=>{
+      this.toastr.error('loading failed');
+      this.loader.hide();});
   }
 
   viewbll(objbill: BillingInfo) {

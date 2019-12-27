@@ -6,6 +6,7 @@ import { Routes, RouterModule, Router } from '@angular/router';
 import { RetailerService } from '../Services/retailer.service';
 import { Retailer } from '../model/Retailer';
 import { ToastrService } from 'ngx-toastr';
+import { SpinnerService } from '../spinner/spinner.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class LoginComponent {
   userState: any;
   loginuser: Users;
   
-  constructor(private loginsvc: LoginService, private cmsvc: CommonService, private router: Router, private retailer: RetailerService,private toastr: ToastrService) {
+  constructor(private loginsvc: LoginService, private cmsvc: CommonService, private router: Router, private retailer: RetailerService,private toastr: ToastrService,private loader:SpinnerService) {
     this.loginuser = new Users();
   }
 
@@ -27,16 +28,22 @@ export class LoginComponent {
   }
 
   validate(user: Users) {
+    this.loader.show();
     this.loginsvc.login(user.UserName, user.Password).subscribe((data: any) => {
       if (data != null || undefined) {
         this.cmsvc.retailerId = data.RetailId;
         this.userState = data;
         localStorage.setItem('user', JSON.stringify(this.userState));
         this.getretailer();
+        
       }
       else{
         this.toastr.error('login failed');
+        this.loader.hide();
       }
+    },er=>{
+      this.toastr.error('login failed');
+      this.loader.hide();
     });
   }
 
@@ -45,6 +52,7 @@ export class LoginComponent {
       if (data != null || undefined) {
         this.cmsvc.retaileR = data;
         localStorage.setItem('retail', JSON.stringify(data));
+        this.loader.hide();
         this.router.navigateByUrl("/mainpage");
       }
     });

@@ -16,12 +16,10 @@
                         <th scope="col">Type</th>
                         <th scope="col">Status</th>
                         <th scope="col">Edit/Delete</th>
-                        <!--<th scope="col">Delete</th>-->
-
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let type of types| paginate: pageConfig ; let i=index">
+                    <tr *ngFor="let type of types  |filter: searchstr : 'Name' | paginate: pageConfig ; let i=index">
                         <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
                         <td>{{type.Name}}</td>
                         <td>{{type.Status}}</td>
@@ -32,11 +30,6 @@
                             <button class="btn"> <span class="fa fa-flag fa-trash"
                                     (click)="deleteType((i),type);"></span></button>
                         </td>
-                        <!--<td>
-                            <a href="#" class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span> Pencil
-                            </a>
-                        </td>-->
                     </tr>
                 </tbody>
             </table>

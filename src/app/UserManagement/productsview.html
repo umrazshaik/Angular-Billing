@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let prod of prods | paginate: pageConfig ; let i=index">
+          <tr *ngFor="let prod of prods |filter: filterStr : 'Name':'Code':'TypeName':'BrandName'| paginate: pageConfig ; let i=index">
             <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
             <td>{{prod.Name}}</td>
             <td>{{prod.DisplayName}}</td>
