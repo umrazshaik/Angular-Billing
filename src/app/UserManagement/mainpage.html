@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -26,7 +26,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark " [appSidebar]="issidebar" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="javascript:void(0)">
@@ -41,7 +41,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/mainpage']">
+        <a class="nav-link" (click)="issidebar=!issidebar" [routerLink]="['/mainpage']">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -122,7 +122,7 @@
           <span>Charts</span></a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/mainpage/products']">
+        <a class="nav-link" (click)="issidebar=!issidebar" [routerLink]="['/mainpage/products']">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Products</span></a>
       </li>
@@ -132,7 +132,7 @@
           <span>Tax Center</span></a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/mainpage/billing']">
+        <a class="nav-link" (click)="issidebar=!issidebar" [routerLink]="['/mainpage/billing']">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Billing</span></a>
       </li>
@@ -164,7 +164,7 @@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3" (click)="issidebar=!issidebar">
             <i class="fa fa-bars"></i>
           </button>
 
@@ -393,8 +393,8 @@
       </div>
     </div>
   </div>
-
-
+    
+    <script src="../js/sb-admin-2.min.js"></script>
 
 </body>
 

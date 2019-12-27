@@ -29,6 +29,7 @@ import { RegisterComponent } from './views/register.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ProfileComponent } from './views/profile.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SidebarDirective } from './directives/sidebar.directive';
 
 
 
@@ -36,7 +37,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule,NgxPaginationModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [AppComponent, HelloComponent, DashBoardComponent, LoginComponent, ProductsComponent, MainPageComponent, ProductTypeComponent,
-    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent, ProfileComponent,FilterPipe],
+    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent, ProfileComponent,FilterPipe, SidebarDirective],
     providers :[AppintializorService,{ provide: APP_INITIALIZER, useFactory: serverConfigInitializerFactory, deps: [AppintializorService], multi: true }],
   bootstrap: [AppComponent]
 })
