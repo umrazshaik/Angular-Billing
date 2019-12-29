@@ -100,7 +100,7 @@ export class ProductsView {
         //this.getProducts();
       }
       else {
-        this.toastr.success('failed');
+        this.toastr.error('failed');
       }
     });
 
