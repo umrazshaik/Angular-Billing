@@ -1,3 +1,6 @@
+<style>
+
+</style>
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-center">List of Products
@@ -8,7 +11,7 @@
     </h6>
   </div>
   <div class="card-body">
-    <div class="table-responsive">
+    <!-- <div class="table-responsive">
       <table class="table table-bordered" id="escalation">
         <thead>
           <tr>
@@ -35,7 +38,7 @@
             <td>{{prod.BrandName}}</td>
             <td>{{prod.ActualCost}}</td>
             <td>{{prod.SellingCost}}</td>
-            <!-- <td>{{prod.Status}}</td> -->
+           
             <td>
               <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id" data-backdrop="static"
                 data-keyboard="false" (click)="edit(prod);"> <span class="fa fa-flag fa-wrench"></span> </button>
@@ -50,6 +53,42 @@
       </table>
       <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
         (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
+    </div> -->
+    <!-- <div class="col-xl-3 col-md-6 mb-4" *ngFor="let prod of prods |filter: filterStr : 'Name':'Code':'TypeName':'BrandName'| paginate: pageConfig ; let i=index">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{prod.Name}}</div>
+             
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-xl-3 col-md-6 mb-4"
+        *ngFor="let prod of prods |filter: filterStr : 'Name':'Code':'TypeName':'BrandName'| paginate: pageConfig ; let i=index">
+        <div class="Products-card">
+          <div class="card-body">
+            <!-- <div class="row no-gutters align-items-center"> -->
+                <!-- <div class="container"> -->
+            <img src="assets/img/oneplus-7t-pro-back.jpg" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id"
+              data-backdrop="static" data-keyboard="false" (click)="edit(prod);" alt="Denim Jeans" style="width:100%">
+              <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
+            <!-- </div> -->
+            <h4>{{prod.Name}}</h4>
+            <p class="price">{{prod.SellingCost | currency:'INR'}}</p>
+            <p class="text-truncate">{{prod.DisplayName}}</p>
+            <p><button class="btn btn-primary btn-sm" (click)="addtocart(prod);">Add to Cart</button>
+              <button class="btn btn-danger btn-sm" (click)="delete(i,prod);">Delete</button>
+            </p>
+          </div> 
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -65,79 +104,83 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form (ngSubmit)="fm.form.valid && submit(actiontype,newobj)" #fm="ngForm">      
+      <form (ngSubmit)="fm.form.valid && submit(actiontype,newobj)" #fm="ngForm">
         <div class="modal-body">
           <div class="container-fluid">
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Name</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.Name" name="name" placeholder="Name" #name="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && name.invalid }" required>
+              <input type="text" class="form-control" [(ngModel)]="newobj.Name" name="name" placeholder="Name"
+                #name="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && name.invalid }" required>
             </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
               <label for="exampleInputEmail1">Display Name</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.DisplayName" name="displayname" placeholder="Display Name" #displayname="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && displayname.invalid }" required>
+              <input type="text" class="form-control" [(ngModel)]="newobj.DisplayName" name="displayname"
+                placeholder="Display Name" #displayname="ngModel"
+                [ngClass]="{ 'is-invalid': fm.submitted && displayname.invalid }" required>
             </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Code</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.Code" name="code" placeholder="Code" #code="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && code.invalid }" required>
-            </div>           
+              <input type="text" class="form-control" [(ngModel)]="newobj.Code" name="code" placeholder="Code"
+                #code="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && code.invalid }" required>
+            </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
               <label for="exampleInputEmail1">Select Type</label>
               <select class="form-control" [(ngModel)]="newobj.TypeId" name="typeId" #typeId="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && typeId.invalid }" required>
+                [ngClass]="{ 'is-invalid': fm.submitted && typeId.invalid }" required>
                 <option [ngValue]=null>Select</option>
                 <option *ngFor="let type of ptypes" value={{type.TypeId}}>{{type.Name}}</option>
               </select>
-            </div>            
+            </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Select Brand</label>
               <select class="form-control" [(ngModel)]="newobj.BrandId" name="brand" #brand="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && brand.invalid }" required>
+                [ngClass]="{ 'is-invalid': fm.submitted && brand.invalid }" required>
                 <option [ngValue]=null>Select</option>
                 <option *ngFor="let brand of brands" value={{brand.BrandId}}>{{brand.BrandName}}</option>
               </select>
             </div>
             <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-right">
               <label for="exampleInputEmail1">Selling Price</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.SellingCost" name="sellingprice" placeholder="Selling price" #sellingprice="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && sellingprice.invalid }" required />
+              <input type="text" class="form-control" [(ngModel)]="newobj.SellingCost" name="sellingprice"
+                placeholder="Selling price" #sellingprice="ngModel"
+                [ngClass]="{ 'is-invalid': fm.submitted && sellingprice.invalid }" required />
             </div>
             <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-right">
               <label for="exampleInputEmail1">Actual Price</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.ActualCost" name="actualprice" placeholder="Actual price" #actualprice="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && actualprice.invalid }" required />
+              <input type="text" class="form-control" [(ngModel)]="newobj.ActualCost" name="actualprice"
+                placeholder="Actual price" #actualprice="ngModel"
+                [ngClass]="{ 'is-invalid': fm.submitted && actualprice.invalid }" required />
             </div>
             <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-left">
               <label for="exampleInputEmail1">CGST%</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.CGST" name="cgst" placeholder="Actual price" #cgst="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && cgst.invalid }" required />
+              <input type="text" class="form-control" [(ngModel)]="newobj.CGST" name="cgst" placeholder="CGST"
+                #cgst="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && cgst.invalid }" required />
             </div>
             <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-left">
               <label for="exampleInputEmail1">SGST%</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.SGST" name="sgst" placeholder="Actual price" #sgst="ngModel"
-              [ngClass]="{ 'is-invalid': fm.submitted && sgst.invalid }" required />
+              <input type="text" class="form-control" [(ngModel)]="newobj.SGST" name="sgst" placeholder="SGST"
+                #sgst="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && sgst.invalid }" required />
             </div>
-         
-           
-           
-         
-            <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-right" >
-             
-              
-              
-            </div>
-            
+
+
+
+
             <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-right">
-             
-              
+
+
+
             </div>
-            <button type="button" class="btn btn-secondary btn-sm btn-space" style="float: right;" (click)="closepopup();">Close</button>
+
+            <div class="form-group col-xs-12 col-xl-3 col-md-12 pull-right">
+
+
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm btn-space" style="float: right;"
+              (click)="closepopup();">Close</button>
             <button type="submit" class="btn btn-primary btn-sm btn-space" style="float: right;">Submit</button>
           </div>
-        </div>       
-       
+        </div>
+
       </form>
     </div>
   </div>

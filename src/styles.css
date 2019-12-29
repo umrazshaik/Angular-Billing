@@ -13,3 +13,59 @@
     background-position: center;
     background-size: cover;
   }
+  .txt-gray-color{
+    color: #6c757d!important;
+  }
+
+  .Products-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+    overflow: hidden;
+  }
+  .card-text {
+    overflow-wrap:break-word;
+}
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  /* .Products-card button {
+    border: none;
+    outline: 0;
+    padding: 10px;
+    color: white;
+    
+    text-align: center;
+    cursor: pointer;
+    width: 48%;
+    font-size: 18px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  
+  .Products-card button:hover {
+    opacity: 0.7;
+  } */
+
+  .container .btn {
+    position: absolute;
+    top: 12%;
+    left: 77%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .btn {
+    margin-right: 5px;
+  }

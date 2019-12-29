@@ -13,20 +13,22 @@
                         <th scope="col">Billed Amt.</th>
                         <th scope="col">Paid Amt.</th>
                         <th scope="col">Tax Amt.</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Pay. Mode </th>
                         <th scope="col">View</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let bill of billings|filter: filterStr : 'BillNo':'CustomerName':'PaymentType'| paginate: pageConfig ; let i=index">
+                    <tr *ngFor="let bill of billings|filter: filterStr : 'BillNo':'CustomerName':'PaymentType':'CreatedDate'| paginate: pageConfig ; let i=index">
                         <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
                         <td>{{bill.BillNo}}</td>
                         <td *ngIf="bill.CustomerName!=null">{{bill.CustomerName}}</td>
                         <td *ngIf="bill.CustomerName==null">Unknown</td>
                         <td>{{bill.BilledAmount}}</td>
-                        <td>{{bill.PaidAmount}}</td>
-                        <td>{{bill.TaxAmount}}</td>
+                        <td>{{bill.CreatedDate | date}}</td>
+                        <td>{{bill.PaidAmount| currency:'INR'}}</td>
+                        <td>{{bill.TaxAmount| currency:'INR'}}</td>
                         <td>{{bill.PaymentType}}</td>
                         <td>
                             <button class="btn" (click)="viewbll(bill);" [routerLink]="['/billing/invoice']"> <span class="fa fa-flag fa-file-image-o fa-lg" ></span>

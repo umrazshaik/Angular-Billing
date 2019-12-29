@@ -1,37 +1,43 @@
 <style>
- .form-group > [class*='.form-group .col-md-']{
-   padding-top: 10px;
- }
+  .form-group>[class*='.form-group .col-md-'] {
+    padding-top: 10px;
+  }
 </style>
 
 
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="makepayment(3,newobj)">Online</button>
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="makepayment(2,newobj)">Card</button>    
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="makepayment(1,newobj)">Cash</button>
-    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;" (click)="updatecarts();">UpdateCart</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;"
+      (click)="makepayment(3,newobj)">Online</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;"
+      (click)="makepayment(2,newobj)">Card</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;"
+      (click)="makepayment(1,newobj)">Cash</button>
+    <button type="button" class="btn btn-outline-success btn-sm btn-space" style="float: right;"
+      (click)="updatecarts();">UpdateCart</button>
     <form id="fid">
       <div class="form-group col-xs-12 col-xl-4 col-md-12  pull-right">
-        <input type="number" class="form-control"  [(ngModel)]="newobj.BillInfo.CustMobile" [ngModelOptions]="{standalone:true}" name="customername" placeholder="Mobile">
-    </div>
-     <div class="form-group col-xs-12 col-xl-4 col-md-12  pull-right">
-          <input type="text" class="form-control"  [(ngModel)]="newobj.BillInfo.CustomerName" [ngModelOptions]="{standalone:true}" name="custmobile"  placeholder="Customer Name">
+        <input type="number" class="form-control" [(ngModel)]="newobj.BillInfo.CustMobile"
+          [ngModelOptions]="{standalone:true}" name="customername" placeholder="Mobile">
       </div>
-  </form>
+      <div class="form-group col-xs-12 col-xl-4 col-md-12  pull-right">
+        <input type="text" class="form-control" [(ngModel)]="newobj.BillInfo.CustomerName"
+          [ngModelOptions]="{standalone:true}" name="custmobile" placeholder="Customer Name">
+      </div>
+    </form>
   </div>
   <div class="card-body">
-    <div class="table-responsive">
+    <!-- <div class="table-responsive">
       <table class="table table-bordered" id="escalation">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Product</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Price</th>            
+            <th scope="col">Price</th>
             <th scope="col">CGST</th>
-            <th scope="col">SGST</th> 
-            <th scope="col">TaxAmount</th>           
+            <th scope="col">SGST</th>
+            <th scope="col">TaxAmount</th>
             <th scope="col">TotalPrice</th>
             <th scope="col">Actions</th>
           </tr>
@@ -41,22 +47,39 @@
             <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
             <td>{{cart.ProductName}}</td>
             <td>{{cart.Quantity | number : '1.2-2'}}</td>
-            <td>{{cart.Price | currency:'INR'}}</td>            
+            <td>{{cart.Price | currency:'INR'}}</td>
             <td>{{cart.CGST | currency:'INR'}}</td>
             <td>{{cart.SGST | currency:'INR'}}</td>
-            <td>{{cart.TaxAmount | currency:'INR'}}</td>            
+            <td>{{cart.TaxAmount | currency:'INR'}}</td>
             <td>{{cart.TotalPrice | currency:'INR'}}</td>
             <td>
-              <!-- <button class="btn" data-toggle="modal" data-target="#exampleModal" [id]="cart.CartId"
-                data-backdrop="static" data-keyboard="false" (click)="editCart(cart);"> <span
-                  class="fa fa-cart-plus"></span> </button> -->
-                  <button class="btn"> <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
+              <button class="btn"> <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
               <button class="btn"> <span class="fa fa-flag fa-trash" (click)="deleteCart(i,cart);"></span></button>
             </td>
           </tr>
         </tbody>
       </table>
-      <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide" (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
+      <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
+        (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
+    </div> -->
+    <div class="row">
+      <div class="col-xl-3 col-md-6 mb-4" *ngFor="let cart of carts |filter: filterStr">
+        <div class="Products-card">
+          <div class="card-body">
+            <img src="assets/img/oneplus-7t-pro-back.jpg" (click)="edit(prod);" alt="Denim Jeans" style="width:100%">
+
+            <h4>{{cart.ProductName}}</h4>
+            <p class="price">Qty: {{cart.Quantity | number : '1.2-2'}} {{cart.Price | currency:'INR'}}</p>
+            <!-- <p class="price">{{cart.Price | currency:'INR'}}</p> -->
+            <p>CGST: {{cart.CGST | currency:'INR'}}</p>
+            <p>SGST: {{cart.SGST | currency:'INR'}}</p>
+            <p class="price">Total: {{cart.TotalPrice | currency:'INR'}}</p>
+            <p><button class="btn btn-primary" > <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
+              <button class="btn btn-danger"> <span class="fa fa-flag fa-trash" (click)="deleteCart(i,cart);"></span></button>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
