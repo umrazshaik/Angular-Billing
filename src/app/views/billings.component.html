@@ -25,10 +25,10 @@
                         <td>{{bill.BillNo}}</td>
                         <td *ngIf="bill.CustomerName!=null">{{bill.CustomerName}}</td>
                         <td *ngIf="bill.CustomerName==null">Unknown</td>
-                        <td>{{bill.BilledAmount}}</td>
-                        <td>{{bill.CreatedDate | date}}</td>
+                        <td>{{bill.BilledAmount| currency:'INR'}}</td>
                         <td>{{bill.PaidAmount| currency:'INR'}}</td>
                         <td>{{bill.TaxAmount| currency:'INR'}}</td>
+                        <td>{{bill.CreatedDate | date}}</td>
                         <td>{{bill.PaymentType}}</td>
                         <td>
                             <button class="btn" (click)="viewbll(bill);" [routerLink]="['/billing/invoice']"> <span class="fa fa-flag fa-file-image-o fa-lg" ></span>
