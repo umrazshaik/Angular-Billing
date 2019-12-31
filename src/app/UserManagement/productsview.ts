@@ -50,6 +50,7 @@ export class ProductsView {
     this.actiontype = 1;
     this.pageConfig = commonsvc.pageConfig;
     this.pageConfig.currentPage = 1;
+    this.pageConfig.itemsPerPage=4;
   }
 
   ngOnInit() {

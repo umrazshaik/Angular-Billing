@@ -39,6 +39,7 @@ export class CartsComponent {
     this.cash = 'Cash'; this.card = 'Card'; this.online = 'Online';
     this.pageConfig = commonsvc.pageConfig;
     this.pageConfig.currentPage = 1;
+    this.pageConfig.itemsPerPage=4;
   }
   ngOnInit() {
     this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr = p });

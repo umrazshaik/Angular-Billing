@@ -33,6 +33,7 @@ export class BillingsComponent implements OnInit {
     this.retailId = this.commonsvc.getretailId();
     return this.billsvc.getBillings(this.retailId).subscribe((data: any) => {
       this.billings = data;
+      this.billings=this.billings.sort(o=>o.BillId);
       this.loader.hide();
     },er=>{
       this.toastr.error('loading failed');

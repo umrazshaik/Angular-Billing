@@ -69,17 +69,20 @@
             <img src="assets/img/oneplus-7t-pro-back.jpg" (click)="edit(prod);" alt="Denim Jeans" style="width:100%">
 
             <h4>{{cart.ProductName}}</h4>
-            <p class="price">Qty: {{cart.Quantity | number : '1.2-2'}} {{cart.Price | currency:'INR'}}</p>
+            <p>Qty: {{cart.Quantity | number : '1.2-2'}} {{cart.Price | currency:'INR'}}</p>
             <!-- <p class="price">{{cart.Price | currency:'INR'}}</p> -->
             <p>CGST: {{cart.CGST | currency:'INR'}}</p>
             <p>SGST: {{cart.SGST | currency:'INR'}}</p>
-            <p class="price">Total: {{cart.TotalPrice | currency:'INR'}}</p>
-            <p><button class="btn btn-primary" > <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
-              <button class="btn btn-danger"> <span class="fa fa-flag fa-trash" (click)="deleteCart(i,cart);"></span></button>
+            <p>Total: {{cart.TotalPrice | currency:'INR'}}</p>
+            <p><button class="btn btn-primary"> <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
+              <button class="btn btn-danger"> <span class="fa fa-flag fa-trash"
+                  (click)="deleteCart(i,cart);"></span></button>
             </p>
           </div>
         </div>
       </div>
     </div>
+    <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
+      (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
   </div>
 </div>

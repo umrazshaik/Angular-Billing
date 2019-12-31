@@ -31,6 +31,7 @@ export class ProductTypeComponent {
         this.actiontype = 1;
         this.pageConfig = commonsvc.pageConfig;
         this.pageConfig.currentPage = 1;
+        this.pageConfig.itemsPerPage=8;
         this.commonsvc.pullSearchStr().subscribe((p:any)=>{
             this.searchstr=p;
         })

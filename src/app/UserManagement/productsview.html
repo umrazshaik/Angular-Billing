@@ -81,7 +81,7 @@
               <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
             <!-- </div> -->
             <h4>{{prod.Name}}</h4>
-            <p class="price">{{prod.SellingCost | currency:'INR'}}</p>
+            <p class="price">{{prod.SellingCost | currency:'INR': fractionSize}}</p>
             <p class="text-truncate">{{prod.DisplayName}}</p>
             <p><button class="btn btn-primary btn-sm" (click)="addtocart(prod);">Add to Cart</button>
               <button class="btn btn-danger btn-sm" (click)="delete(i,prod);">Delete</button>
@@ -90,6 +90,8 @@
         </div>
       </div>
     </div>
+    <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
+      (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
   </div>
 </div>
 

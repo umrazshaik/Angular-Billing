@@ -36,6 +36,7 @@ export class BrandComponent {
     this.actiontype = 1;
     this.pageConfig = commonsvc.pageConfig;
     this.pageConfig.currentPage = 1;
+    this.pageConfig.itemsPerPage=8;
     //this.retailId = this.commonsvc.retaileR.RetailId;
   }
   ngOnInit() {
