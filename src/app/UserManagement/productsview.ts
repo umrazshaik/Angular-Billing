@@ -10,6 +10,7 @@ import { Brands } from '../model/brands';
 import { Carts } from '../model/carts';
 import { ToastrService } from 'ngx-toastr';
 import { SpinnerService } from '../spinner/spinner.service';
+import { error } from 'util';
 
 declare var $: any;
 
@@ -41,8 +42,8 @@ export class ProductsView {
     this.closepopup();
   }
 
-  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private csvc: CartsService, private toastr: ToastrService, private cd: ChangeDetectorRef,private loader:SpinnerService) {
-    this.newobj = new Products;     
+  constructor(private commonsvc: CommonService, private prodsvc: ProductsService, private ptypesvc: ProdtypeService, private bsvc: BrandsService, private csvc: CartsService, private toastr: ToastrService, private cd: ChangeDetectorRef, private loader: SpinnerService) {
+    this.newobj = new Products;
     this.newobj.Id = 0;
     this.selectedbrand = new Brands;
     this.selectedtype = new ProductType;
@@ -50,19 +51,19 @@ export class ProductsView {
     this.actiontype = 1;
     this.pageConfig = commonsvc.pageConfig;
     this.pageConfig.currentPage = 1;
-    this.pageConfig.itemsPerPage=4;
+    this.pageConfig.itemsPerPage = 4;
   }
 
   ngOnInit() {
-    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr=p});
+    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr = p });
     this.loaddependencies();
   }
   getProducts() {
     this.loader.show();
     this.retailId = this.commonsvc.getretailId();
     return this.prodsvc.getProducts(this.retailId).subscribe((data: any) => {
-      this.prods = data; 
-      this.loader.hide();     
+      this.prods = data;
+      this.loader.hide();
     });
   }
   loaddependencies() {
@@ -82,15 +83,16 @@ export class ProductsView {
     this.retailId = this.commonsvc.getretailId();
     this.bsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
-    },er=>{
+    }, er => {
       this.toastr.error('loading failed');
-      this.loader.hide();});
+      this.loader.hide();
+    });
   }
 
   createProduct() {
     this.newobj = new Products();
-    this.newobj.BrandId=null;
-    this.newobj.TypeId=null;
+    this.newobj.BrandId = null;
+    this.newobj.TypeId = null;
   }
 
   delete(index: number, objproduct: Products) {
@@ -123,7 +125,7 @@ export class ProductsView {
     this.actiontype = 1;
   }
   addp(newp: Products) {
-
+    this.loader.show();
     newp.RetailId = this.retailId;
     newp.Status = true;
     newp.CreatedBy = "admin";
@@ -134,11 +136,17 @@ export class ProductsView {
         this.toastr.success('Added');
         this.selectedbrand = new Brands;
         this.selectedtype = new ProductType
+        this.loader.hide();
         this.getProducts();
+
       }
       else {
         this.toastr.error('failed');
+        this.loader.hide();
       }
+    }, er => {
+      this.toastr.error('failed');
+      this.loader.hide();
     });
   }
   updateType(prod: Products) {
@@ -190,12 +198,12 @@ export class ProductsView {
   }
 
   addtocart(prod: Products) {
-    debugger
+    this.loader.show();
     let cart = new Carts();
     cart.ProductId = prod.Id;
-    this.commonsvc.retailerId=0;
+    this.commonsvc.retailerId = 0;
     this.commonsvc.getretailId();
-    cart.UserId=this.commonsvc.userId;
+    cart.UserId = this.commonsvc.userId;
     cart.Quantity = 1;
     cart.RetailerId = this.retailId;
     this.csvc.addCart(cart).subscribe((data: any) => {
@@ -205,6 +213,7 @@ export class ProductsView {
       else {
         this.toastr.error('failed');
       }
+      this.loader.hide();
     });
 
   }

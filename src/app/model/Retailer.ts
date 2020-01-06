@@ -2,6 +2,7 @@
 {
     public RetailId: number;
     public RetailName: string;
+    public GstNo : string;
     public DisplayName: string;
     public Address: string;
     public Mobile: number;

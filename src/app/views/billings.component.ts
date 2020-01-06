@@ -19,6 +19,7 @@ export class BillingsComponent implements OnInit {
   constructor(private commonsvc: CommonService, private toastr: ToastrService, private billsvc: BillingService, private router: Router,private loader:SpinnerService) {
     this.billings = new Array<BillingInfo>();
     this.pageConfig = commonsvc.pageConfig;
+    this.pageConfig.itemsPerPage=5;
     //this.retailId = this.commonsvc.retaileR.RetailId;
   }
 
@@ -33,7 +34,6 @@ export class BillingsComponent implements OnInit {
     this.retailId = this.commonsvc.getretailId();
     return this.billsvc.getBillings(this.retailId).subscribe((data: any) => {
       this.billings = data;
-      this.billings=this.billings.sort(o=>o.BillId);
       this.loader.hide();
     },er=>{
       this.toastr.error('loading failed');

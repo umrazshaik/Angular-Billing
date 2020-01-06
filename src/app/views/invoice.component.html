@@ -39,33 +39,37 @@
     .btn-space {
         margin-right: 5px;
     }
+
     .table .table-cell {
-   display: table-cell;
-   text-align: left;
-   vertical-align: top;
-   border: 1px solid black;
-}
-.card-body {
-    flex: 1 1 auto;
-    padding: 0.40rem;
-}
+        display: table-cell;
+        text-align: left;
+        vertical-align: top;
+        border: 1px solid black;
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+        padding: 0.40rem;
+    }
 </style>
 <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
     <div class="card">
         <div class="card-header p-2">
             <div class="float-right">
                 <h2>Invoice Bill</h2>
+                GST NO: {{objretailer.GstNo}}
             </div>
         </div>
         <div class="card-header p-2">
-            <button class="btn btn-primary btn-sm btn-space"  [routerLink]="['/mainpage/billing']"
+            <button class="btn btn-primary btn-sm btn-space" [routerLink]="['/mainpage/billing']"
                 data-abc="true">Back</button>
-            <button class="btn btn-success btn-sm btn-space"  (click)="print();"
-                data-abc="true">Print</button>
+            <button class="btn btn-success btn-sm btn-space" (click)="print();" data-abc="true">Print</button>
             <div class="float-right">
                 <h3 class="mb-0">Serial No of Invoice: {{objbill.BillInfo.BillNo}}</h3>
                 Date of Invoice: {{objbill.BillInfo.CreatedDate | date}}
+
             </div>
+
         </div>
         <div class="card-body">
             <div class="row mb-2">
@@ -84,10 +88,10 @@
                     <div>Phone: +91 {{objbill.BillInfo.CustMobile}}</div>
                 </div>
                 <div class="col-sm-6" *ngIf="objbill.BillInfo.CustMobile==0">
-                        <h5 class="mb-2">To:</h5>
-                        <h3 class="text-dark mb-1">Unknown</h3>
-                        <div>Phone: +91 9999999999</div>
-                    </div>
+                    <h5 class="mb-2">To:</h5>
+                    <h3 class="text-dark mb-1">Unknown</h3>
+                    <div>Phone: +91 9999999999</div>
+                </div>
             </div>
             <div class="table-responsive-sm">
                 <table class="table table-borderd">

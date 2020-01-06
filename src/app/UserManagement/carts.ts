@@ -75,7 +75,7 @@ export class CartsComponent {
   }
 
   makepayment(type: number, objbill: Bill) {
-
+   
     if (this.carts != null && this.carts.length > 0) {
       if (type == 1) {
 
@@ -143,6 +143,7 @@ export class CartsComponent {
 
   addbilling(objbill: Bill) {
     debugger
+    this.loader.show();
     this.billsvc.addBilling(objbill).subscribe((data: any) => {
       if (data > 0) {
         this.toastr.success('billing success');
@@ -152,6 +153,7 @@ export class CartsComponent {
       else {
         this.toastr.error('billing failed');
       }
+      this.loader.hide();
     });
   }
 

@@ -1,7 +1,7 @@
 ﻿export class BillingInfo {
     public BillId: number
 
-    public BillNo: number
+    public BillNo: string
 
     public RetailId: number
 

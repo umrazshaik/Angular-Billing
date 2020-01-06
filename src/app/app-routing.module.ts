@@ -27,7 +27,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DashBoardComponent,
+        //component: DashBoardComponent,
+        component:ProductsComponent
       },
       {
         path: 'profile',

@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let bill of billings |filter: filterStr : 'BillNo':'CustomerName':'PaymentType':'CreatedDate'| paginate: pageConfig ; let i=index">
+                    <tr *ngFor="let bill of billings.reverse() |filter: filterStr : 'BillNo':'CustomerName':'PaymentType':'CreatedDate'| paginate: pageConfig ; let i=index">
                         <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
                         <td>{{bill.BillNo}}</td>
                         <td *ngIf="bill.CustomerName!=null">{{bill.CustomerName}}</td>
