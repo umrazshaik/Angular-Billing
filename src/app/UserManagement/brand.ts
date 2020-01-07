@@ -24,7 +24,7 @@ export class BrandComponent {
   actiontype = 0;
   pageConfig: any;
   filterStr: string;
-
+  actions: any = null;
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     this.closepopup();
   }
@@ -35,6 +35,7 @@ export class BrandComponent {
     this.header = "Add";
     this.actiontype = 1;
     this.pageConfig = commonsvc.pageConfig;
+    this.actions = this.commonsvc.fileuploadConfig;
     this.pageConfig.currentPage = 1;
     this.pageConfig.itemsPerPage=8;
     //this.retailId = this.commonsvc.retaileR.RetailId;
@@ -133,5 +134,37 @@ export class BrandComponent {
     this.actiontype = 1;
   }
 
+  //file upload code here
+  fileUpload(files: any) {
+    try {
+      let file = files[0];
+      let fileTypestr = this.commonsvc.fileuploadConfig.import.accept;
+      let fileTypes = (fileTypestr == null || fileTypestr == undefined) ? null : fileTypestr.split(',').map(item => item.trim());
+      if (fileTypes == null || fileTypes.indexOf(file.type.toString()) > -1) {
+        let formData = new FormData();
+        formData.append(file.name, file);
+        this.fileuploadEvent(formData);
+      }
+      else {
+        //file type error
+        alert('unsupported file format');
+      }
+    }
+    catch{
+    }
+  }
+
+  fileuploadEvent(formData: any) {
+    //console.log(formData);
+    this.loader.show();
+    this.brandsvc.importBrands(formData).subscribe(data => {
+      this.loader.hide();
+      this.toastr.success('Sucesfully Imported.');
+      this.getBrands();
+    }, er => {
+      this.loader.hide();
+      this.toastr.error('Import failed.')
+    });
+  }
 
 }

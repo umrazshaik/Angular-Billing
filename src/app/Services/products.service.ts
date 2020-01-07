@@ -24,4 +24,12 @@ export class ProductsService {
     deleteProduct(prodId: number) {
         return this.http.delete("api/product/deletep?productId=" + prodId);
     }
+
+    importProducts(formdata: FormData) {
+        return this.http.postJson(formdata,'api/product/import');
+    }
+
+    exportProducts(formdata: FormData) {
+        return this.http.postJson(formdata,'api/product/export');
+    }
 }

@@ -5,6 +5,9 @@
                 data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static"
                 data-keyboard="false">Add Product
                 Type</button>
+            <input  type="file" name="myfile" [accept]="actions?.import?.accept"  (change)="fileUpload($event.target.files)" style="display:none;" #file />
+            <button *ngIf="actions?.import" type="button" (click)="file.click()" class="btn btn-primary btn-sm"
+                style="float: right;">{{actions?.import?.btnName}}</button>
         </h6>
     </div>
     <div class="card-body">
@@ -37,31 +40,36 @@
                 (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
         </div> -->
         <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4" *ngFor="let type of types  |filter: searchstr : 'Name' | paginate: pageConfig ; let i=index">
-            <div class="card border-left-success shadow h-100 py-2">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success mb-1">{{type.Name| titlecase}}</div>
-                    <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div> -->
-                  </div>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw txt-gray-color"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item"  data-toggle="modal" data-target="#exampleModal" [id]="type.TypeId"  data-backdrop="static" data-keyboard="false" (click)="edittype(type);"><span
-                        class="fa fa-flag fa-wrench"></span> Edit</a>
-                      <a class="dropdown-item"  (click)="deleteType((i),type);"><span class="fa fa-flag fa-trash"></span> Delete</a>
+            <div class="col-xl-3 col-md-6 mb-4"
+                *ngFor="let type of types  |filter: searchstr : 'Name' | paginate: pageConfig ; let i=index">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success mb-1">{{type.Name| titlecase}}</div>
+                                <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div> -->
+                            </div>
+                            <div class="dropdown no-arrow">
+                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-sm fa-fw txt-gray-color"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                    aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal"
+                                        [id]="type.TypeId" data-backdrop="static" data-keyboard="false"
+                                        (click)="edittype(type);"><span class="fa fa-flag fa-wrench"></span> Edit</a>
+                                    <a class="dropdown-item" (click)="deleteType((i),type);"><span
+                                            class="fa fa-flag fa-trash"></span> Delete</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
         <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
-        (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
+            (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
     </div>
 </div>
 

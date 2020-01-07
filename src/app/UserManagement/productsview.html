@@ -8,6 +8,10 @@
         data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static"
         data-keyboard="false">Add
         Product</button>
+      <input type="file" name="myfile" [accept]="actions?.import?.accept"
+        (change)="fileUpload($event.target.files, actions?.import?.accept)" style="display:none;" #file />
+      <button *ngIf="actions?.import" type="button" (click)="file.click()" class="btn btn-primary btn-sm"
+        style="float: right;">{{actions?.import?.btnName}}</button>
     </h6>
   </div>
   <div class="card-body">
@@ -75,10 +79,10 @@
         <div class="Products-card">
           <div class="card-body">
             <!-- <div class="row no-gutters align-items-center"> -->
-                <!-- <div class="container"> -->
+            <!-- <div class="container"> -->
             <img src="assets/img/oneplus-7t-pro-back.jpg" data-toggle="modal" data-target="#exampleModal" [id]="prod.Id"
               data-backdrop="static" data-keyboard="false" (click)="edit(prod);" alt="Denim Jeans" style="width:100%">
-              <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
+            <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
             <!-- </div> -->
             <h4>{{prod.Name}}</h4>
             <p class="price">{{prod.SellingCost | currency:'INR': fractionSize}}</p>
@@ -86,7 +90,7 @@
             <p><button class="btn btn-primary btn-sm" (click)="addtocart(prod);">Add to Cart</button>
               <button class="btn btn-danger btn-sm" (click)="delete(i,prod);">Delete</button>
             </p>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
@@ -111,8 +115,9 @@
           <div class="container-fluid">
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Name</label>
-              <input type="text" class="form-control" [(ngModel)]="newobj.Name" name="name" placeholder="Name"
-                #name="ngModel" [ngClass]="{ 'is-invalid': fm.submitted && name.invalid }" required>
+              <input type="text" class="form-control" [attr.disabled]="(actiontype === 2) ? '' : null" [(ngModel)]="
+                newobj.Name" name="name" placeholder="Name" #name="ngModel" pattern="[A-Za-z0-9]*"
+                [ngClass]="{ 'is-invalid': fm.submitted && name.invalid }" required>
             </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-right">
               <label for="exampleInputEmail1">Display Name</label>

@@ -14,10 +14,18 @@ export class CommonService {
   retaileR: Retailer;
   billId: number;
   retailerId: number = 0;
-  userId:number=0;
+  userId: number = 0;
   baseurl: string;
   private _searchBS = new BehaviorSubject<string>('');
   pageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
+
+  //gloabl file upload config
+  fileuploadConfig: any = {
+    import: {
+      accept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel',
+      btnName: 'Import'
+    }
+  };
 
   constructor() {
 
@@ -30,7 +38,7 @@ export class CommonService {
     this._searchBS.next(val);
   }
 
-  pullSearchStr(){
+  pullSearchStr() {
     return this._searchBS.asObservable();
   }
 
@@ -42,10 +50,9 @@ export class CommonService {
   getretailId() {
     if (this.retailerId == 0 || undefined || null) {
       var user = JSON.parse(localStorage.getItem('user'));
-      if (user != null)
-      {
+      if (user != null) {
         this.retailerId = user.RetailId;
-        this.userId=user.UserId;
+        this.userId = user.UserId;
       }
     }
 

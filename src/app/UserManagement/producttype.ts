@@ -20,7 +20,10 @@ export class ProductTypeComponent {
     header: string;
     actiontype: number;
     pageConfig: any;
-    searchstr:string;
+    searchstr: string;
+
+    actions: any = null;
+
     @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         this.closepopup();
     }
@@ -31,9 +34,10 @@ export class ProductTypeComponent {
         this.actiontype = 1;
         this.pageConfig = commonsvc.pageConfig;
         this.pageConfig.currentPage = 1;
-        this.pageConfig.itemsPerPage=8;
-        this.commonsvc.pullSearchStr().subscribe((p:any)=>{
-            this.searchstr=p;
+        this.pageConfig.itemsPerPage = 8;
+        this.actions = this.commonsvc.fileuploadConfig;
+        this.commonsvc.pullSearchStr().subscribe((p: any) => {
+            this.searchstr = p;
         })
     }
 
@@ -48,7 +52,7 @@ export class ProductTypeComponent {
         return this.prodtypesvc.getproductTypes(this.retailId).subscribe((data: any) => {
             this.types = data;
             this.loader.hide();
-        },er=>{
+        }, er => {
             this.toastr.error('loading failed');
             this.loader.hide();
         });
@@ -133,5 +137,38 @@ export class ProductTypeComponent {
         this.header = "Add Product Type";
         this.actiontype = 1;
         form.reset();
+    }
+
+    //file upload code here
+    fileUpload(files: any) {
+        try {
+            let file = files[0];
+            let fileTypestr = this.commonsvc.fileuploadConfig.import.accept;
+            let fileTypes = (fileTypestr == null || fileTypestr == undefined) ? null : fileTypestr.split(',').map(item => item.trim());
+            if (fileTypes == null || fileTypes.indexOf(file.type.toString()) > -1) {
+                let formData = new FormData();
+                formData.append(file.name, file);
+                this.fileuploadEvent(formData);
+            }
+            else {
+                //file type error
+                alert('unsupported file format');
+            }
+        }
+        catch{
+        }
+    }
+
+    fileuploadEvent(formData: any) {
+        //console.log(formData);
+        this.loader.show();
+        this.prodtypesvc.importProductTypes(formData).subscribe(data => {
+            this.loader.hide();
+            this.toastr.success('Sucesfully Imported.');
+            this.getTypes();
+        }, er => {
+            this.loader.hide();
+            this.toastr.error('Import failed.')
+        });
     }
 }

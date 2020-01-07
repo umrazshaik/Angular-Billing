@@ -1,8 +1,13 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-center">List of Brands<button type="button" class="btn btn-primary btn-sm"
+    <h6 class="m-0 font-weight-bold text-center">List of Brands
+      <button type="button" class="btn btn-primary btn-sm"
         style="float: right;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"
-        data-backdrop="static" (click)="createBrand()" data-keyboard="false">Add Brand</button></h6>
+        data-backdrop="static" (click)="createBrand()" data-keyboard="false">Add Brand</button>
+        <input  type="file" name="myfile" [accept]="actions?.import?.accept"  (change)="fileUpload($event.target.files, actions?.import?.accept)" style="display:none;" #file />
+        <button *ngIf="actions?.import" type="button" (click)="file.click()" class="btn btn-primary btn-sm"
+            style="float: right;">{{actions?.import?.btnName}}</button>
+      </h6>
   </div>
   <div class="card-body">
     <!-- <div class="table-responsive">
