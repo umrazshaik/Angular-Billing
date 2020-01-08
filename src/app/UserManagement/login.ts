@@ -53,7 +53,7 @@ export class LoginComponent {
         this.cmsvc.retaileR = data;
         localStorage.setItem('retail', JSON.stringify(data));
         this.loader.hide();
-        this.router.navigateByUrl("/mainpage/products");
+        this.router.navigateByUrl("/mainpage");
       }
     });
   }

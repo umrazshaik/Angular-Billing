@@ -27,10 +27,10 @@ export class ProdtypeService {
         return this.http.delete("api/productType/deletet?typeId=" + typeId);
     }
 
-    importProductTypes(formdata: FormData) {
-        return this.http.postJson(formdata,'api/productType/import');
+    importProductTypes(formdata: FormData, id: number) {
+        return this.http.postJson(formdata, 'api/productType/import?retailId=' + id);
     }
-    exportProductTypes(){
+    exportProductTypes() {
         return this.http.getJson('api/productType/export')
     }
 }
