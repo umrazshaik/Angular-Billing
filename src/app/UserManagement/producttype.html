@@ -5,6 +5,8 @@
                 data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static"
                 data-keyboard="false">Add Product
                 Type</button>
+                <button *ngIf="types && types.length>0" type="button" (click)="export()" class="btn btn-primary btn-sm"
+                    style="float: right;">Export</button>
             <input  type="file" name="myfile" [accept]="actions?.import?.accept"  (change)="fileUpload($event.target.files)" style="display:none;" #file />
             <button *ngIf="actions?.import" type="button" (click)="file.click()" class="btn btn-primary btn-sm"
                 style="float: right;">{{actions?.import?.btnName}}</button>

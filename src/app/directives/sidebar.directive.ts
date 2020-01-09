@@ -9,8 +9,7 @@ export class SidebarDirective {
   constructor(private eleref: ElementRef, private rend2: Renderer2) { }
 
   @Input() set appSidebar(val: boolean) {
-    if (val) {
-      debugger
+    if (!val) {     
       this.rend2.addClass(this.eleref.nativeElement, 'toggled');
     }
     else

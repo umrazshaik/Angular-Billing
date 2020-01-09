@@ -47,11 +47,11 @@
             <th scope="row">{{pageConfig.itemsPerPage * (pageConfig.currentPage-1)+(i+1)}}</th>
             <td>{{cart.ProductName}}</td>
             <td>{{cart.Quantity | number : '1.2-2'}}</td>
-            <td>{{cart.Price | currency:'INR'}}</td>
-            <td>{{cart.CGST | currency:'INR'}}</td>
-            <td>{{cart.SGST | currency:'INR'}}</td>
-            <td>{{cart.TaxAmount | currency:'INR'}}</td>
-            <td>{{cart.TotalPrice | currency:'INR'}}</td>
+            <td>{{cart.Price |  INR}}</td>
+            <td>{{cart.CGST |  INR}}</td>
+            <td>{{cart.SGST |  INR}}</td>
+            <td>{{cart.TaxAmount |  INR}}</td>
+            <td>{{cart.TotalPrice |  INR}}</td>
             <td>
               <button class="btn"> <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
               <button class="btn"> <span class="fa fa-flag fa-trash" (click)="deleteCart(i,cart);"></span></button>
@@ -69,11 +69,11 @@
             <img src="assets/img/oneplus-7t-pro-back.jpg" (click)="edit(prod);" alt="Denim Jeans" style="width:100%">
 
             <h4>{{cart.ProductName}}</h4>
-            <p>Qty: {{cart.Quantity | number : '1.2-2'}} {{cart.Price | currency:'INR'}}</p>
-            <!-- <p class="price">{{cart.Price | currency:'INR'}}</p> -->
-            <p>CGST: {{cart.CGST | currency:'INR'}}</p>
-            <p>SGST: {{cart.SGST | currency:'INR'}}</p>
-            <p>Total: {{cart.TotalPrice | currency:'INR'}}</p>
+            <p>Qty: {{cart.Quantity | number : '1.2-2'}} {{cart.Price |  INR}}</p>
+            <!-- <p class="price">{{cart.Price |  INR}}</p> -->
+            <p>CGST: {{cart.CGST |  INR}}</p>
+            <p>SGST: {{cart.SGST |  INR}}</p>
+            <p>Total: {{cart.TotalPrice |  INR}}</p>
             <p><button class="btn btn-primary"> <span class="fa fa-cart-plus" (click)="addplus(cart);"></span></button>
               <button class="btn btn-danger"> <span class="fa fa-flag fa-trash"
                   (click)="deleteCart(i,cart);"></span></button>

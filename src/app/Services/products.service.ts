@@ -25,11 +25,11 @@ export class ProductsService {
         return this.http.delete("api/product/deletep?productId=" + prodId);
     }
 
-    importProducts(formdata: FormData,id:number) {
-        return this.http.postJson(formdata,'api/product/import?retailId='+id);
+    importProducts(formdata: FormData, id: number) {
+        return this.http.postJson(formdata, 'api/product/import?retailId=' + id);
     }
 
-    exportProducts(formdata: FormData) {
-        return this.http.postJson(formdata,'api/product/export');
+    exportProducts(rid: number) {
+        return this.http.getJson('api/product/export/' + rid);
     }
 }

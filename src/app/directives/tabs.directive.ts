@@ -4,19 +4,17 @@ import { Router } from "@angular/router";
 
 
 @Directive({
-  selector: '[appTabs]'
+  selector: '[stab]'
 })
 export class TabsDirective {
 
-  constructor(private eleref: ElementRef, private rend2: Renderer2) { }
+  constructor(private eleref: ElementRef, private rend2: Renderer2, private router: Router) { }
 
-  @Input() set appSidebar(val: string) {
-    if (val='') {
-      debugger
+  @Input() set stab(val: string) {
+    let ctab = this.router.url.split('/').pop()
+    if (val = ctab) {
       this.rend2.addClass(this.eleref.nativeElement, 'active');
     }
-    else
-      this.rend2.removeClass(this.eleref.nativeElement, 'active');
   }
 
 }

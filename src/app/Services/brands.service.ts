@@ -25,11 +25,11 @@ export class BrandsService {
         return this.http.delete("api/brands/deleteb?brandId=" + brandId);
     }
 
-    importBrands(formdata: FormData,id:number) {
-        return this.http.postJson(formdata,'api/brands/import?retailId='+id);
+    importBrands(formdata: FormData, id: number) {
+        return this.http.postJson(formdata, 'api/brands/import?retailId=' + id);
     }
 
-    exportBrands(){
-        return this.http.getJson('api/brands/export')
+    exportBrands(rid: number) {
+        return this.http.getJson('api/brands/export/' + rid);
     }
 }

@@ -8,6 +8,8 @@
         data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" data-backdrop="static"
         data-keyboard="false">Add
         Product</button>
+        <button *ngIf="prods && prods.length>0" type="button" (click)="export()" class="btn btn-primary btn-sm"
+          style="float: right;">Export</button>
       <input type="file" name="myfile" [accept]="actions?.import?.accept"
         (change)="fileUpload($event.target.files, actions?.import?.accept)" style="display:none;" #file />
       <button *ngIf="actions?.import" type="button" (click)="file.click()" class="btn btn-primary btn-sm"
@@ -85,7 +87,7 @@
             <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
             <!-- </div> -->
             <h5>{{prod.DisplayName}}</h5>
-            <p >{{prod.SellingCost | currency:'INR': fractionSize}}</p>
+            <p >{{prod.SellingCost | INR}}</p>
             <p class="text-truncate">{{prod.Description}}</p>
             <!-- <textarea readonly="readonly" cols="50" rows="2"> 
               {{prod.Description}}
