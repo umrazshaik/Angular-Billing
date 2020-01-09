@@ -24,7 +24,7 @@ export class BillingService {
         return this.http.getJson("api/billing/getbillinfo?billId=" + billId);
     }
 
-    getbillsbydates(retailerId: number, fdate: string, tdate: string) {
-        return this.http.getJson('api/billing/getbillbydates?retailerId=' + retailerId + '&&fromdate=' + fdate + '&&todate=' + tdate);
+     getbillsbydates(retailerId: number, dys: number) {
+        return this.http.getJson('api/billing/getbillbydates?retailerId=' + retailerId + '&&days=' + dys);
     }
 }
