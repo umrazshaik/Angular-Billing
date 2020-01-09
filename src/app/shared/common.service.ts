@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Retailer } from '../model/Retailer'
+import { PageConfig } from '../model/pageConfig';
 
 
 
@@ -17,7 +18,7 @@ export class CommonService {
   userId: number = 0;
   baseurl: string;
   private _searchBS = new BehaviorSubject<string>('');
-  pageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
+  pageConfig: PageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
 
   //gloabl file upload config
   fileuploadConfig: any = {
@@ -68,5 +69,16 @@ export class CommonService {
   clearlocalStorage() {
     localStorage.clear();
   }
+
+  setCurrentPage(cpageConfig: PageConfig, deletedItem: any, totalItems: any[]) {
+    let deletedItemIndex = totalItems.indexOf(deletedItem) + 1;
+    let reminder = deletedItemIndex % cpageConfig.itemsPerPage;
+    if (cpageConfig.currentPage > 1 &&
+      totalItems.length == deletedItemIndex && reminder == 1) {
+      return cpageConfig.currentPage - 1;
+    }
+    return cpageConfig.currentPage;
+  }
+
 
 }

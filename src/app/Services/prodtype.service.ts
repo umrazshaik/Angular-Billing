@@ -28,9 +28,9 @@ export class ProdtypeService {
     }
 
     importProductTypes(formdata: FormData) {
-        return this.http.postJson(formdata,'api/productType/import');
+        return this.http.postJson(formdata, 'api/productType/import');
     }
-    exportProductTypes(){
-        return this.http.getJson('api/productType/export')
+    exportProductTypes() {
+        return this.http.getJson('api/productType/export');
     }
 }
