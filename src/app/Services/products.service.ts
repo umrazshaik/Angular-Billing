@@ -26,10 +26,10 @@ export class ProductsService {
     }
 
     importProducts(formdata: FormData) {
-        return this.http.postJson(formdata, 'api/product/import');
+        return this.http.postJson(formdata,'api/product/import');
     }
 
-    exportProducts() {
-        return this.http.getJson('api/product/export');
+    exportProducts(formdata: FormData) {
+        return this.http.postJson(formdata,'api/product/export');
     }
 }

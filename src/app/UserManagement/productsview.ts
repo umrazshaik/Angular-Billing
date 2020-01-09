@@ -99,8 +99,7 @@ export class ProductsView {
 
   delete(index: number, objproduct: Products) {
     this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
-      if (data > 0) {                
-        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, objproduct, this.prods);
+      if (data > 0) {
         this.prods.splice(index, 1);
         this.toastr.success('deleted');
         //this.getProducts();

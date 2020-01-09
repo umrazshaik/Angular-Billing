@@ -30,6 +30,6 @@ export class BrandsService {
     }
 
     exportBrands(){
-        return this.http.getJson('api/brands/export');
+        return this.http.getJson('api/brands/export')
     }
 }

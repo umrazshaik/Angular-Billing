@@ -4,7 +4,6 @@ import { Brands } from '../model/brands';
 import { BrandsService } from '../Services/brands.service';
 import { ToastrService } from 'ngx-toastr';
 import { SpinnerService } from '../spinner/spinner.service';
-import 'rxjs/Rx';
 
 declare var $: any;
 
@@ -30,7 +29,7 @@ export class BrandComponent {
     this.closepopup();
   }
 
-  constructor(private commonsvc: CommonService, private brandsvc: BrandsService, private toastr: ToastrService, private loader: SpinnerService) {
+  constructor(private commonsvc: CommonService, private brandsvc: BrandsService, private toastr: ToastrService,private loader:SpinnerService) {
     this.newBrand = new Brands();
     this.brands = [];
     this.header = "Add";
@@ -38,25 +37,24 @@ export class BrandComponent {
     this.pageConfig = commonsvc.pageConfig;
     this.actions = this.commonsvc.fileuploadConfig;
     this.pageConfig.currentPage = 1;
-    this.pageConfig.itemsPerPage = 8;
+    this.pageConfig.itemsPerPage=8;
     //this.retailId = this.commonsvc.retaileR.RetailId;
   }
   ngOnInit() {
     this.getBrands();
-    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr = p });
+    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr=p});
   }
 
   getBrands() {
     this.loader.show();
-    this.retailId = this.commonsvc.getretailId();
+    this.retailId = this.commonsvc.getretailId();    
     this.brandsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
       this.loader.hide();
       console.log(data);
-    }, er => {
+    },er=>{
       this.toastr.error('loading failed');
-      this.loader.hide();
-    });
+      this.loader.hide();});
   }
 
   createBrand() {
@@ -134,18 +132,6 @@ export class BrandComponent {
     $('#exampleModal').modal('hide')
     this.header = "Add";
     this.actiontype = 1;
-  }
-
-  export() {
-    this.brandsvc.exportBrands().subscribe(data => this.downloadFile(data)),//console.log(data),
-      error => console.log('Error downloading the file.'),
-      () => console.info('OK');
-  }
-
-  downloadFile(data: any) {
-    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
   }
 
   //file upload code here
