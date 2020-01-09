@@ -30,6 +30,6 @@ export class BrandsService {
     }
 
     exportBrands(rid: number) {
-        return this.http.getJson('api/brands/export/' + rid);
+        return this.http.getJson('api/brands/export?retailId=' + rid);
     }
 }

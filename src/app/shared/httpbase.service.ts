@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppintializorService } from '../shared/appintializor.service'
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class HttpbaseService {
 
@@ -46,8 +46,12 @@ export class HttpbaseService {
     }
 
     getJson(url) {
-         
+
         return this.httpClient.get(this.baseUrl + url, this.requestOptions);
+    }
+
+    getBlob(url) {
+        return this.httpClient.get(this.baseUrl + url, { responseType: 'blob' }).toPromise();
     }
 
     getJsonWithHeader(url: string, token: any) {

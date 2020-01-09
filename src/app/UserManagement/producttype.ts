@@ -5,6 +5,7 @@ import { ProductType } from '../model/productType';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { SpinnerService } from '../spinner/spinner.service';
+import { saveAs } from 'file-saver'
 
 declare var $: any;
 
@@ -175,14 +176,15 @@ export class ProductTypeComponent {
     }
 
     export() {
-        this.prodtypesvc.exportProductTypes(this.retailId).subscribe(data => this.downloadFile(data)),//console.log(data),
-          error => console.log('Error downloading the file.'),
-          () => console.info('OK');
-      }
-    
-      downloadFile(data: any) {
+        this.prodtypesvc.exportProductTypes(this.retailId).then(blob => {
+            saveAs(blob, 'dfskjlakl.xlsx');
+        });
+    }
+
+    downloadFile(data: any) {
         const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        const url = window.URL.createObjectURL(blob);
+        let url = window.URL.createObjectURL(blob);
+        //url = url + '.xlsx';
         window.open(url);
-      }
+    }
 }
