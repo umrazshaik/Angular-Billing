@@ -243,7 +243,7 @@ export class ProductsView {
   fileuploadEvent(formData: any) {
     //console.log(formData);
     this.loader.show();
-    this.prodsvc.importProducts(formData).subscribe(data => {
+    this.prodsvc.importProducts(formData,this.commonsvc.getretailId()).subscribe(data => {
       this.loader.hide();
       this.toastr.success('Sucesfully Imported.');
       this.getProducts();

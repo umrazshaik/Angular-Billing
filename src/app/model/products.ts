@@ -5,6 +5,8 @@
 
     public DisplayName: string
 
+    public Description:string
+
     public Code : string
 
     public TypeId: number

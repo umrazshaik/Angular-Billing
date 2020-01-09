@@ -162,7 +162,7 @@ export class ProductTypeComponent {
     fileuploadEvent(formData: any) {
         //console.log(formData);
         this.loader.show();
-        this.prodtypesvc.importProductTypes(formData).subscribe(data => {
+        this.prodtypesvc.importProductTypes(formData,this.commonsvc.getretailId()).subscribe(data => {
             this.loader.hide();
             this.toastr.success('Sucesfully Imported.');
             this.getTypes();

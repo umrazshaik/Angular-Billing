@@ -25,8 +25,8 @@ export class ProductsService {
         return this.http.delete("api/product/deletep?productId=" + prodId);
     }
 
-    importProducts(formdata: FormData) {
-        return this.http.postJson(formdata,'api/product/import');
+    importProducts(formdata: FormData,id:number) {
+        return this.http.postJson(formdata,'api/product/import?retailId='+id);
     }
 
     exportProducts(formdata: FormData) {

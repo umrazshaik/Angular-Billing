@@ -84,9 +84,12 @@
               data-backdrop="static" data-keyboard="false" (click)="edit(prod);" alt="Denim Jeans" style="width:100%">
             <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
             <!-- </div> -->
-            <h4>{{prod.Name}}</h4>
-            <p class="price">{{prod.SellingCost | currency:'INR': fractionSize}}</p>
-            <p class="text-truncate">{{prod.DisplayName}}</p>
+            <h5>{{prod.DisplayName}}</h5>
+            <p >{{prod.SellingCost | currency:'INR': fractionSize}}</p>
+            <p class="text-truncate">{{prod.Description}}</p>
+            <!-- <textarea readonly="readonly" cols="50" rows="2"> 
+              {{prod.Description}}
+          </textarea>  -->
             <p><button class="btn btn-primary btn-sm" (click)="addtocart(prod);">Add to Cart</button>
               <button class="btn btn-danger btn-sm" (click)="delete(i,prod);">Delete</button>
             </p>
@@ -124,6 +127,12 @@
               <input type="text" class="form-control" [(ngModel)]="newobj.DisplayName" name="displayname"
                 placeholder="Display Name" #displayname="ngModel"
                 [ngClass]="{ 'is-invalid': fm.submitted && displayname.invalid }" required>
+            </div>
+            <div class="form-group col-xs-12 col-xl-12 col-md-12 pull-right">
+              <label for="exampleInputEmail1">Description</label>
+              <textarea rows="2" cols="50"  class="form-control" [(ngModel)]="newobj.Description" name="description"
+                placeholder="Description" #description="ngModel"
+                [ngClass]="{ 'is-invalid': fm.submitted && description.invalid }" required></textarea>
             </div>
             <div class="form-group col-xs-12 col-xl-6 col-md-12 pull-left">
               <label for="exampleInputEmail1">Code</label>
