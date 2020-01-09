@@ -1,7 +1,37 @@
     .fa-flag:hover {
     color: red;
 }/* Add application styles & imports to this file! */
-
+.hover:hover {
+  color:#007bff !important;
+  cursor: pointer;
+}
+.hover1:hover {
+  color:#28a745 !important;
+  cursor: pointer;
+}
+.hover2:hover {
+  color:#17a2b8 !important;
+  cursor: pointer;
+}
+.hover3:hover {
+  color:#ffc107 !important;
+  cursor: pointer;
+}
+.txtclr{
+  color: #007bff !important;
+}
+.text-gray-3001{
+  color: #007bff !important;
+}
+.text-gray-3002{
+  color: #28a745 !important;   
+}
+.text-gray-3003{
+  color: #17a2b8 !important; 
+}
+.text-gray-3004{
+  color: #ffc107 !important;   
+}
 .bg-register-user {
     background: url("./assets/img/reg.jpg");
     background-position: center;
