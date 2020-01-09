@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Retailer } from '../model/Retailer'
-
+import { PageConfig } from '../model/pageConfig';
 
 
 @Injectable({
@@ -17,7 +17,10 @@ export class CommonService {
   userId: number = 0;
   baseurl: string;
   private _searchBS = new BehaviorSubject<string>('');
-  pageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
+  private _sliderToggleBS = new BehaviorSubject<boolean>(false);
+  private sliderStatus: boolean;
+  slider = this._sliderToggleBS.asObservable();
+  pageConfig: PageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
 
   //gloabl file upload config
   fileuploadConfig: any = {
@@ -43,8 +46,23 @@ export class CommonService {
   }
 
   setRetailer(objretailer: Retailer) {
-
     this.retaileR = objretailer;
+  }
+
+  sliderToggle() {
+    if (this.sliderStatus)
+      this.sliderClose();
+    else
+      this.sliderOpen();
+  }
+
+  sliderOpen() {
+    this.sliderStatus = true;
+    this._sliderToggleBS.next(true);
+  }
+  sliderClose() {
+    this.sliderStatus = false;
+    this._sliderToggleBS.next(false);    
   }
 
   getretailId() {
@@ -67,6 +85,17 @@ export class CommonService {
 
   clearlocalStorage() {
     localStorage.clear();
+  }
+
+  setCurrentPage(cpageConfig: PageConfig, deletedItemIndex: number, totalItems: number) {
+    debugger
+    deletedItemIndex += 1;
+    let reminder = deletedItemIndex % cpageConfig.itemsPerPage;
+    if (cpageConfig.currentPage > 1 &&
+      totalItems == deletedItemIndex && reminder == 1) {
+      return cpageConfig.currentPage - 1;
+    }
+    return cpageConfig.currentPage;
   }
 
 }

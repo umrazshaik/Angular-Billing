@@ -40,21 +40,21 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link"  [routerLink]="['/mainpage']">
+      <li class="nav-item" [ngClass]="{'active':tabselect==='mainpage'}">
+        <a class="nav-link" (click)="navLinkClick('mainpage')"  [routerLink]="['/mainpage']">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
 
       
-      <li class="nav-item">
-        <a class="nav-link"  [routerLink]="['/mainpage/products']">
+      <li class="nav-item" [ngClass]="{'active':tabselect==='products'}">
+        <a class="nav-link" (click)="navLinkClick('products')"  [routerLink]="['/mainpage/products']">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Products</span></a>
       </li>
     
-      <li class="nav-item">
-        <a class="nav-link"  [routerLink]="['/mainpage/billing']">
+      <li class="nav-item" [ngClass]="{'active':tabselect==='billing'}">
+        <a class="nav-link" (click)="navLinkClick('billing')"  [routerLink]="['/mainpage/billing']">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Billing</span></a>
       </li>
@@ -65,7 +65,7 @@
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <button (click)="commonsvc.sliderToggle()" class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
 
     </ul>
@@ -81,7 +81,7 @@
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3" (click)="issidebar=!issidebar">
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3" (click)="commonsvc.sliderToggle()">
             <i class="fa fa-bars"></i>
           </button>
 
@@ -183,7 +183,7 @@
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="javascript:void(0)">
                   <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                    <img class="rounded-circle" [src]="'https://source.unsplash.com/fn_BT9fwg_E/60x60'" alt="">
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold">

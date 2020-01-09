@@ -109,12 +109,14 @@ export class ProductTypeComponent {
     deleteType(index: number, pt: ProductType) {
         this.prodtypesvc.deleteProductType(pt.TypeId).subscribe((data: any) => {
             if (data > 0) {
-                this.types.splice(index, 1);
+                let deletedItemIndex = this.types.indexOf(pt);
+                this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.types.length);
+                this.types.splice(deletedItemIndex, 1);
                 this.toastr.success('deleted');
                 //this.getTypes();
             }
             else {
-                this.toastr.success('not deleted');
+                this.toastr.error('Failed');
             }
         });
     }
@@ -162,7 +164,7 @@ export class ProductTypeComponent {
     fileuploadEvent(formData: any) {
         //console.log(formData);
         this.loader.show();
-        this.prodtypesvc.importProductTypes(formData,this.commonsvc.getretailId()).subscribe(data => {
+        this.prodtypesvc.importProductTypes(formData, this.commonsvc.getretailId()).subscribe(data => {
             this.loader.hide();
             this.toastr.success('Sucesfully Imported.');
             this.getTypes();
@@ -171,4 +173,16 @@ export class ProductTypeComponent {
             this.toastr.error('Import failed.')
         });
     }
+
+    export() {
+        this.prodtypesvc.exportProductTypes(this.retailId).subscribe(data => this.downloadFile(data)),//console.log(data),
+          error => console.log('Error downloading the file.'),
+          () => console.info('OK');
+      }
+    
+      downloadFile(data: any) {
+        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      }
 }

@@ -116,11 +116,11 @@
                             <td>{{prod.ProductName}}</td>
                             <td>{{prod.Code}}</td>
                             <td>{{prod.Quantity | number : '1.2-2'}}</td>
-                            <td>{{prod.Price | currency:'INR'}}</td>
+                            <td>{{prod.Price |  INR}}</td>
                             <td></td>
                             <td>{{prod.SGSTPercentage}}.00</td>
                             <td>{{prod.CGSTPercentage}}.00</td>
-                            <td>{{((prod.Price*prod.Quantity)+prod.Tax) | currency:'INR'}}</td>
+                            <td>{{((prod.Price*prod.Quantity)+prod.Tax) |  INR}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -135,7 +135,7 @@
                                 <td class="left">
                                     <strong class="text-dark">Subtotal</strong>
                                 </td>
-                                <td class="right">{{objbill.BillInfo.ActualAmount| currency:'INR'}}</td>
+                                <td class="right">{{objbill.BillInfo.ActualAmount|  INR}}</td>
                             </tr>
                             <!-- <tr>
                                 <td class="left">
@@ -147,19 +147,19 @@
                                 <td class="left">
                                     <strong class="text-dark">SGST</strong>
                                 </td>
-                                <td class="right">{{(objbill.BillInfo.TaxAmount/2)| currency:'INR'}}</td>
+                                <td class="right">{{(objbill.BillInfo.TaxAmount/2)|  INR}}</td>
                             </tr>
                             <tr>
                                 <td class="left">
                                     <strong class="text-dark">CGST</strong>
                                 </td>
-                                <td class="right">{{(objbill.BillInfo.TaxAmount/2)| currency:'INR'}}</td>
+                                <td class="right">{{(objbill.BillInfo.TaxAmount/2)|  INR}}</td>
                             </tr>
                             <tr>
                                 <td class="left">
                                     <strong class="text-dark">Total</strong> </td>
                                 <td class="right">
-                                    <strong class="text-dark">{{objbill.BillInfo.PaidAmount| currency:'INR'}}</strong>
+                                    <strong class="text-dark">{{objbill.BillInfo.PaidAmount|  INR}}</strong>
                                 </td>
                             </tr>
                         </tbody>

@@ -30,7 +30,7 @@ export class ProdtypeService {
     importProductTypes(formdata: FormData, id: number) {
         return this.http.postJson(formdata, 'api/productType/import?retailId=' + id);
     }
-    exportProductTypes() {
-        return this.http.getJson('api/productType/export')
+    exportProductTypes(rid: number) {
+        return this.http.getJson('api/productType/export/' + rid);
     }
 }

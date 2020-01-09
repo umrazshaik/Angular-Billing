@@ -107,7 +107,9 @@ export class BrandComponent {
     debugger
     this.brandsvc.deleteBrand(brand.BrandId).subscribe((data: any) => {
       if (data > 0) {
-        this.brands.splice(index, 1);
+        let deletedItemIndex = this.brands.indexOf(brand);
+        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.brands.length);
+        this.brands.splice(deletedItemIndex, 1);
         this.toastr.success('deleted');
         //this.getBrands();
       }
@@ -165,6 +167,18 @@ export class BrandComponent {
       this.loader.hide();
       this.toastr.error('Import failed.')
     });
+  }
+
+  export() {
+    this.brandsvc.exportBrands(this.retailId).subscribe(data => this.downloadFile(data)),//console.log(data),
+      error => console.log('Error downloading the file.'),
+      () => console.info('OK');
+  }
+
+  downloadFile(data: any) {
+    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
 
 }

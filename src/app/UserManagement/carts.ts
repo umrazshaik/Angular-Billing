@@ -64,7 +64,9 @@ export class CartsComponent {
     debugger
     this.castssvc.deleteCart(cart.CartId).subscribe((data: any) => {
       if (data > 0) {
-        this.carts.splice(index, 1);
+        let deletedItemIndex = this.carts.indexOf(cart);
+        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.carts.length);
+        this.carts.splice(deletedItemIndex, 1);
         this.toastr.success('deleted');
         //this.getCarts();
       }

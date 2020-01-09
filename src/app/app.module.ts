@@ -33,6 +33,7 @@ import { SidebarDirective } from './directives/sidebar.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { TabsDirective } from './directives/tabs.directive';
+import { InrPipe } from './pipes/inr.pipe';
 
 
 
@@ -40,7 +41,7 @@ import { TabsDirective } from './directives/tabs.directive';
 @NgModule({
   imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule,NgxPaginationModule, HttpClientModule, ToastrModule.forRoot()],
   declarations: [AppComponent, HelloComponent, DashBoardComponent, LoginComponent, ProductsComponent, MainPageComponent, ProductTypeComponent,
-    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent, ProfileComponent,FilterPipe, SidebarDirective, SpinnerComponent, SearchPipe,SearchPipe, TabsDirective],
+    ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent, ProfileComponent,FilterPipe, SidebarDirective, SpinnerComponent, SearchPipe,SearchPipe, TabsDirective, InrPipe],
     providers :[AppintializorService,{ provide: APP_INITIALIZER, useFactory: serverConfigInitializerFactory, deps: [AppintializorService], multi: true }],
   bootstrap: [AppComponent]
 })

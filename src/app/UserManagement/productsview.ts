@@ -10,7 +10,7 @@ import { Brands } from '../model/brands';
 import { Carts } from '../model/carts';
 import { ToastrService } from 'ngx-toastr';
 import { SpinnerService } from '../spinner/spinner.service';
-import { error } from 'util';
+
 
 declare var $: any;
 
@@ -100,7 +100,9 @@ export class ProductsView {
   delete(index: number, objproduct: Products) {
     this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
       if (data > 0) {
-        this.prods.splice(index, 1);
+        let deletedItemIndex = this.prods.indexOf(objproduct);
+        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.prods.length);
+        this.prods.splice(deletedItemIndex, 1);
         this.toastr.success('deleted');
         //this.getProducts();
       }
@@ -243,7 +245,7 @@ export class ProductsView {
   fileuploadEvent(formData: any) {
     //console.log(formData);
     this.loader.show();
-    this.prodsvc.importProducts(formData,this.commonsvc.getretailId()).subscribe(data => {
+    this.prodsvc.importProducts(formData, this.commonsvc.getretailId()).subscribe(data => {
       this.loader.hide();
       this.toastr.success('Sucesfully Imported.');
       this.getProducts();
@@ -251,5 +253,17 @@ export class ProductsView {
       this.loader.hide();
       this.toastr.error('Import failed.')
     });
+  }
+
+  export() {
+    this.prodsvc.exportProducts(this.retailId).subscribe(data => this.downloadFile(data)),//console.log(data),
+      error => console.log('Error downloading the file.'),
+      () => console.info('OK');
+  }
+
+  downloadFile(data: any) {
+    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
 }

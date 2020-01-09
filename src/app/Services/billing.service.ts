@@ -24,14 +24,7 @@ export class BillingService {
         return this.http.getJson("api/billing/getbillinfo?billId=" + billId);
     }
 
-    getbillsbydates(retailerId: number, dys: number) {
+     getbillsbydates(retailerId: number, dys: number) {
         return this.http.getJson('api/billing/getbillbydates?retailerId=' + retailerId + '&&days=' + dys);
     }
-    getdaysreport(retailerId: number) {
-        return this.http.getJson('api/billing/getdaysreport?retailerId=' + retailerId);
-    }
-    getpaymentsreport(retailerId: number) {
-        return this.http.getJson('api/billing/getpaymentsreport?retailerId=' + retailerId);
-    }
-
 }
