@@ -21,7 +21,7 @@
         data-backdrop="static" (click)="createProduct()" data-keyboard="false">Add</button>
       <button class="dropdown-item" *ngIf="prods && prods.length>0" (click)="export()">Export</button>
       <input type="file" name="myfile" [accept]="actions?.import?.accept"
-        (change)="fileUpload($event.target.files, actions?.import?.accept)" style="display:none;" #file />
+        (change)="fileUpload($event.target.files)" style="display:none;" #file />
       <button class="dropdown-item" *ngIf="actions?.import" (click)="file.click()">
         {{actions?.import?.btnName}}</button>
     </div>
@@ -85,7 +85,7 @@
         </div>
       </div>
     </div> -->
-    <div *ngIf="prods.length>0">
+    <div *ngIf="prods?.length>0">
       <div class="row">
         <div class="col-xl-3 col-md-6 mb-4"
           *ngFor="let prod of prods |filter: filterStr : 'Name':'Code':'TypeName':'BrandName'| paginate: pageConfig ; let i=index">
@@ -98,7 +98,7 @@
                 style="width:100%">
               <!-- <a class="btn"> <span class="fa fa-flag fa-trash" (click)="delete(i,prod);"></span></a> -->
               <!-- </div> -->
-              <h5>{{prod.DisplayName}}</h5>
+              <h5 class="text-truncate">{{prod.DisplayName}}</h5>
               <p>{{prod.SellingCost | INR}}</p>
               <p class="text-truncate">{{prod.Description}}</p>
               <!-- <textarea readonly="readonly" cols="50" rows="2"> 
@@ -114,7 +114,7 @@
       <pagination-controls style="float: right;" [autoHide]="pageConfig.autoHide"
         (pageChange)="pageConfig.currentPage = $event"></pagination-controls>
     </div>
-    <div *ngIf="prods.length==0">
+    <div *ngIf="prods?.length==0">
       <p>No items to display</p>
     </div>
   </div>

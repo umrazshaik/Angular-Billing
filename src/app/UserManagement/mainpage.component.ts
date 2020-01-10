@@ -18,7 +18,7 @@ export class MainPageComponent {
     name = 'Angular';
     public cdate = new Date();
 
-    constructor(private router: Router, private commonsvc: CommonService, private castssvc: CartsService) {
+    constructor(private router: Router, public commonsvc: CommonService, private castssvc: CartsService) {
         router.events.subscribe(val => {
             this.serachStr = '';
         });
