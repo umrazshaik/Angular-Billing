@@ -1,6 +1,9 @@
     .fa-flag:hover {
     color: red;
 }/* Add application styles & imports to this file! */
+.dropdown-item:hover{
+color: blue;
+}
 .hover:hover {
   color:#007bff !important;
   cursor: pointer;
