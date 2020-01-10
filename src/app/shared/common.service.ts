@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Retailer } from '../model/Retailer'
 import { PageConfig } from '../model/pageConfig';
+import { SpinnerService } from '../spinner/spinner.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -17,9 +19,15 @@ export class CommonService {
   userId: number = 0;
   baseurl: string;
   private _searchBS = new BehaviorSubject<string>('');
+
   private _sliderToggleBS = new BehaviorSubject<boolean>(false);
   private sliderStatus: boolean;
   slider = this._sliderToggleBS.asObservable();
+
+  private _cartsCountBS = new BehaviorSubject<number>(0);
+  private _cartsCount: number= 0;
+  cartsCount = this._cartsCountBS.asObservable();
+
   pageConfig: PageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
 
   //gloabl file upload config
@@ -62,7 +70,12 @@ export class CommonService {
   }
   sliderClose() {
     this.sliderStatus = false;
-    this._sliderToggleBS.next(false);    
+    this._sliderToggleBS.next(false);
+  }
+
+  modifyCartsCount(cnt: number) {
+    this._cartsCount += cnt;
+    this._cartsCountBS.next(this._cartsCount);
   }
 
   getretailId() {
@@ -96,6 +109,26 @@ export class CommonService {
       return cpageConfig.currentPage - 1;
     }
     return cpageConfig.currentPage;
+  }
+
+
+  downloadAsExcel(data: any, fileName: string, loader: SpinnerService, toaster: ToastrService) {
+    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', });
+    let downloadUrl = URL.createObjectURL(blob);
+    if (navigator.appVersion.toString().indexOf('.net') > 0) { // for ie browser
+      window.navigator.msSaveBlob(data.body, fileName);
+      loader.hide();
+      toaster.success('Filed Downloaded');
+    } else {
+      var downloadlink = document.createElement("a");
+      downloadlink.setAttribute("download", fileName);
+      downloadlink.setAttribute("href", downloadUrl);
+      document.body.appendChild(downloadlink);
+      downloadlink.click();
+      document.body.removeChild(downloadlink);
+      loader.hide();
+      toaster.success('Filed Downloaded');
+    }
   }
 
 }

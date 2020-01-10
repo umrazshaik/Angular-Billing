@@ -5,7 +5,6 @@ import { ProductType } from '../model/productType';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { SpinnerService } from '../spinner/spinner.service';
-import { saveAs } from 'file-saver'
 
 declare var $: any;
 
@@ -167,24 +166,29 @@ export class ProductTypeComponent {
         this.loader.show();
         this.prodtypesvc.importProductTypes(formData, this.commonsvc.getretailId()).subscribe(data => {
             this.loader.hide();
-            this.toastr.success('Sucesfully Imported.');
+            this.toastr.success('Imported Success');
             this.getTypes();
         }, er => {
             this.loader.hide();
-            this.toastr.error('Import failed.')
+            this.toastr.error('Import Failed.')
         });
     }
 
     export() {
-        this.prodtypesvc.exportProductTypes(this.retailId).then(blob => {
-            saveAs(blob, 'dfskjlakl.xlsx');
-        });
-    }
+        this.loader.show();
+        this.prodtypesvc.exportProductTypes(this.retailId).subscribe((data: any) => {            
+           this.commonsvc.downloadAsExcel(data,'ProductTypes',this.loader,this.toastr);
+          }, (err: any) => {
+            console.log(err);
+            this.toastr.error('Download Failed');
+            this.loader.hide();
+          });
+      }    
 
-    downloadFile(data: any) {
-        const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        let url = window.URL.createObjectURL(blob);
-        //url = url + '.xlsx';
-        window.open(url);
-    }
+    // downloadFile(data: any) {
+    //     const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', });
+    //     let url = window.URL.createObjectURL(blob);
+    //     //url = url + '.xlsx';
+    //     window.open(url);
+    // }
 }

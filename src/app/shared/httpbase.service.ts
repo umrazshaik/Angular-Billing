@@ -51,7 +51,7 @@ export class HttpbaseService {
     }
 
     getBlob(url) {
-        return this.httpClient.get(this.baseUrl + url, { responseType: 'blob' }).toPromise();
+        return this.httpClient.get(this.baseUrl + url, { responseType: 'blob' });
     }
 
     getJsonWithHeader(url: string, token: any) {

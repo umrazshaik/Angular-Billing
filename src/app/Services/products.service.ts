@@ -30,6 +30,6 @@ export class ProductsService {
     }
 
     exportProducts(rid: number) {
-        return this.http.getJson('api/product/export?retailId=' + rid);
+        return this.http.getBlob('api/product/export?retailId=' + rid);
     }
 }

@@ -161,24 +161,24 @@ export class BrandComponent {
     this.loader.show();
     this.brandsvc.importBrands(formData,this.commonsvc.getretailId()).subscribe(data => {
       this.loader.hide();
-      this.toastr.success('Sucesfully Imported.');
+      this.toastr.success('Imported Success');
       this.getBrands();
     }, er => {
       this.loader.hide();
-      this.toastr.error('Import failed.')
+      this.toastr.error('Import Failed.')
     });
   }
 
   export() {
-    this.brandsvc.exportBrands(this.retailId).subscribe(data => this.downloadFile(data)),//console.log(data),
-      error => console.log('Error downloading the file.'),
-      () => console.info('OK');
-  }
-
-  downloadFile(data: any) {
-    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
-  }
+    this.loader.show();
+    debugger
+    this.brandsvc.exportBrands(this.retailId).subscribe((data: any) => {            
+       this.commonsvc.downloadAsExcel(data,'Brands',this.loader,this.toastr);
+      }, (err: any) => {
+        console.log(err);
+        this.toastr.error('Download Failed');
+        this.loader.hide();
+      });
+  } 
 
 }

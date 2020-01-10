@@ -18,7 +18,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (7 Days)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objday.Weekly | currency:'INR'}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objday?.Weekly | INR}}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x  text-gray-3001"></i>
@@ -35,7 +35,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objday.Monthly | currency:'INR'}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objday?.Monthly | INR}}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-3002"></i>
@@ -52,7 +52,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objday.Annualy | currency:'INR'}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objday?.Annualy | INR}}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-3003"></i>
@@ -88,7 +88,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Cash</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objpayments.Cash | currency:'INR' }}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objpayments?.Cash |INR }}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-rupee-sign fa-2x text-gray-3001"></i>
@@ -105,7 +105,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Card</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objpayments.Card | currency:'INR'}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objpayments?.Card | INR}}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-credit-card fa-2x text-gray-3002"></i>
@@ -122,7 +122,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Online</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objpayments.Online | currency:'INR'}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{objpayments?.Online | INR}}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-signal fa-2x text-gray-3003"></i>

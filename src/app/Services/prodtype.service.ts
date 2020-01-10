@@ -31,6 +31,6 @@ export class ProdtypeService {
         return this.http.postJson(formdata, 'api/productType/import?retailId=' + id);
     }
     exportProductTypes(rid: number) {
-        return this.http.getBlob('api/productType/export?retailerId=' + rid);
+        return this.http.getBlob('api/productType/export?retailId=' + rid);
     }
 }

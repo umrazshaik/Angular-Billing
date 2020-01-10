@@ -211,8 +211,9 @@ export class ProductsView {
     cart.Quantity = 1;
     cart.RetailerId = this.retailId;
     this.csvc.addCart(cart).subscribe((data: any) => {
-      if (data > 0) {
+      if (data > 0) {        
         this.toastr.success('added to cart');
+        this.commonsvc.modifyCartsCount(1);
       }
       else {
         this.toastr.error('failed');
@@ -247,23 +248,22 @@ export class ProductsView {
     this.loader.show();
     this.prodsvc.importProducts(formData, this.commonsvc.getretailId()).subscribe(data => {
       this.loader.hide();
-      this.toastr.success('Sucesfully Imported.');
+      this.toastr.success('Imported Success');
       this.getProducts();
     }, er => {
       this.loader.hide();
-      this.toastr.error('Import failed.')
+      this.toastr.error('Import Failed.')
     });
   }
 
   export() {
-    this.prodsvc.exportProducts(this.retailId).subscribe(data => this.downloadFile(data)),//console.log(data),
-      error => console.log('Error downloading the file.'),
-      () => console.info('OK');
-  }
-
-  downloadFile(data: any) {
-    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const url = window.URL.createObjectURL(blob);
-    window.open(url);
-  }
+    this.loader.show();
+    this.prodsvc.exportProducts(this.retailId).subscribe((data: any) => {            
+       this.commonsvc.downloadAsExcel(data,'Products',this.loader,this.toastr);
+      }, (err: any) => {
+        console.log(err);
+        this.toastr.error('Download Failed');
+        this.loader.hide();
+      });
+  } 
 }
