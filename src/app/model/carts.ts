@@ -5,6 +5,10 @@
 
     public ProductName: string
 
+    public  Type :string
+
+    public  Brand :string
+
     public RetailerId: number
 
     public UserId: number
