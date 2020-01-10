@@ -8,6 +8,7 @@ import { BillingService } from '../Services/billing.service';
 import { BillingInfo } from '../model/billingInfo';
 import { BillingProducts } from '../model/billingProducts';
 import { SpinnerService } from '../spinner/spinner.service';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -29,8 +30,10 @@ export class CartsComponent {
   cash: string; card: string; online: string;
   pageConfig: any;
   filterStr: string;
+  subtotal:number=0; total:number=0; totaltax:number=0;
 
-  constructor(private commonsvc: CommonService, private castssvc: CartsService, private billsvc: BillingService, private toastr: ToastrService, private loader: SpinnerService) {
+
+  constructor(private commonsvc: CommonService, private castssvc: CartsService, private billsvc: BillingService, private toastr: ToastrService, private loader: SpinnerService,private router: Router) {
     this.newCart = new Carts();
     this.carts = [];
     this.actiontype = 1;
@@ -51,6 +54,11 @@ export class CartsComponent {
     this.retailId = this.commonsvc.getretailId();
     this.castssvc.getCarts(this.retailId).subscribe((data: any) => {
       this.carts = data;
+      this.carts.forEach(element => {
+        this.subtotal=this.subtotal+element.TotalPrice;
+        this.totaltax=this.totaltax+(element.CGST+element.SGST);
+        this.total=this.subtotal+this.totaltax;
+      });
       this.loader.hide();
       console.log('castssvc', data);
     }, er => {
@@ -149,7 +157,10 @@ export class CartsComponent {
     this.billsvc.addBilling(objbill).subscribe((data: any) => {
       if (data > 0) {
         this.toastr.success('billing success');
-        this.getCarts();
+        this.totaltax=0;
+        this.total=0; this.subtotal=0;
+        this.router.navigateByUrl("mainpage/billing");
+        //this.getCarts();
         $("#fid").trigger("reset");
       }
       else {
