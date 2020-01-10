@@ -27,7 +27,6 @@ export class MainPageComponent {
     ngOnInit() {
         if (window.innerWidth > 400) {
             //desktop screen code
-
             this.commonsvc.sliderOpen();
         }
         else {
@@ -49,12 +48,12 @@ export class MainPageComponent {
         let retailId = this.commonsvc.getretailId();
         this.castssvc.getCarts(retailId).subscribe((data: any) => {
             this.carts = data;
-            this.commonsvc.modifyCartsCount(data.length);
+            this.commonsvc._cartsCount=data.length;
+            this.commonsvc.modifyCartsCount(0);
             if (this.carts != null && this.carts.length > 3) {
                 // take last 3 items in array
                 this.carts = this.carts.reverse().slice(0,3);
-            }
-            console.log('castssvc', data);
+            }           
         }, er => { /* error */ });
     }
 

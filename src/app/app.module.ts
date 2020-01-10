@@ -39,7 +39,11 @@ import { InrPipe } from './pipes/inr.pipe';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule,NgxPaginationModule, HttpClientModule, ToastrModule.forRoot()],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, MatTableModule, MatPaginatorModule, BrowserAnimationsModule,NgxPaginationModule, HttpClientModule, ToastrModule.forRoot({
+    timeOut: 1500,
+    positionClass: 'toast-top-right',
+    preventDuplicates: true,
+  })],
   declarations: [AppComponent, HelloComponent, DashBoardComponent, LoginComponent, ProductsComponent, MainPageComponent, ProductTypeComponent,
     ProductsView, BrandComponent, TaxComponent, PopupshowDirective,CartsComponent, BillingsComponent, InvoiceComponent, RegisterComponent, ProfileComponent,FilterPipe, SidebarDirective, SpinnerComponent, SearchPipe,SearchPipe, TabsDirective, InrPipe],
     providers :[AppintializorService,{ provide: APP_INITIALIZER, useFactory: serverConfigInitializerFactory, deps: [AppintializorService], multi: true }],

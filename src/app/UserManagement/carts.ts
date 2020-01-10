@@ -42,7 +42,7 @@ export class CartsComponent {
     this.cash = 'Cash'; this.card = 'Card'; this.online = 'Online';
     this.pageConfig = commonsvc.pageConfig;
     this.pageConfig.currentPage = 1;
-    this.pageConfig.itemsPerPage=4;
+    this.pageConfig.itemsPerPage=3;
   }
   ngOnInit() {
     this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr = p });
@@ -75,6 +75,7 @@ export class CartsComponent {
         let deletedItemIndex = this.carts.indexOf(cart);
         this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.carts.length);
         this.carts.splice(deletedItemIndex, 1);
+        this.commonsvc.modifyCartsCount(-1);
         this.toastr.success('deleted');
         //this.getCarts();
       }

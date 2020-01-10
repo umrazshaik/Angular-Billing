@@ -25,7 +25,7 @@ export class CommonService {
   slider = this._sliderToggleBS.asObservable();
 
   private _cartsCountBS = new BehaviorSubject<number>(0);
-  private _cartsCount: number= 0;
+  public _cartsCount: number= 0;
   cartsCount = this._cartsCountBS.asObservable();
 
   pageConfig: PageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };

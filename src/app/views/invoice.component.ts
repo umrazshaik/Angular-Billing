@@ -7,7 +7,7 @@ import { SpinnerService } from '../spinner/spinner.service';
 
 
 @Component({
-  templateUrl: './invoice.component.html'
+  templateUrl: './invoice.component.html'  
 })
 export class InvoiceComponent implements OnInit {
   objbill: Bill; objretailer: Retailer

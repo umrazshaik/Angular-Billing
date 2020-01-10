@@ -125,7 +125,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let cart of carts |filter: filterStr">
+              <tr *ngFor="let cart of carts | paginate: pageConfig ; let i=index">
                 <th scope="row" class="border-0">
                   <div class="p-2">
                     <img src="assets/img/oneplus-7t-pro-back.jpg" alt="" width="70" class="img-fluid rounded shadow-sm">
@@ -163,12 +163,12 @@
             <form id="fid">
               <div class="input-group mb-4 border rounded-pill p-2">
                 <input type="text" placeholder="Customer Name" aria-describedby="button-addon3"
-                  class="form-control border-0" [(ngModel)]="newobj.BillInfo.CustMobile"
+                  class="form-control border-0" [(ngModel)]="newobj.BillInfo.CustomerName"
                   [ngModelOptions]="{standalone:true}" name="customername">
               </div>
               <div class="input-group mb-4 border rounded-pill p-2">
-                <input type="text" placeholder="Mobile" aria-describedby="button-addon3" class="form-control border-0"
-                  [(ngModel)]="newobj.BillInfo.CustomerName" [ngModelOptions]="{standalone:true}" name="custmobile">
+                <input type="number" placeholder="Mobile" aria-describedby="button-addon3" class="form-control border-0"
+                  [(ngModel)]="newobj.BillInfo.CustMobile" [ngModelOptions]="{standalone:true}" name="custmobile">
               </div>
             </form>
           </div>
@@ -204,7 +204,7 @@
       </div>
     </div>
     <div *ngIf="carts.length==0">
-      <p>No items</p>
+      <p>No items to display</p>
     </div>
   </div>
 </div>

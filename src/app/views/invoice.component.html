@@ -51,6 +51,15 @@
         flex: 1 1 auto;
         padding: 0.40rem;
     }
+
+    @media print {
+    #printPageButton {
+      display: none;
+    }
+    #backPageButton{
+      display: none;
+    }
+  }
 </style>
 <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
     <div class="card">
@@ -61,9 +70,9 @@
             </div>
         </div>
         <div class="card-header p-2">
-            <button class="btn btn-primary btn-sm btn-space" [routerLink]="['/mainpage/billing']"
+            <button class="btn btn-primary btn-sm btn-space" id="backPageButton" [routerLink]="['/mainpage/billing']"
                 data-abc="true">Back</button>
-            <button class="btn btn-success btn-sm btn-space" (click)="print();" data-abc="true">Print</button>
+            <button class="btn btn-success btn-sm btn-space" id="printPageButton" (click)="print();" data-abc="true">Print</button>
             <div class="float-right">
                 <h3 class="mb-0">Serial No of Invoice: {{objbill.BillInfo.BillNo}}</h3>
                 Date of Invoice: {{objbill.BillInfo.CreatedDate | date}}
