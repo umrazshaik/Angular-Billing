@@ -227,37 +227,25 @@ export class ProductsView {
 
   //file upload code here
   fileUpload(files: any) {
-    try {
-      let file = files[0];
-      let fileTypestr = this.commonsvc.fileuploadConfig.import.accept;
-      let fileTypes = (fileTypestr == null || fileTypestr == undefined) ? null : fileTypestr.split(',').map(item => item.trim());
-      if (fileTypes == null || fileTypes.indexOf(file.type.toString()) > -1) {
-        let formData = new FormData();
-        formData.append(file.name, file);
-        this.fileuploadEvent(formData);
-      }
-      else {
-        //file type error
-        alert('unsupported file format');
-      }
-    }
-    catch{
-    }
-  }
-
-  fileuploadEvent(formData: any) {
-    //console.log(formData);
-    this.loader.show();
-    this.prodsvc.importProducts(formData, this.commonsvc.getretailId()).subscribe(data => {
-      this.loader.hide();
-      this.toastr.success('Imported Success');
-      this.getProducts();
-    }, er => {
-      this.loader.hide();
-      this.toastr.error('Import Failed.')
+    this.commonsvc.fileUpload(files, (formData: any) => {
+      console.log(formData);
+      this.loader.show();
+      this.prodsvc.importProducts(formData, this.commonsvc.getretailId()).subscribe((data: any) => {
+        this.loader.hide();
+        if (data == 1) {
+          this.toastr.success('Import Success');
+          this.getProducts();
+        } else {
+          this.toastr.error('Import Failed.')
+        }
+      }, er => {
+        this.loader.hide();
+        this.toastr.error('Import Failed.')
+      });
     });
   }
 
+    
   export() {
     this.loader.show();
     this.prodsvc.exportProducts(this.retailId).subscribe((data: any) => {

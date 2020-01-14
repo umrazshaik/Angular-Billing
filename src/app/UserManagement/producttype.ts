@@ -148,10 +148,14 @@ export class ProductTypeComponent {
     this.commonsvc.fileUpload(files, (formData: any) => {
       console.log(formData);
       this.loader.show();
-      this.prodtypesvc.importProductTypes(formData, this.commonsvc.getretailId()).subscribe(data => {
+      this.prodtypesvc.importProductTypes(formData, this.commonsvc.getretailId()).subscribe((data: any) => {
         this.loader.hide();
-        this.toastr.success('Import Success');
-        this.getTypes();
+        if (data == 1) {
+          this.toastr.success('Import Success');
+          this.getTypes();
+        } else {
+          this.toastr.error('Import Failed.')
+        }
       }, er => {
         this.loader.hide();
         this.toastr.error('Import Failed.')

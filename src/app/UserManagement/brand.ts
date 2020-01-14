@@ -144,10 +144,14 @@ export class BrandComponent {
     this.commonsvc.fileUpload(files, (formData: any) => {
       console.log(formData);
       this.loader.show();
-      this.brandsvc.importBrands(formData, this.commonsvc.getretailId()).subscribe(data => {
+      this.brandsvc.importBrands(formData, this.commonsvc.getretailId()).subscribe((data:any) => {
         this.loader.hide();
-        this.toastr.success('Import Success');
-        this.getBrands();
+        if (data == 1) {
+          this.toastr.success('Import Success');
+          this.getBrands();
+        } else {
+          this.toastr.error('Import Failed.')
+        }
       }, er => {
         this.loader.hide();
         this.toastr.error('Import Failed.')
