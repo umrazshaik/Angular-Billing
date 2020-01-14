@@ -66,7 +66,7 @@
         <div class="card-header p-2">
             <div class="float-right">
                 <h2>Invoice Bill</h2>
-                GST NO: {{objretailer.GstNo}}
+                GST NO: {{objretailer?.GstNo}}
             </div>
         </div>
         <div class="card-header p-2">
@@ -74,8 +74,8 @@
                 data-abc="true">Back</button>
             <button class="btn btn-success btn-sm btn-space" id="printPageButton" (click)="print();" data-abc="true">Print</button>
             <div class="float-right">
-                <h3 class="mb-0">Serial No of Invoice: {{objbill.BillInfo.BillNo}}</h3>
-                Date of Invoice: {{objbill.BillInfo.CreatedDate | date}}
+                <h3 class="mb-0">Serial No of Invoice: {{objbill?.BillInfo?.BillNo}}</h3>
+                Date of Invoice: {{objbill?.BillInfo?.CreatedDate | date}}
 
             </div>
 
@@ -84,23 +84,25 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h5 class="mb-2">From:</h5>
-                    <h3 class="text-dark mb-1">{{objretailer.RetailName}}</h3>
-                    <div>{{objretailer.ShopNo}}, {{objretailer.Building}}</div>
-                    <div>{{objretailer.Area}}, {{objretailer.City}}</div>
-                    <div>{{objretailer.District}}, {{objretailer.State}}</div>
-                    <div>{{objretailer.PinCode}}</div>
-                    <div>Phone: +91 {{objretailer.Mobile}}, {{objretailer.AlternateMob}}</div>
+                    <h3 class="text-dark mb-1">{{objretailer?.RetailName}}</h3>
+                    <div>{{objretailer?.ShopNo}}, {{objretailer?.Building}}</div>
+                    <div>{{objretailer?.Area}}, {{objretailer?.City}}</div>
+                    <div>{{objretailer?.District}}, {{objretailer?.State}}</div>
+                    <div>{{objretailer?.PinCode}}</div>
+                    <div>Phone: +91 {{objretailer?.Mobile}}, {{objretailer?.AlternateMob}}</div>
                 </div>
-                <div class="col-sm-6" *ngIf="objbill.BillInfo.CustMobile>0">
+                <div class="col-sm-6">
                     <h5 class="mb-2">To:</h5>
-                    <h3 class="text-dark mb-1">{{objbill.BillInfo.CustomerName}}</h3>
-                    <div>Phone: +91 {{objbill.BillInfo.CustMobile}}</div>
+                    <h3 class="text-dark mb-1" *ngIf="objbill?.BillInfo?.CustomerName">{{objbill?.BillInfo?.CustomerName}}</h3>
+                    <h3 class="text-dark mb-1" *ngIf="objbill?.BillInfo?.CustomerName===null">Unknown</h3>
+                    <div *ngIf="objbill?.BillInfo?.CustMobile!=0">Phone: +91 {{objbill?.BillInfo?.CustMobile}}</div>
+                    <div *ngIf="objbill?.BillInfo?.CustMobile==0">Phone: +91 9999999999</div>
                 </div>
-                <div class="col-sm-6" *ngIf="objbill.BillInfo.CustMobile==0">
+                <!-- <div class="col-sm-6" *ngIf="objbill?.BillInfo?.CustMobile==0">
                     <h5 class="mb-2">To:</h5>
                     <h3 class="text-dark mb-1">Unknown</h3>
                     <div>Phone: +91 9999999999</div>
-                </div>
+                </div> -->
             </div>
             <div class="table-responsive-sm">
                 <table class="table table-borderd">
@@ -119,7 +121,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let prod of objbill.BillProducts; let i=index" [attr.data-index]="i">
+                        <tr *ngFor="let prod of objbill?.BillProducts; let i=index" [attr.data-index]="i">
                             <th scope=" row">{{i+1}}</th>
                             <td>{{prod.ProductName}}</td>
                             <td>{{prod.ProductName}}</td>
@@ -144,7 +146,7 @@
                                 <td class="left">
                                     <strong class="text-dark">Subtotal</strong>
                                 </td>
-                                <td class="right">{{objbill.BillInfo.ActualAmount|  INR}}</td>
+                                <td class="right">{{objbill?.BillInfo?.ActualAmount|  INR}}</td>
                             </tr>
                             <!-- <tr>
                                 <td class="left">
@@ -156,19 +158,19 @@
                                 <td class="left">
                                     <strong class="text-dark">SGST</strong>
                                 </td>
-                                <td class="right">{{(objbill.BillInfo.TaxAmount/2)|  INR}}</td>
+                                <td class="right">{{(objbill?.BillInfo?.TaxAmount/2)|  INR}}</td>
                             </tr>
                             <tr>
                                 <td class="left">
                                     <strong class="text-dark">CGST</strong>
                                 </td>
-                                <td class="right">{{(objbill.BillInfo.TaxAmount/2)|  INR}}</td>
+                                <td class="right">{{(objbill?.BillInfo?.TaxAmount/2)|  INR}}</td>
                             </tr>
                             <tr>
                                 <td class="left">
                                     <strong class="text-dark">Total</strong> </td>
                                 <td class="right">
-                                    <strong class="text-dark">{{objbill.BillInfo.PaidAmount|  INR}}</strong>
+                                    <strong class="text-dark">{{objbill?.BillInfo?.PaidAmount|  INR}}</strong>
                                 </td>
                             </tr>
                         </tbody>
