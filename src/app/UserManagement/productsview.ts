@@ -98,18 +98,20 @@ export class ProductsView {
   }
 
   delete(index: number, objproduct: Products) {
-    this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
-      if (data > 0) {
-        let deletedItemIndex = this.prods.indexOf(objproduct);
-        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.prods.length);
-        this.prods.splice(deletedItemIndex, 1);
-        this.toastr.success('deleted');
-        //this.getProducts();
-      }
-      else {
-        this.toastr.error('failed');
-      }
-    });
+    if (this.commonsvc.confirmDelete()) {
+      this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
+        if (data > 0) {
+          let deletedItemIndex = this.prods.indexOf(objproduct);
+          this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.prods.length);
+          this.prods.splice(deletedItemIndex, 1);
+          this.toastr.success('deleted');
+          //this.getProducts();
+        }
+        else {
+          this.toastr.error('failed');
+        }
+      });
+    }
 
   }
 
@@ -211,7 +213,7 @@ export class ProductsView {
     cart.Quantity = 1;
     cart.RetailerId = this.retailId;
     this.csvc.addCart(cart).subscribe((data: any) => {
-      if (data > 0) {        
+      if (data > 0) {
         this.toastr.success('added to cart');
         this.commonsvc.modifyCartsCount(1);
       }
@@ -225,45 +227,33 @@ export class ProductsView {
 
   //file upload code here
   fileUpload(files: any) {
-    try {
-      let file = files[0];
-      let fileTypestr = this.commonsvc.fileuploadConfig.import.accept;
-      let fileTypes = (fileTypestr == null || fileTypestr == undefined) ? null : fileTypestr.split(',').map(item => item.trim());
-      if (fileTypes == null || fileTypes.indexOf(file.type.toString()) > -1) {
-        let formData = new FormData();
-        formData.append(file.name, file);
-        this.fileuploadEvent(formData);
-      }
-      else {
-        //file type error
-        alert('unsupported file format');
-      }
-    }
-    catch{
-    }
-  }
-
-  fileuploadEvent(formData: any) {
-    //console.log(formData);
-    this.loader.show();
-    this.prodsvc.importProducts(formData, this.commonsvc.getretailId()).subscribe(data => {
-      this.loader.hide();
-      this.toastr.success('Imported Success');
-      this.getProducts();
-    }, er => {
-      this.loader.hide();
-      this.toastr.error('Import Failed.')
+    this.commonsvc.fileUpload(files, (formData: any) => {
+      console.log(formData);
+      this.loader.show();
+      this.prodsvc.importProducts(formData, this.commonsvc.getretailId()).subscribe((data: any) => {
+        this.loader.hide();
+        if (data == 1) {
+          this.toastr.success('Import Success');
+          this.getProducts();
+        } else {
+          this.toastr.error('Import Failed.')
+        }
+      }, er => {
+        this.loader.hide();
+        this.toastr.error('Import Failed.')
+      });
     });
   }
 
+    
   export() {
     this.loader.show();
-    this.prodsvc.exportProducts(this.retailId).subscribe((data: any) => {            
-       this.commonsvc.downloadAsExcel(data,'Products',this.loader,this.toastr);
-      }, (err: any) => {
-        console.log(err);
-        this.toastr.error('Download Failed');
-        this.loader.hide();
-      });
-  } 
+    this.prodsvc.exportProducts(this.retailId).subscribe((data: any) => {
+      this.commonsvc.downloadAsExcel(data, 'Products', this.loader, this.toastr);
+    }, (err: any) => {
+      console.log(err);
+      this.toastr.error('Download Failed');
+      this.loader.hide();
+    });
+  }
 }

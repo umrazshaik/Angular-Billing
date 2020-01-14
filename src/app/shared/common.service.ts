@@ -4,6 +4,7 @@ import { Retailer } from '../model/Retailer'
 import { PageConfig } from '../model/pageConfig';
 import { SpinnerService } from '../spinner/spinner.service';
 import { ToastrService } from 'ngx-toastr';
+import { transformAll } from '@angular/compiler/src/render3/r3_ast';
 
 
 @Injectable({
@@ -25,7 +26,7 @@ export class CommonService {
   slider = this._sliderToggleBS.asObservable();
 
   private _cartsCountBS = new BehaviorSubject<number>(0);
-  public _cartsCount: number= 0;
+  public _cartsCount: number = 0;
   public cartsCount = this._cartsCountBS.asObservable();
 
   pageConfig: PageConfig = { itemsPerPage: 5, currentPage: 1, maxSize: 7, autoHide: true };
@@ -129,6 +130,34 @@ export class CommonService {
       loader.hide();
       toaster.success('Filed Downloaded');
     }
+  }
+
+  fileUpload(files: any, successCB: Function) {
+    try {
+      let file = files[0];
+      let fileTypestr = this.fileuploadConfig.import.accept;
+      let fileTypes = (fileTypestr == null || fileTypestr == undefined) ? null : fileTypestr.split(',').map(item => item.trim());
+      if (fileTypes == null || fileTypes.indexOf(file.type.toString()) > -1) {
+        let formData = new FormData();
+        formData.append(file.name, file);
+        //here calling success call back funtion
+        successCB(formData);
+      }
+      else {
+        //file type error
+        alert('unsupported file format');
+      }
+    }
+    catch{ /* throw error here */ }
+  }
+
+
+  confirmDelete() {
+    var result = confirm("Confirm to delete?");
+    if (result) {
+      return true;
+    }
+    return false;
   }
 
 }
