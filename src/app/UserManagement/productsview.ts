@@ -98,18 +98,20 @@ export class ProductsView {
   }
 
   delete(index: number, objproduct: Products) {
-    this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
-      if (data > 0) {
-        let deletedItemIndex = this.prods.indexOf(objproduct);
-        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.prods.length);
-        this.prods.splice(deletedItemIndex, 1);
-        this.toastr.success('deleted');
-        //this.getProducts();
-      }
-      else {
-        this.toastr.error('failed');
-      }
-    });
+    if (this.commonsvc.confirmDelete()) {
+      this.prodsvc.deleteProduct(objproduct.Id).subscribe((data: any) => {
+        if (data > 0) {
+          let deletedItemIndex = this.prods.indexOf(objproduct);
+          this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.prods.length);
+          this.prods.splice(deletedItemIndex, 1);
+          this.toastr.success('deleted');
+          //this.getProducts();
+        }
+        else {
+          this.toastr.error('failed');
+        }
+      });
+    }
 
   }
 
@@ -211,7 +213,7 @@ export class ProductsView {
     cart.Quantity = 1;
     cart.RetailerId = this.retailId;
     this.csvc.addCart(cart).subscribe((data: any) => {
-      if (data > 0) {        
+      if (data > 0) {
         this.toastr.success('added to cart');
         this.commonsvc.modifyCartsCount(1);
       }
@@ -258,12 +260,12 @@ export class ProductsView {
 
   export() {
     this.loader.show();
-    this.prodsvc.exportProducts(this.retailId).subscribe((data: any) => {            
-       this.commonsvc.downloadAsExcel(data,'Products',this.loader,this.toastr);
-      }, (err: any) => {
-        console.log(err);
-        this.toastr.error('Download Failed');
-        this.loader.hide();
-      });
-  } 
+    this.prodsvc.exportProducts(this.retailId).subscribe((data: any) => {
+      this.commonsvc.downloadAsExcel(data, 'Products', this.loader, this.toastr);
+    }, (err: any) => {
+      console.log(err);
+      this.toastr.error('Download Failed');
+      this.loader.hide();
+    });
+  }
 }

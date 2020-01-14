@@ -30,10 +30,10 @@ export class CartsComponent {
   cash: string; card: string; online: string;
   pageConfig: any;
   filterStr: string;
-  subtotal:number=0; total:number=0; totaltax:number=0;
+  subtotal: number = 0; total: number = 0; totaltax: number = 0;
 
 
-  constructor(private commonsvc: CommonService, private castssvc: CartsService, private billsvc: BillingService, private toastr: ToastrService, private loader: SpinnerService,private router: Router) {
+  constructor(private commonsvc: CommonService, private castssvc: CartsService, private billsvc: BillingService, private toastr: ToastrService, private loader: SpinnerService, private router: Router) {
     this.newCart = new Carts();
     this.carts = [];
     this.actiontype = 1;
@@ -42,7 +42,7 @@ export class CartsComponent {
     this.cash = 'Cash'; this.card = 'Card'; this.online = 'Online';
     this.pageConfig = commonsvc.pageConfig;
     this.pageConfig.currentPage = 1;
-    this.pageConfig.itemsPerPage=3;
+    this.pageConfig.itemsPerPage = 3;
   }
   ngOnInit() {
     this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr = p });
@@ -55,9 +55,9 @@ export class CartsComponent {
     this.castssvc.getCarts(this.retailId).subscribe((data: any) => {
       this.carts = data;
       this.carts.forEach(element => {
-        this.subtotal=this.subtotal+element.TotalPrice;
-        this.totaltax=this.totaltax+(element.CGST+element.SGST);
-        this.total=this.subtotal+this.totaltax;
+        this.subtotal = this.subtotal + element.TotalPrice;
+        this.totaltax = this.totaltax + (element.CGST + element.SGST);
+        this.total = this.subtotal + this.totaltax;
       });
       this.loader.hide();
       console.log('castssvc', data);
@@ -69,24 +69,26 @@ export class CartsComponent {
 
 
   deleteCart(index: number, cart: Carts) {
-    debugger
-    this.castssvc.deleteCart(cart.CartId).subscribe((data: any) => {
-      if (data > 0) {
-        let deletedItemIndex = this.carts.indexOf(cart);
-        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.carts.length);
-        this.carts.splice(deletedItemIndex, 1);
-        this.commonsvc.modifyCartsCount(-1);
-        this.toastr.success('deleted');
-        //this.getCarts();
-      }
-      else {
-        this.toastr.error('failed');
-      }
-    });
+
+    if (this.commonsvc.confirmDelete()) {
+      this.castssvc.deleteCart(cart.CartId).subscribe((data: any) => {
+        if (data > 0) {
+          let deletedItemIndex = this.carts.indexOf(cart);
+          this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.carts.length);
+          this.carts.splice(deletedItemIndex, 1);
+          this.commonsvc.modifyCartsCount(-1);
+          this.toastr.success('deleted');
+          //this.getCarts();
+        }
+        else {
+          this.toastr.error('failed');
+        }
+      });
+    }
   }
 
   makepayment(type: number, objbill: Bill) {
-   
+
     if (this.carts != null && this.carts.length > 0) {
       if (type == 1) {
 
@@ -158,8 +160,8 @@ export class CartsComponent {
     this.billsvc.addBilling(objbill).subscribe((data: any) => {
       if (data > 0) {
         this.toastr.success('billing success');
-        this.totaltax=0;
-        this.total=0; this.subtotal=0;
+        this.totaltax = 0;
+        this.total = 0; this.subtotal = 0;
         this.router.navigateByUrl("mainpage/billing");
         //this.getCarts();
         $("#fid").trigger("reset");

@@ -29,7 +29,7 @@ export class BrandComponent {
     this.closepopup();
   }
 
-  constructor(private commonsvc: CommonService, private brandsvc: BrandsService, private toastr: ToastrService,private loader:SpinnerService) {
+  constructor(private commonsvc: CommonService, private brandsvc: BrandsService, private toastr: ToastrService, private loader: SpinnerService) {
     this.newBrand = new Brands();
     this.brands = [];
     this.header = "Add";
@@ -37,24 +37,25 @@ export class BrandComponent {
     this.pageConfig = commonsvc.pageConfig;
     this.actions = this.commonsvc.fileuploadConfig;
     this.pageConfig.currentPage = 1;
-    this.pageConfig.itemsPerPage=8;
+    this.pageConfig.itemsPerPage = 8;
     //this.retailId = this.commonsvc.retaileR.RetailId;
   }
   ngOnInit() {
     this.getBrands();
-    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr=p});
+    this.commonsvc.pullSearchStr().subscribe(p => { this.filterStr = p });
   }
 
   getBrands() {
     this.loader.show();
-    this.retailId = this.commonsvc.getretailId();    
+    this.retailId = this.commonsvc.getretailId();
     this.brandsvc.getBrands(this.retailId).subscribe((data: any) => {
       this.brands = data;
       this.loader.hide();
       console.log(data);
-    },er=>{
+    }, er => {
       this.toastr.error('loading failed');
-      this.loader.hide();});
+      this.loader.hide();
+    });
   }
 
   createBrand() {
@@ -104,19 +105,21 @@ export class BrandComponent {
   }
 
   deleteBrand(index: number, brand: Brands) {
-    debugger
-    this.brandsvc.deleteBrand(brand.BrandId).subscribe((data: any) => {
-      if (data > 0) {
-        let deletedItemIndex = this.brands.indexOf(brand);
-        this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.brands.length);
-        this.brands.splice(deletedItemIndex, 1);
-        this.toastr.success('deleted');
-        //this.getBrands();
-      }
-      else {
-        this.toastr.error('not deleted');
-      }
-    });
+
+    if (this.commonsvc.confirmDelete()) {
+      this.brandsvc.deleteBrand(brand.BrandId).subscribe((data: any) => {
+        if (data > 0) {
+          let deletedItemIndex = this.brands.indexOf(brand);
+          this.pageConfig.currentPage = this.commonsvc.setCurrentPage(this.pageConfig, deletedItemIndex, this.brands.length);
+          this.brands.splice(deletedItemIndex, 1);
+          this.toastr.success('deleted');
+          //this.getBrands();
+        }
+        else {
+          this.toastr.error('not deleted');
+        }
+      });
+    }
   }
 
   //pop up controlling code here
@@ -138,47 +141,31 @@ export class BrandComponent {
 
   //file upload code here
   fileUpload(files: any) {
-    try {
-      let file = files[0];
-      let fileTypestr = this.commonsvc.fileuploadConfig.import.accept;
-      let fileTypes = (fileTypestr == null || fileTypestr == undefined) ? null : fileTypestr.split(',').map(item => item.trim());
-      if (fileTypes == null || fileTypes.indexOf(file.type.toString()) > -1) {
-        let formData = new FormData();
-        formData.append(file.name, file);
-        this.fileuploadEvent(formData);
-      }
-      else {
-        //file type error
-        alert('unsupported file format');
-      }
-    }
-    catch{
-    }
-  }
-
-  fileuploadEvent(formData: any) {
-    //console.log(formData);
-    this.loader.show();
-    this.brandsvc.importBrands(formData,this.commonsvc.getretailId()).subscribe(data => {
-      this.loader.hide();
-      this.toastr.success('Imported Success');
-      this.getBrands();
-    }, er => {
-      this.loader.hide();
-      this.toastr.error('Import Failed.')
+    this.commonsvc.fileUpload(files, (formData: any) => {
+      console.log(formData);
+      this.loader.show();
+      this.brandsvc.importBrands(formData, this.commonsvc.getretailId()).subscribe(data => {
+        this.loader.hide();
+        this.toastr.success('Import Success');
+        this.getBrands();
+      }, er => {
+        this.loader.hide();
+        this.toastr.error('Import Failed.')
+      });
     });
   }
+
 
   export() {
     this.loader.show();
     debugger
-    this.brandsvc.exportBrands(this.retailId).subscribe((data: any) => {            
-       this.commonsvc.downloadAsExcel(data,'Brands',this.loader,this.toastr);
-      }, (err: any) => {
-        console.log(err);
-        this.toastr.error('Download Failed');
-        this.loader.hide();
-      });
-  } 
+    this.brandsvc.exportBrands(this.retailId).subscribe((data: any) => {
+      this.commonsvc.downloadAsExcel(data, 'Brands', this.loader, this.toastr);
+    }, (err: any) => {
+      console.log(err);
+      this.toastr.error('Download Failed');
+      this.loader.hide();
+    });
+  }
 
 }
