@@ -32,7 +32,7 @@
     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
       <button class="dropdown-item" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"
         data-backdrop="static" (click)="createBrand()" data-keyboard="false">Add</button>
-      <button class="dropdown-item" *ngIf="brands && brands.length>0" (click)="export()">Export</button>
+      <button class="dropdown-item"  (click)="export()">Export</button>
       <input type="file" name="myfile" [accept]="actions?.import?.accept"
         (change)="fileUpload($event.target.files)" style="display:none;" #file />
       <button class="dropdown-item" *ngIf="actions?.import" (click)="file.click()">

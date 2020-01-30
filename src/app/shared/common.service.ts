@@ -22,8 +22,10 @@ export class CommonService {
   private _searchBS = new BehaviorSubject<string>('');
 
   private _sliderToggleBS = new BehaviorSubject<boolean>(false);
+  public _token=new BehaviorSubject<string>(null);
   private sliderStatus: boolean;
   slider = this._sliderToggleBS.asObservable();
+  token=this._token.asObservable();
 
   private _cartsCountBS = new BehaviorSubject<number>(0);
   public _cartsCount: number = 0;

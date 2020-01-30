@@ -31,11 +31,8 @@ export class LoginComponent {
     this.loader.show();
     this.loginsvc.login(user.UserName, user.Password).subscribe((data: any) => {
       if (data != null || undefined) {
-        this.cmsvc.retailerId = data.RetailId;
-        this.userState = data;
-        localStorage.setItem('user', JSON.stringify(this.userState));
-        this.getretailer();
-        
+        this.cmsvc._token.next(data);
+        this.getUser(user.UserName,user.Password);
       }
       else{
         this.toastr.error('login failed');
@@ -56,5 +53,16 @@ export class LoginComponent {
         this.router.navigateByUrl("/mainpage");
       }
     });
+  }
+
+  getUser(username:string,Password:string)
+  {
+    this.loginsvc.getUser(username,Password).subscribe((data:any)=>{
+      if (data != null || undefined) {
+        this.cmsvc.retailerId = data.RetailId;
+        this.userState = data;
+        localStorage.setItem('user', JSON.stringify(this.userState));
+        this.getretailer();
+      }});
   }
 }

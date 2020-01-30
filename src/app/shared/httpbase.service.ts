@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppintializorService } from '../shared/appintializor.service'
+import { CommonService } from './common.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,13 +15,14 @@ export class HttpbaseService {
         'Accept': 'application/json',
         'Access-Control-Allow-Headers': 'Content-Type',
     }
-    constructor(private httpClient: HttpClient, private appInitializerService: AppintializorService) {
+    constructor(private httpClient: HttpClient, private appInitializerService: AppintializorService,private cmnsvc:CommonService) {
         this.baseUrl = appInitializerService.baseUrl;
         console.log(this.baseUrl);
     }
 
     requestOptions: any = {
         headers: new HttpHeaders(this.Headers),
+        //headers:new HttpHeaders().append().append()
     };
 
 
@@ -28,9 +30,18 @@ export class HttpbaseService {
         headers: new HttpHeaders()
     };
 
+    postJsonLogin(postObject: any, url: string) {
+        debugger
+        return this.httpClient.post(this.baseUrl + url, postObject,this.requestOptionsForUpload)
+      }
+
     postJson(postObject: any, url: string) {
         debugger
-        return this.httpClient.post(this.baseUrl + url, postObject, this.requestOptionsForUpload);
+        let tkn=String(this.cmnsvc.token);
+        return this.httpClient.post(this.baseUrl + url, postObject, {
+            headers:new HttpHeaders().append("Authorization","Basic "+ "text")
+            .append("Content-Type", "application/x-www-form-urlencoded")
+        });
     }
 
     postJsonP(postObject: any, url: string) {
