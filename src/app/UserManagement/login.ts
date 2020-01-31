@@ -32,6 +32,8 @@ export class LoginComponent {
     this.loginsvc.login(user.UserName, user.Password).subscribe((data: any) => {
       if (data != null || undefined) {
         this.cmsvc._token.next(data);
+        this.cmsvc.token.subscribe(p=>this.cmsvc.token);
+        console.log(data);
         this.getUser(user.UserName,user.Password);
       }
       else{

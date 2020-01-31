@@ -15,9 +15,11 @@ export class HttpbaseService {
         'Accept': 'application/json',
         'Access-Control-Allow-Headers': 'Content-Type',
     }
-    constructor(private httpClient: HttpClient, private appInitializerService: AppintializorService,private cmnsvc:CommonService) {
+    token:string=null;
+    constructor(private httpClient: HttpClient, private appInitializerService: AppintializorService, private cmnsvc: CommonService) {
         this.baseUrl = appInitializerService.baseUrl;
         console.log(this.baseUrl);
+        this.cmnsvc.token.subscribe(p=>this.token=p);
     }
 
     requestOptions: any = {
@@ -25,6 +27,10 @@ export class HttpbaseService {
         //headers:new HttpHeaders().append().append()
     };
 
+    requestoptionswithtokenheader:any={
+        headers: new HttpHeaders().append("Authorization", "Basic "  + btoa(this.token))
+                .append("Content-Type", "application/x-www-form-urlencoded")
+    }
 
     requestOptionsForUpload: any = {
         headers: new HttpHeaders()
@@ -32,33 +38,39 @@ export class HttpbaseService {
 
     postJsonLogin(postObject: any, url: string) {
         debugger
-        return this.httpClient.post(this.baseUrl + url, postObject,this.requestOptionsForUpload)
-      }
+        return this.httpClient.post(this.baseUrl + url, postObject, this.requestOptionsForUpload)
+    }
 
     postJson(postObject: any, url: string) {
         debugger
-        let tkn=String(this.cmnsvc.token);
-        return this.httpClient.post(this.baseUrl + url, postObject, {
-            headers:new HttpHeaders().append("Authorization","Basic "+ "text")
-            .append("Content-Type", "application/x-www-form-urlencoded")
-        });
+        let tkn = String(this.cmnsvc.token);
+        return this.httpClient.post(this.baseUrl + url, postObject,{ headers: new HttpHeaders().append("Authorization", "Basic "  + btoa(this.token))
+        .append("Content-Type", "application/x-www-form-urlencoded")});
     }
 
     postJsonP(postObject: any, url: string) {
-        return this.httpClient.post(this.baseUrl + url, postObject, this.requestOptions);
+        return this.httpClient.post(this.baseUrl + url, postObject, { headers: new HttpHeaders().append("Authorization", "Basic "  + btoa(this.token))
+        .append("Content-Type", "application/x-www-form-urlencoded")});
     }
 
     put(postObject: any, url: string) {
-        return this.httpClient.put(this.baseUrl + url, postObject, this.requestOptions);
+        return this.httpClient.put(this.baseUrl + url, postObject, { headers: new HttpHeaders().append("Authorization", "Basic "  + btoa(this.token))
+        .append("Content-Type", "application/x-www-form-urlencoded")});
     }
 
     delete(url: string) {
-        return this.httpClient.delete(this.baseUrl + url, this.requestOptions);
+        return this.httpClient.delete(this.baseUrl + url, { headers: new HttpHeaders().append("Authorization", "Basic "  + btoa(this.token))
+        .append("Content-Type", "application/x-www-form-urlencoded")});
     }
 
     getJson(url) {
-
-        return this.httpClient.get(this.baseUrl + url, this.requestOptions);
+        if (this.token != null) {
+            return this.httpClient.get(this.baseUrl + url, { headers: new HttpHeaders().append("Authorization", "Basic "  + btoa(this.token))
+            .append("Content-Type", "application/x-www-form-urlencoded")});
+        }
+        else {
+            return this.httpClient.get(this.baseUrl + url, this.requestOptions);
+        }
     }
 
     getBlob(url) {
