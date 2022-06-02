@@ -25,7 +25,7 @@
     "ng6-toastr-notifications": "^1.0.4",
     "ngx-pagination": "^5.0.0",
     "ngx-toastr": "^11.2.1",
-    "protobufjs": "^6.8.8",
+    "protobufjs": "^6.11.3",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.3",
     "tslib": "^1.10.0",
